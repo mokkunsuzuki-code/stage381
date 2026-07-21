@@ -688,6 +688,10 @@ def main() -> int:
             else None,
         "stage377_result_sha256":
             stage377_declared_hash,
+        "stage377_hash_valid":
+            stage377_hash_valid,
+        "stage377_final_acceptance_verified":
+            stage377_final_acceptance_verified,
         "metadata_input_path":
             INPUT_PATH.as_posix(),
         "metadata_input_sha256":
