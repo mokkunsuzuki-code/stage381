@@ -1,0 +1,12 @@
+Stage368: Production Timestamp Verification Receipt Layer
+for OpenTimestamps / RFC3161
+
+Decision: verifier_pending
+Verification Status: not_verified
+Previous Hash: 39cbd446adf581cac436d92dab931630eff5346be08985747c91c4210783889f
+Result SHA256: ca155da9f98f1549566cadf8eb435025f6a25b1e46ba90fa9ff50301875f6aa2
+
+Meaning:
+Stage368 records production timestamp verification command receipts as metadata.
+It can return timestamp_verified only with exit_code=0, output SHA256, and matching verified_target_hash.
+Without a real command receipt, the correct decision remains verifier_pending.

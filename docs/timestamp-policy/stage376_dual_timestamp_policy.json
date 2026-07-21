@@ -1,0 +1,42 @@
+{
+  "stage": 376,
+  "policy_type": "production_dual_timestamp_final_acceptance_policy",
+  "rfc3161": {
+    "enabled": true,
+    "required_for_final_acceptance": true,
+    "require_verify_exit_code_zero": true,
+    "require_message_imprint_match": true,
+    "require_tsa_signature_verification": true,
+    "require_certificate_chain_verification": true,
+    "require_generation_time": true,
+    "require_nonce_match_when_nonce_is_used": true
+  },
+  "opentimestamps": {
+    "enabled": true,
+    "required_for_final_acceptance": true,
+    "require_verify_exit_code_zero": true,
+    "require_target_hash_match": true,
+    "require_confirmed_public_anchor": true,
+    "require_verified_time": true
+  },
+  "final_acceptance": {
+    "required_verified_proof_count": 2,
+    "supersede_stage372_pending": true,
+    "modify_stage372_record": false,
+    "fail_closed": true
+  },
+  "execution": {
+    "allow_free_form_commands": false,
+    "allow_local_external_execution": false,
+    "fixed_github_actions_workflows_only": true
+  },
+  "safety_boundary": {
+    "publish_raw_rfc3161_response": false,
+    "publish_raw_opentimestamps_proof": false,
+    "publish_tsa_private_key": false,
+    "publish_oidc_token": false,
+    "publish_github_token": false,
+    "publish_raw_qkd_key_material": false,
+    "publish_metadata_receipts_only": true
+  }
+}

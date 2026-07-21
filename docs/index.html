@@ -1,0 +1,2775 @@
+<!doctype html>
+<html lang="ja" translate="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="google" content="notranslate">
+  <title>Stage376: Production Dual-Timestamp Verification &amp; Superseding Final Acceptance Gate</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; background: #f6f8fa; color: #24292f; }
+    header { background: #0d1117; color: white; padding: 44px 32px; }
+    main { max-width: 1120px; margin: 28px auto; padding: 0 20px; }
+    .card { background: white; border: 1px solid #d0d7de; border-radius: 16px; padding: 24px; margin-bottom: 20px; box-shadow: 0 8px 24px rgba(140,149,159,.14); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+    label { display: block; font-weight: 700; margin-top: 12px; }
+    input, select, textarea { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #d0d7de; border-radius: 10px; margin-top: 6px; font-family: inherit; }
+    textarea { min-height: 130px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    button, a.button { display: inline-block; margin: 8px 8px 0 0; padding: 12px 16px; border-radius: 10px; background: #0969da; color: white; border: none; text-decoration: none; font-weight: 700; cursor: pointer; }
+    .secondary { background: #57606a !important; }
+    .green { background: #1a7f37 !important; }
+    pre { background: #0d1117; color: #c9d1d9; padding: 16px; border-radius: 12px; overflow-x: auto; white-space: pre-wrap; }
+    .accept { background: #dafbe1; color: #116329; border: 1px solid #4ac26b; }
+    .pending { background: #fff8c5; color: #7d4e00; border: 1px solid #d4a72c; }
+    .reject { background: #ffebe9; color: #82071e; border: 1px solid #ff8182; }
+    .badge { display: inline-block; padding: 6px 12px; border-radius: 999px; background: #dafbe1; color: #116329; font-weight: 700; }
+    code { background: #f6f8fa; padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+
+
+<!-- STAGE377_CURRENT_PAGE_HEADER_START -->
+<script>
+  document.title =
+    "Stage377: Production Dual-Timestamp Finalization and Superseding Final Acceptance Gate";
+</script>
+<section
+  id="stage377-current-page-header"
+  aria-label="Stage377 current stage"
+>
+  <h1>Stage377</h1>
+
+  <h2>
+    Production Dual-Timestamp Finalization and
+    Superseding Final Acceptance Gate
+  </h2>
+
+  <p>
+    Stage376までの検証履歴を保持し、その末尾に、
+    Stage377の本番二重タイムスタンプ最終化ゲートを
+    積み上げています。
+  </p>
+
+  <p>
+    <strong>Current decision:</strong>
+    <code>timestamp_finalization_pending</code>
+  </p>
+</section>
+<!-- STAGE377_CURRENT_PAGE_HEADER_END -->
+
+
+
+<header>
+  <h1>Stage376</h1>
+
+  <p>
+    Production Dual-Timestamp Verification
+    &amp; Superseding Final Acceptance Gate
+  </p>
+
+  <span class="badge">
+    Stage375の量子安全二重署名検証を継承し、
+    Stage360の正規化された対象に対して
+    RFC3161とOpenTimestampsの二重タイムスタンプ検証を行います。
+    両方の外部証明が同一対象に対して独立に検証された場合のみ、
+    Stage372の履歴を変更せず、新しい有効な最終承認状態を成立させます。
+  </span>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Overview</h2>
+    <p>
+      Stage330 does not replace Stage329.
+      It extends the Stage329 audit submission package by adding automatic SHA256 evidence hash generation.
+    </p>
+    <pre>AI主張
+↓
+再現証拠
+↓
+Stage328 Evidence Match Gate
+↓
+受け入れ / 保留 / reject
+↓
+Stage329 Signed Audit Report</pre>
+  </section>
+
+  <section class="card">
+    <h2>Stage327 + Stage328 Integrated Builder</h2>
+    <p>
+      Input AI vulnerability claims and reproduction evidence, generate structured Stage327 JSON,
+      and perform Stage328 gate verification.
+    </p>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <h2>AI脆弱性主張</h2>
+
+      <label>脆弱性タイプ</label>
+      <select id="vulnerability_type">
+        <option>プロンプトインジェクション</option>
+        <option>data-leakage</option>
+        <option>unsafe-output</option>
+        <option>policy-bypass</option>
+      </select>
+
+      <label>Target</label>
+      <select id="target">
+        <option>モデル出力</option>
+        <option>repository</option>
+        <option>api-response</option>
+      </select>
+
+      <label>AI主張 ID</label>
+      <input id="ai_claim_id" value="claim-001">
+
+      <label>Repository</label>
+      <input id="claim_repository" value="demo/repository">
+
+      <label>Commit</label>
+      <input id="claim_commit" value="abc123demo">
+
+      <label>File</label>
+      <input id="claim_file" value="src/auth.py">
+
+      <label>Line Range</label>
+      <input id="claim_line_range" value="40-55">
+
+      <label>Claim Summary</label>
+      <textarea id="claim_summary">AI detected a possible prompt injection issue.</textarea>
+    </div>
+
+    <div class="card">
+      <h2>再現証拠</h2>
+
+      <label>再現ID</label>
+      <input id="reproduction_id" value="repro-001">
+
+      <label>再現リポジトリ</label>
+      <input id="repro_repository" value="demo/repository">
+
+      <label>再現コミット</label>
+      <input id="repro_commit" value="abc123demo">
+
+      <label>再現ファイル</label>
+      <input id="repro_file" value="src/auth.py">
+
+      <label>再現ライン範囲</label>
+      <input id="repro_line_range" value="40-55">
+
+      <label>Result</label>
+      <select id="result_status">
+        <option>再現済み</option>
+        <option>partial</option>
+        <option>inconclusive</option>
+      </select>
+
+      <label>再現メモ</label>
+      <textarea id="reproduction_note">隔離環境で安全に再現確認しました。</textarea>
+
+      <label>Evidence Files</label>
+      <textarea id="evidence_files">prompt.txt
+response.txt
+run.log</textarea>
+
+      <label>SHA256 Map</label>
+      <textarea id="sha256_map" translate="no" class="notranslate">{
+  "prompt.txt": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "response.txt": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "run.log": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+}</textarea>
+
+      <label>Signature File</label>
+      <input id="signature_file" value="reproduction.log.asc">
+    </div>
+  </section>
+
+  <section class="card">
+    <button onclick="generateStage328()">Generate Stage328 JSON + Gate Decision</button>
+    <button class="secondary" onclick="downloadStage328Decision()">Download stage328_decision.json</button>
+    <a class="button green" href="./reports/audit_report.html">Open Stage329 Audit Report</a>
+
+    <h2>生成されたStage328 JSON</h2>
+    <pre id="generated_json" translate="no" class="notranslate">Generated JSON appears here.</pre>
+
+    <h2>Stage328 Gate判定</h2>
+    <div id="decision_box" class="card pending">Gate decision appears here.</div>
+    <pre id="gate_decision" translate="no" class="notranslate">{}</pre>
+  </section>
+
+  <section class="card">
+    <h2>Stage329監査提出レイヤー</h2>
+    <p>
+      After generating the Stage328 decision, Stage329 converts it into an audit package:
+      JSON, HTML, signature, hash, and verification instructions.
+    </p>
+    <a class="button" href="./reports/audit_report.html">Stage329 Audit Report</a>
+    <a class="button" href="./reports/audit_report.json">Audit JSON</a>
+    <a class="button" href="./reports/audit_report.json.asc">Audit Signature</a>
+    <a class="button" href="./reports/verify.txt">Verify Instructions</a>
+  </section>
+
+  <section class="card">
+    <h2>判定ルール</h2>
+    <p><strong>受け入れ:</strong> all checks are true</p>
+    <p><strong>保留:</strong> target/evidence exist but SHA256 or signature missing</p>
+    <p><strong>reject:</strong> target mismatch or evidence missing</p>
+  </section>
+
+  <section class="card">
+    <h2>公開検証ファイル</h2>
+    <a class="button secondary" href="./ja/">Japanese Page</a>
+    
+<a class="button secondary" href="./en/">English Page</a>
+
+    <a class="button secondary" href="./schema/vulnerability-evidence-intake.schema.json">Schema JSON</a>
+    <a class="button secondary" href="./examples/demo-intake.json">Example JSON</a>
+    <a class="button secondary" href="./proof/demo-ai-vulnerability.html">Proof Viewer</a>
+    <a class="button secondary" href="./report/report.html">Stage328 Audit Report</a>
+    <a class="button secondary" href="./history/history.json">Audit History JSON</a>
+    <a class="button secondary" href="./verify/third-party-verify.txt">Third-Party Verification Guide</a>
+  </section>
+
+<section class="card" id="stage330-hash-auto-builder">
+  <h2>Stage330 Evidence Hash Auto Builder</h2>
+
+  <p>
+    Stage330 adds automatic SHA256 hash generation to the Stage329 audit submission workflow.
+    It reads evidence files, generates a SHA256 map, creates hash_manifest.json, and prepares
+    reproduction_evidence.json for the Stage328 Evidence Match Gate.
+  </p>
+
+  <pre>
+prompt.txt
+response.txt
+run.log
+↓
+Automatic SHA256 Generation
+↓
+hash_manifest.json
+↓
+hash_manifest.sha256
+↓
+reproduction_evidence.json
+↓
+Stage328 Evidence Match Gate
+↓
+Stage329 Audit Submission Package
+  </pre>
+
+  <h3>Generated Stage330 Files</h3>
+  <ul>
+    <li><a href="evidence/hash_manifest.json">docs/evidence/hash_manifest.json</a></li>
+    <li><a href="evidence/hash_manifest.sha256">docs/evidence/hash_manifest.sha256</a></li>
+    <li><a href="evidence/reproduction_evidence.json">docs/evidence/reproduction_evidence.json</a></li>
+</ul>
+
+<h3>Stage331 Execution Integrity</h3>
+
+<p>
+Stage331 extends Stage330 by binding evidence files into a single execution session.
+</p>
+
+<pre>
+prompt.txt
+response.txt
+run.log
+↓
+Execution Session Binding
+↓
+session_id
+created_at
+evidence_order
+evidence_count
+sha256_map
+↓
+execution_session.json
+↓
+Execution Integrity Verification
+</pre>
+
+<p>
+Stage331 verifies not only file integrity, but whether the evidence files belong to the same execution session.
+</p>
+
+<ul>
+  <li><a href="report/execution_session.json">docs/report/execution_session.json</a></li>
+</ul>
+
+</section>
+
+    <li><a href="report/audit_report.json">docs/report/audit_report.json</a></li>
+    <li><a href="report/audit_report.html">docs/report/audit_report.html</a></li>
+  </ul>
+
+  <h3>What Stage330 Adds</h3>
+  <table>
+    <tr>
+      <th>Before Stage330</th>
+      <th>After Stage330</th>
+    </tr>
+    <tr>
+      <td>SHA256 map was manually written</td>
+      <td>SHA256 map is automatically generated</td>
+    </tr>
+    <tr>
+      <td>Risk of copy mistakes</td>
+      <td>Lower risk of human error</td>
+    </tr>
+    <tr>
+      <td>Audit package starts after hashes exist</td>
+      <td>Audit package includes the hash generation layer</td>
+    </tr>
+  </table>
+</section>
+
+
+
+
+
+
+
+</main>
+
+<script>
+let lastStage328Decision = null;
+
+function linesToArray(text) {
+  return text.split("\n").map(x => x.trim()).filter(Boolean);
+}
+
+function sameTarget(claim, evidence) {
+  return claim.repository === evidence.repository &&
+    claim.commit === evidence.commit &&
+    claim.file === evidence.file &&
+    claim.line_range === evidence.line_range;
+}
+
+function generateStage328() {
+  const claim = {
+    ai_claim_id: document.getElementById("ai_claim_id").value,
+    vulnerability_type: document.getElementById("vulnerability_type").value,
+    target: document.getElementById("target").value,
+    repository: document.getElementById("claim_repository").value,
+    commit: document.getElementById("claim_commit").value,
+    file: document.getElementById("claim_file").value,
+    line_range: document.getElementById("claim_line_range").value,
+    summary: document.getElementById("claim_summary").value
+  };
+
+  let sha256Map = {};
+  try {
+    sha256Map = JSON.parse(document.getElementById("sha256_map").value);
+  } catch (e) {
+    alert("SHA256 Map must be valid JSON.");
+    return;
+  }
+
+  const evidence = {
+    reproduction_id: document.getElementById("reproduction_id").value,
+    repository: document.getElementById("repro_repository").value,
+    commit: document.getElementById("repro_commit").value,
+    file: document.getElementById("repro_file").value,
+    line_range: document.getElementById("repro_line_range").value,
+    result: document.getElementById("result_status").value,
+    note: document.getElementById("reproduction_note").value,
+    evidence_files: linesToArray(document.getElementById("evidence_files").value),
+    sha256: sha256Map,
+    signature_file: document.getElementById("signature_file").value
+  };
+
+  const same_target = sameTarget(claim, evidence);
+  const evidence_files_present = evidence.evidence_files.length > 0;
+  const sha256_bound = evidence.evidence_files.every(f => Boolean(evidence.sha256[f]));
+  const signature_present = Boolean(evidence.signature_file);
+
+  let decision = "reject";
+  if (same_target && evidence_files_present && sha256_bound && signature_present) {
+    decision = "accept";
+  } else if (same_target && evidence_files_present) {
+    decision = "pending";
+  }
+
+  const stage328 = {
+    stage: 328,
+    engine: "QSP Evidence Match Gate",
+    purpose: "Trust decision between AI claim and reproduction evidence.",
+    ai_claim: claim,
+    reproduction_evidence: evidence,
+    checks: {
+      same_target,
+      evidence_files_present,
+      sha256_bound,
+      signature_present
+    },
+    decision,
+    note: "This gate verifies evidence binding. It does not reproduce vulnerabilities."
+  };
+
+  lastStage328Decision = stage328;
+
+  document.getElementById("generated_json").textContent = JSON.stringify(stage328, null, 2);
+  document.getElementById("gate_decision").textContent = JSON.stringify({
+    decision,
+    checks: stage328.checks
+  }, null, 2);
+
+  const box = document.getElementById("decision_box");
+  box.className = "card " + decision;
+
+const labelMap = { accept: "accept", pending: "pending", reject: "reject" };
+box.textContent = "Decision: " + (labelMap[decision] || decision);
+
+}
+
+function downloadStage328Decision() {
+  if (!lastStage328Decision) generateStage328();
+  const blob = new Blob([JSON.stringify(lastStage328Decision, null, 2) + "\n"], {type: "application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "stage328_decision.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+generateStage328();
+</script>
+
+
+
+
+
+
+
+
+
+
+<section>
+  <h2>Stage332: Signed Execution Session</h2>
+  <p>
+    Stage332 extends Stage331 by cryptographically signing the execution session.
+    The audit target is <code>execution_session.json</code>.
+  </p>
+  <p>
+    The execution session becomes signed audit evidence through GPG signature,
+    Sigstore bundle, and public verification.
+  </p>
+  <p>
+    This stage proves who generated the execution evidence, whether the evidence
+    was modified, and whether the execution session can be independently verified.
+  </p>
+  <ul>
+    <li><a href="./execution/execution_session.json">execution_session.json</a></li>
+    <li><a href="./execution/execution_session.json.sig">GPG signature</a></li>
+    <li><a href="./execution/execution_session.json.bundle">Sigstore bundle</a></li>
+    <li><a href="./execution/public-key.asc">Public key</a></li>
+  </ul>
+  <p>
+    Meaning: this proves who generated the execution session and turns execution evidence into signed audit evidence.
+
+<section style="margin-top:40px; padding:24px; border:2px solid #222; border-radius:16px;">
+  <h2>Stage333 Transparency Log</h2>
+  <p>Stage333 extends Stage332 by recording the signed execution session into an append-only transparency log.</p>
+
+  <h3>Stage332 → Stage333</h3>
+  <pre>execution_session.json
+↓
+GPG / Sigstore signature
+↓
+transparency-log.json
+↓
+previous_hash chain
+↓
+public audit timeline</pre>
+
+  <h3>Latest Transparency Log Entry</h3>
+  <pre id="stage333-log">Loading transparency log...</pre>
+
+  <p><a href="./audit/timeline.html">View Transparency Timeline</a></p>
+  <p><a href="./audit/transparency-log.json">View Transparency Log JSON</a></p>
+  <p><a href="./audit/verify-transparency-log.txt">Verification Instructions</a></p>
+</section>
+
+<script>
+fetch("./audit/transparency-log.json")
+  .then(r => r.json())
+  .then(log => {
+    const latest = log[log.length - 1];
+    document.getElementById("stage333-log").textContent = JSON.stringify(latest, null, 2);
+  })
+  .catch(() => {
+    document.getElementById("stage333-log").textContent = "Transparency log could not be loaded.";
+  });
+</script>
+
+<section style="margin-top:40px; padding:24px; border:2px solid #1f2937; border-radius:16px;">
+  <h2>Stage334 AI Vulnerability Watch Atlas + Stage335 Safe AI Vulnerability Intelligence Fetcher</h2>
+  <p>
+    Stage334 extends Stage333 by adding a safe AI vulnerability watch system.
+    It organizes AI failure patterns from security sources into a public audit atlas.
+  </p>
+
+  <h3>Stage333 → Stage334</h3>
+  <pre>Stage333 Transparency Log
+↓
+signed evidence history
+↓
+AI vulnerability source watch
+↓
+AI vulnerability atlas
+↓
+safe reproduction planning</pre>
+
+  <h3>Safety Boundary</h3>
+  <ul>
+    <li>No exploit code is published.</li>
+    <li>No harmful prompt payloads are published.</li>
+    <li>No attack automation is published.</li>
+    <li>Only safe audit metadata is public.</li>
+    <li>Collection logic stays private.</li>
+  </ul>
+
+  <h3>Latest Watch Summary</h3>
+  <pre id="stage334-summary">Loading Stage334 watch summary...</pre>
+
+  <p><a href="./intelligence/index.html">View Stage334 Intelligence Page</a></p>
+  <p><a href="./intelligence/ai-vulnerability-atlas.json">View AI Vulnerability Atlas JSON</a></p>
+  <p><a href="./intelligence/watch-summary.json">View Watch Summary JSON</a></p>
+</section>
+
+<script>
+fetch("./intelligence/watch-summary.json")
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById("stage334-summary").textContent = JSON.stringify(data, null, 2);
+  })
+  .catch(() => {
+    document.getElementById("stage334-summary").textContent = "Stage334 summary could not be loaded.";
+  });
+</script>
+
+<section style="margin-top:40px; padding:24px; border:2px solid #111827; border-radius:16px;">
+  <h2>Stage335 Safe AI Vulnerability Intelligence Fetcher</h2>
+  <p>
+    Stage335 extends Stage334 by collecting safe AI vulnerability intelligence metadata.
+    Dangerous prompts, exploit code, weaponized payloads, and attack automation are not published.
+  </p>
+
+  <h3>Stage334 → Stage335</h3>
+  <pre>Stage334 AI Vulnerability Watch Atlas
+↓
+safe AI risk categories
+↓
+Stage335 Safe Metadata Fetcher
+↓
+safe intelligence feed
+↓
+collection transparency log
+↓
+private internal Runner preparation</pre>
+
+  <h3>Public / Private Separation</h3>
+  <ul>
+    <li><strong>Public:</strong> metadata, classification, summary, SHA256, transparency log.</li>
+    <li><strong>Private:</strong> reproduction templates, behavior matching, runner logic, unsafe details.</li>
+  </ul>
+
+  <h3>Latest Stage335 Summary</h3>
+  <pre id="stage335-summary">Loading Stage335 summary...</pre>
+
+  <p><a href="./docs/stage335/index.html">View Stage335 Page</a></p>
+  <p><a href="./docs/stage335/safe-intelligence-feed.json">View Safe Intelligence Feed</a></p>
+  <p><a href="./docs/stage335/collection-transparency-log.json">View Collection Transparency Log</a></p>
+
+<!-- STAGE336-LIVE-INTEL-START -->
+<section class="card">
+  <h2>Stage336: Safe Live Intelligence Fetcher</h2>
+  <p>
+    Stage336 extends Stage335 by adding live public AI/security intelligence metadata.
+    This is added after the Stage335 Safe AI Vulnerability Intelligence Fetcher section,
+    preserving all previous Stage329–Stage335 functions.
+  </p>
+
+  <h3>Stage335 → Stage336</h3>
+  <pre>Stage335 Safe Intelligence Fetcher
+↓
+Safe intelligence feed
+↓
+Collection transparency log
+↓
+Stage336 Safe Live Intelligence Fetcher
+↓
+Live public metadata collection
+↓
+Audit metadata connected to Stage335</pre>
+
+  <p>
+    <a class="button green" href="./intel/">Open Stage336 Live Intelligence</a>
+    <a class="button secondary" href="./intel/index.json">Live Intelligence JSON</a>
+    <a class="button secondary" href="./stage336/intel-session.json">Stage336 Audit Session JSON</a>
+  </p>
+</section>
+<!-- STAGE336-LIVE-INTEL-END -->
+
+</section>
+
+<script>
+fetch("./docs/stage335/watch-summary.json")
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById("stage335-summary").textContent = JSON.stringify(data, null, 2);
+  })
+  .catch(() => {
+    document.getElementById("stage335-summary").textContent = "Stage335 summary could not be loaded.";
+  });
+</script>
+
+
+
+
+
+
+  </p>
+</section>
+
+<section id="stage337">
+  <h2>Stage338: Behavior Decision Engine</h2>
+
+  <p>
+    Stage337 adds safe reproduction templates for AI vulnerability verification.
+    This stage does not include attack code, exploit payloads, bypass steps, or automated attack logic.
+  </p>
+
+  <h3>Template Flow</h3>
+  <ul>
+    <li>Vulnerability category</li>
+    <li>Safe reproduction template</li>
+    <li>Expected behavior</li>
+    <li>Pass condition</li>
+    <li>Fail condition</li>
+    <li>Safety boundary</li>
+  </ul>
+
+  <h3>Template Library</h3>
+  <p>
+    <a href="./templates/safe_reproduction_templates.json">
+      safe_reproduction_templates.json
+    </a>
+  </p>
+
+  <h3>Meaning</h3>
+  <p>
+    Stage336 collected safe intelligence metadata.
+    Stage337 adds the missing safe template layer for future behavior matching.
+  </p>
+</section>
+
+
+<section id="stage338-behavior-decision-engine">
+  <h2>Stage338: Behavior Decision Engine</h2>
+  <p>
+    Stage338 adds behavior decision capability to the existing safe reproduction template library.
+  </p>
+
+  <p>
+    Stage337 defined the rulebook. Stage338 compares expected behavior with actual behavior and returns a decision.
+  </p>
+
+  <ul>
+    <li>Expected Behavior: expected safe behavior</li>
+    <li>Actual Behavior: observed response or action</li>
+    <li>Decision: pass / fail / unknown</li>
+  </ul>
+
+  <p>
+    Public output:
+    <a href="./behavior/behavior_decision.json">behavior_decision.json</a>
+  </p>
+
+  <p>
+    This stage does not publish attack code, dangerous prompts, payloads, or exploit automation.
+  </p>
+</section>
+
+<section id="stage339-unified-qsp-behavior-policy-action-gate">
+  <h2>Stage339: Unified QSP Behavior Policy Action Gate</h2>
+
+  <p>
+    Stage339 integrates earlier QSP decision capabilities into the Stage338 behavior decision layer.
+  </p>
+
+  <p>
+    This stage connects behavior decision, trust score, evidence match, signature status,
+    public policy, action mapping, and fail-closed behavior.
+  </p>
+
+  <ul>
+    <li>Stage338: pass / fail / unknown behavior decision</li>
+    <li>Stage268: Time / Integrity / Execution / Identity trust score</li>
+    <li>Stage269: accept / pending / reject trust decision</li>
+    <li>Stage284: deterministic protocol decision</li>
+    <li>Stage299: signature-aware verification gate</li>
+    <li>Stage305: public policy and explainable reasons</li>
+    <li>Stage306: allow / warn / block action gate</li>
+    <li>Stage328: evidence match gate</li>
+  </ul>
+
+  <p>
+    Public policy:
+    <a href="./behavior/unified_qsp_policy.json">unified_qsp_policy.json</a>
+  </p>
+
+  <p>
+    Public input:
+    <a href="./behavior/unified_qsp_input.json">unified_qsp_input.json</a>
+  </p>
+
+  <p>
+    Public result:
+    <a href="./behavior/unified_qsp_behavior_policy_action_result.json">unified_qsp_behavior_policy_action_result.json</a>
+  </p>
+
+  <p>
+    Stage339 is fail-closed. If behavior is unknown, evidence is insufficient,
+    signature verification fails, or policy evaluation errors, the system rejects or blocks.
+  </p>
+
+  <p>
+    This stage does not publish attack code, dangerous prompts, payloads, bypass steps, or exploit automation.
+  </p>
+</section>
+
+<section id="stage339-deterministic-protocol-proof">
+  <h2>Stage339: Deterministic Protocol Proof</h2>
+
+  <p>
+    Stage339 now verifies deterministic protocol behavior.
+  </p>
+
+  <p>
+    The same canonical input is evaluated twice. If both evaluations produce
+    the same canonical decision hash, deterministic_protocol.same_input_same_output
+    becomes true.
+  </p>
+
+  <ul>
+    <li>Input fingerprint SHA256</li>
+    <li>First decision SHA256</li>
+    <li>Second decision SHA256</li>
+    <li>same_input_same_output</li>
+  </ul>
+
+  <p>
+    This strengthens the Stage284 integration by proving that the same input
+    produces the same policy action output.
+  </p>
+</section>
+
+
+<section id="stage340-unified-verification-session-manifest">
+  <h2>Stage340: Unified Verification Session Manifest</h2>
+
+  <p>
+    Stage340 connects the Stage254 session manifest concept to the Stage339 unified QSP behavior policy action result.
+  </p>
+
+  <p>
+    This stage binds one complete verification result into a session manifest.
+  </p>
+
+  <ul>
+    <li>qsp_session_result.json</li>
+    <li>session_manifest.json</li>
+    <li>local_witness.json</li>
+    <li>session_anchor_receipt.json</li>
+  </ul>
+
+  <p>
+    Public session result:
+    <a href="./session/qsp_session_result.json">qsp_session_result.json</a>
+  </p>
+
+  <p>
+    Public session manifest:
+    <a href="./session/session_manifest.json">session_manifest.json</a>
+  </p>
+
+  <p>
+    Public local witness:
+    <a href="./witnesses/local_witness.json">local_witness.json</a>
+  </p>
+
+  <p>
+    Public anchor receipt:
+    <a href="./anchors/session_anchor_receipt.json">session_anchor_receipt.json</a>
+  </p>
+
+  <p>
+    Stage340 does not publish private keys, attack code, dangerous prompts, exploit payloads, or automated attack logic.
+  </p>
+</section>
+
+<section id="stage341-signed-verification-session-manifest">
+  <h2>Stage341: Signed Verification Session Manifest</h2>
+
+  <p>
+    Stage341 signs the Stage340 session_manifest.json and turns it into signed verification session evidence.
+  </p>
+
+  <p>
+    This stage adds GPG signature, Ed25519 witness signature, and Sigstore bundle verification.
+  </p>
+
+  <ul>
+    <li>GPG signature: session_manifest.json.gpg.asc</li>
+    <li>Ed25519 witness signature: session_manifest.ed25519.sig</li>
+    <li>Sigstore bundle: session_manifest.sigstore.bundle</li>
+    <li>Signature manifest: session_signature_manifest.json</li>
+    <li>Signed session manifest: signed_session_manifest.json</li>
+  </ul>
+
+  <p>Signed manifest:
+    <a href="./session/signed_session_manifest.json">signed_session_manifest.json</a>
+  </p>
+
+  <p>Signature manifest:
+    <a href="./session/session_signature_manifest.json">session_signature_manifest.json</a>
+  </p>
+
+  <p>GPG signature:
+    <a href="./session/session_manifest.json.gpg.asc">session_manifest.json.gpg.asc</a>
+  </p>
+
+  <p>Ed25519 witness signature:
+    <a href="./witnesses/session_manifest.ed25519.sig">session_manifest.ed25519.sig</a>
+  </p>
+
+  <p>Ed25519 witness public key:
+    <a href="./witnesses/stage341_ed25519_witness.pub">stage341_ed25519_witness.pub</a>
+  </p>
+
+  <p>Sigstore bundle:
+    <a href="./anchors/session_manifest.sigstore.bundle">session_manifest.sigstore.bundle</a>
+  </p>
+
+  <p>
+    Verification succeeded for GPG, Ed25519 witness, and Sigstore.
+  </p>
+
+  <p>
+    Stage341 does not publish private keys, attack code, dangerous prompts, exploit payloads, or automated attack logic.
+  </p>
+</section>
+
+<section id="stage342-external-anchor-layer">
+  <h2>Stage342: External Anchor Layer</h2>
+
+  <p>
+    Stage342 extends Stage341 by adding external anchoring for the signed verification session manifest.
+  </p>
+
+  <p>
+    This stage adds checkpoint witness, GitHub Actions anchor support, OpenTimestamps support, and an external anchor receipt.
+  </p>
+
+  <ul>
+    <li>Checkpoint witness: checkpoint_witness.json</li>
+    <li>GitHub Actions anchor intent: github_actions_anchor_intent.json</li>
+    <li>OpenTimestamps support: session_manifest.json.ots when available</li>
+    <li>External anchor receipt: external_anchor_receipt.json</li>
+  </ul>
+
+  <p>
+    External anchor receipt:
+    <a href="./anchors/external_anchor_receipt.json">external_anchor_receipt.json</a>
+  </p>
+
+  <p>
+    GitHub Actions anchor intent:
+    <a href="./anchors/github_actions_anchor_intent.json">github_actions_anchor_intent.json</a>
+  </p>
+
+  <p>
+    Checkpoint witness:
+    <a href="./checkpoints/checkpoint_witness.json">checkpoint_witness.json</a>
+  </p>
+
+  <p>
+    Checkpoint public key:
+    <a href="./checkpoints/stage342_checkpoint_witness.pub">stage342_checkpoint_witness.pub</a>
+  </p>
+
+  <p>
+    Checkpoint signature:
+    <a href="./checkpoints/session_manifest.checkpoint.sig">session_manifest.checkpoint.sig</a>
+  </p>
+
+  <p>
+    Stage342 does not publish private keys, attack code, dangerous prompts, exploit payloads, or automated attack logic.
+  </p>
+</section>
+
+<section id="stage343-verified-external-anchor-layer">
+  <h2>Stage343: Verified External Anchor Layer</h2>
+
+  <p>
+    Stage343 verifies the external anchor layer created in Stage342.
+  </p>
+
+  <p>
+    This stage checks hash binding, checkpoint witness, Ed25519 witness, GPG signature, Sigstore bundle, OpenTimestamps status, and GitHub Actions anchor intent.
+  </p>
+
+  <ul>
+    <li>Hash binding verification</li>
+    <li>Checkpoint witness verification</li>
+    <li>Ed25519 witness verification</li>
+    <li>GPG signature verification</li>
+    <li>Sigstore bundle verification</li>
+    <li>OpenTimestamps verification or pending status</li>
+    <li>GitHub Actions anchor intent verification</li>
+    <li>Independent verification report</li>
+  </ul>
+
+  <p>
+    Independent verification report:
+    <a href="./verification/independent_verification_report.json">independent_verification_report.json</a>
+  </p>
+
+  <p>
+    Verification summary:
+    <a href="./verification/verification_summary.txt">verification_summary.txt</a>
+  </p>
+
+  <p>
+    Stage343 does not publish private keys, attack code, dangerous prompts, exploit payloads, or automated attack logic.
+  </p>
+</section>
+
+<section id="stage344-verified-github-artifact-layer">
+  <h2>Stage344: Verified GitHub Artifact Layer</h2>
+
+  <p>
+    Stage344 verifies GitHub Actions run evidence and connects it to the Stage343 independent verification report.
+  </p>
+
+  <p>
+    This stage prepares GitHub Actions artifact download verification and checks the latest workflow run, SHA256 binding, and previous independent verification result.
+  </p>
+
+  <ul>
+    <li>GitHub Actions run verification</li>
+    <li>Artifact download command preparation</li>
+    <li>Session manifest SHA256 verification</li>
+    <li>Stage343 independent report connection</li>
+    <li>GitHub artifact verification report</li>
+  </ul>
+
+  <p>
+    GitHub artifact verification report:
+    <a href="./artifacts/github_artifact_verification_report.json">github_artifact_verification_report.json</a>
+  </p>
+
+  <p>
+    GitHub artifact verification summary:
+    <a href="./artifacts/github_artifact_verification_summary.txt">github_artifact_verification_summary.txt</a>
+  </p>
+
+  <p>
+    Stage344 does not publish private keys, attack code, dangerous prompts, exploit payloads, or automated attack logic.
+  </p>
+</section>
+
+<section id="stage345-artifact-download-verification-engine">
+  <h2>Stage345: Artifact Download Verification Engine</h2>
+
+  <p>
+    Stage345 extends Stage344 by turning GitHub artifact verification readiness into actual artifact download verification.
+  </p>
+
+  <p>
+    This stage downloads the GitHub Actions artifact, verifies SHA256 binding, checks the session manifest, checks the GitHub run binding, and produces an accept / reject verification report.
+  </p>
+
+  <ul>
+    <li>GitHub Actions run lookup</li>
+    <li>Artifact download</li>
+    <li>Downloaded artifact SHA256 map</li>
+    <li>Session manifest SHA256 verification</li>
+    <li>GitHub Actions run binding verification</li>
+    <li>Stage343 independent verification connection</li>
+    <li>accept / reject artifact verification decision</li>
+  </ul>
+
+  <p>
+    Artifact download verification report:
+    <a href="./artifacts/artifact_download_verification_report.json">artifact_download_verification_report.json</a>
+  </p>
+
+  <p>
+    Artifact download verification summary:
+    <a href="./artifacts/artifact_download_verification_summary.txt">artifact_download_verification_summary.txt</a>
+  </p>
+
+  <p>
+    Stage345 does not publish private keys, attack code, dangerous prompts, exploit payloads, or automated attack logic.
+  </p>
+</section>
+
+<section id="stage346-multi-artifact-verification-layer">
+  <h2>Stage346: Multi-Artifact Verification Layer</h2>
+
+  <p>
+    Stage346 extends Stage345 by verifying multiple public verification artifacts as one connected evidence set.
+  </p>
+
+  <p>
+    This stage checks the session manifest, signed session manifest, external anchor receipt, Stage343 independent verification report, Stage344 GitHub artifact verification report, and Stage345 artifact download verification report.
+  </p>
+
+  <ul>
+    <li>Multi-artifact existence verification</li>
+    <li>Session manifest SHA256 verification</li>
+    <li>Signed session manifest SHA256 verification</li>
+    <li>Stage343 independent verification connection</li>
+    <li>Stage344 GitHub artifact verification connection</li>
+    <li>Stage345 artifact download verification connection</li>
+    <li>accept / reject multi-artifact decision</li>
+  </ul>
+
+  <p>
+    Multi-artifact verification report:
+    <a href="./artifacts/multi_artifact_verification_report.json">multi_artifact_verification_report.json</a>
+  </p>
+
+  <p>
+    Multi-artifact verification summary:
+    <a href="./artifacts/multi_artifact_verification_summary.txt">multi_artifact_verification_summary.txt</a>
+  </p>
+
+  <p>
+    Stage346 does not publish private keys, attack code, dangerous prompts, exploit payloads, or automated attack logic.
+  </p>
+</section>
+
+<section>
+  <h2>Stage347: Quantum-Safe Behavior Template Layer</h2>
+  <p>
+    Stage347 extends Stage346 by adding PQC/QKD behavior templates to the multi-artifact verification layer.
+    It connects safe metadata from quantum-safe implementation history to the current QSP evidence verification rail.
+  </p>
+
+  <ul>
+    <li>PQC behavior template validation</li>
+    <li>QKD behavior template validation</li>
+    <li>ML-KEM / ML-DSA / SLH-DSA metadata confirmation</li>
+    <li>QKD key-session and failover metadata confirmation</li>
+    <li>safe metadata only: no private keys, no raw key material</li>
+    <li>pass / fail / unknown decision output</li>
+  </ul>
+
+  <p>
+    <a href="./quantum/quantum_safe_behavior_templates.json">Quantum-Safe Behavior Templates</a><br>
+    <a href="./quantum/quantum_safe_behavior_input.json">Quantum-Safe Behavior Input</a><br>
+    <a href="./quantum/quantum_safe_behavior_decision.json">Quantum-Safe Behavior Decision</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage348: Quantum-Safe Evidence Binding Schema Layer</h2>
+  <p>
+    Stage348 extends Stage347 by binding PQC/QKD evidence metadata to a shared schema,
+    SHA256 hashes, Git commit metadata, and signature presence checks.
+  </p>
+
+  <ul>
+    <li>Quantum-safe evidence JSON Schema validation</li>
+    <li>Evidence SHA256 binding</li>
+    <li>Schema SHA256 binding</li>
+    <li>Source Git commit binding</li>
+    <li>Producer ID</li>
+    <li>Signature and Sigstore bundle presence checks</li>
+    <li>Fail-closed binding decision</li>
+  </ul>
+
+  <p>
+    <a href="./schema/quantum_safe_evidence.schema.json">Quantum-Safe Evidence Schema</a><br>
+    <a href="./quantum/quantum_execution_evidence.json">Quantum Execution Evidence</a><br>
+    <a href="./quantum/quantum_schema_validation_result.json">Quantum Schema Validation Result</a><br>
+    <a href="./quantum/quantum_evidence_binding_result.json">Quantum Evidence Binding Result</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage349: SLSA/SBOM Evidence Bridge Layer</h2>
+  <p>
+    Stage349 extends Stage348 by connecting SLSA, SBOM, provenance, artifact attestation,
+    policy gate, and Ed25519 review evidence metadata to the REMEDA/QSP evidence verification rail.
+  </p>
+
+  <ul>
+    <li>SLSA/SBOM evidence bridge schema</li>
+    <li>SPDX / CycloneDX format acceptance</li>
+    <li>SLSA provenance metadata acceptance</li>
+    <li>GitHub artifact attestation metadata acceptance</li>
+    <li>Ed25519 review evidence metadata acceptance</li>
+    <li>SHA256, signature, provenance, and policy decision checks</li>
+    <li>Fail-closed bridge decision</li>
+  </ul>
+
+  <p>
+    <a href="./schema/slsa_sbom_evidence.schema.json">SLSA/SBOM Evidence Schema</a><br>
+    <a href="./supply-chain/slsa_sbom_evidence_input.json">SLSA/SBOM Evidence Input</a><br>
+    <a href="./supply-chain/slsa_sbom_bridge_result.json">SLSA/SBOM Bridge Result</a>
+  </p>
+</section>
+
+
+<section id="stage350">
+  <h2>Stage350: Supply-Chain Evidence Enforcement Session Layer</h2>
+  <p>
+    Stage350 upgrades the Stage349 bridge result into an enforceable supply-chain evidence session.
+  </p>
+  <ul>
+    <li>CI blocks <code>local-uncommitted</code> with fail-closed enforcement.</li>
+    <li>Stage349 <code>bridge_result</code> is fixed into an <code>enforcement_session</code>.</li>
+    <li><code>session_sha256</code> binds the enforcement session.</li>
+    <li><code>wrap_signature_required</code> and <code>signature_present</code> are recorded.</li>
+    <li>A transparency entry is chained with <code>previous_hash</code> and <code>entry_hash</code>.</li>
+  </ul>
+  <p>
+    Public evidence:
+    <a href="./enforcement/enforcement_session.json">enforcement_session.json</a>
+    /
+    <a href="./audit/stage350-transparency-log.json">stage350-transparency-log.json</a>
+  </p>
+</section>
+
+
+<section id="stage351">
+  <h2>Stage351: Hybrid Enforcement Signature Manifest Layer</h2>
+  <p>
+    Stage351 extends Stage350 by binding the enforcement session, CI/local execution context,
+    Sigstore OIDC requirements, and PQC ML-DSA intent into one hybrid signature manifest.
+  </p>
+  <ul>
+    <li>Stage350 <code>enforcement_session.json</code> is the signature target.</li>
+    <li><code>session_sha256</code> is fixed into the manifest.</li>
+    <li>CI / local execution context is recorded.</li>
+    <li>Sigstore OIDC is required for CI acceptance.</li>
+    <li>GPG / Sigstore OIDC / Ed25519 / PQC ML-DSA are represented in one signature envelope.</li>
+    <li>PQC ML-DSA is recorded as <code>intent_only</code> metadata, not as a fake completed signature.</li>
+    <li>No private keys, raw secrets, or unverified signature claims are published.</li>
+  </ul>
+  <p>
+    Public evidence:
+    <a href="./signatures/stage351_signature_manifest.json">stage351_signature_manifest.json</a>
+  </p>
+</section>
+
+
+<section id="stage352">
+  <h2>Stage352: Hybrid Signature Manifest Verification Layer</h2>
+  <p>
+    Stage352 verifies the Stage351 hybrid signature manifest against the Stage350 enforcement session.
+  </p>
+  <ul>
+    <li>Checks that the Stage351 signature manifest exists and has required fields.</li>
+    <li>Verifies Stage350 <code>session_sha256</code> matches the Stage351 target hash.</li>
+    <li>Recomputes <code>canonical_payload_sha256</code>.</li>
+    <li>Recomputes <code>signature_manifest_sha256</code>.</li>
+    <li>Checks CI / local context consistency.</li>
+    <li>Checks Sigstore OIDC requirement consistency.</li>
+    <li>Prevents PQC ML-DSA <code>intent_only</code> from being falsely treated as a real signature.</li>
+    <li>Fails closed on hash mismatch, fake signature claims, or missing CI OIDC requirements.</li>
+  </ul>
+  <p>
+    Public evidence:
+    <a href="./signatures/stage352_signature_manifest_verification.json">stage352_signature_manifest_verification.json</a>
+  </p>
+</section>
+
+
+<section id="stage353">
+  <h2>Stage353: Verification Transparency Chain Layer</h2>
+  <p>
+    Stage353 records the Stage352 signature-manifest verification result into a transparency chain.
+  </p>
+  <ul>
+    <li>Uses <code>stage352_signature_manifest_verification.json</code> as input.</li>
+    <li>Generates <code>verification_result_sha256</code>.</li>
+    <li>Creates a transparency entry for the Stage352 verification result.</li>
+    <li>Chains entries with <code>previous_hash</code> and <code>entry_hash</code>.</li>
+    <li>Fails closed if Stage352 is <code>reject</code>, <code>block</code>, or unknown.</li>
+    <li>Does not claim external Rekor registration.</li>
+    <li>Does not claim Bitcoin anchoring.</li>
+  </ul>
+  <p>
+    Public evidence:
+    <a href="./transparency/stage353_verification_transparency_result.json">stage353_verification_transparency_result.json</a>
+    /
+    <a href="./transparency/stage353_verification_transparency_chain.json">stage353_verification_transparency_chain.json</a>
+    /
+    <a href="./transparency/stage353_verification_transparency_summary.txt">stage353_verification_transparency_summary.txt</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage354: Signature Key Rotation Ledger Layer</h2>
+  <p>
+    Stage354 initializes a signature key rotation ledger with Stage178
+    Assumption / Threat Model / Guarantee binding. It records GPG,
+    Sigstore OIDC, Ed25519, and PQC ML-DSA key lifecycle states without
+    publishing private keys or fake active PQC key claims.
+  </p>
+  <ul>
+    <li><a href="./keys/stage354_key_rotation_ledger.json">Stage354 Key Rotation Ledger JSON</a></li>
+    <li><a href="./keys/stage354_key_rotation_result.json">Stage354 Key Rotation Result JSON</a></li>
+    <li><a href="./keys/stage354_key_rotation_summary.txt">Stage354 Summary TXT</a></li>
+  </ul>
+</section>
+
+
+<section>
+  <h2>Stage355: Signature Key Status Verification & Revocation Enforcement Layer</h2>
+  <p>
+    Stage355 extends Stage354 by reading the signature key rotation ledger,
+    verifying key status records, checking revocation safety, preserving PQC
+    ML-DSA as intent_only unless real proof exists, and binding the Stage354
+    entry_hash as the Stage355 previous_hash.
+  </p>
+  <ul>
+    <li><a href="./keys/stage355_key_status_verification.json">Stage355 Key Status Verification JSON</a></li>
+    <li><a href="./keys/stage355_revocation_enforcement_result.json">Stage355 Revocation Enforcement Result JSON</a></li>
+    <li><a href="./keys/stage355_key_status_summary.txt">Stage355 Summary TXT</a></li>
+  </ul>
+</section>
+
+
+<section>
+  <h2>Stage356: Runtime Verification & Fail-Closed Execution Gate</h2>
+  <p>
+    Stage356 extends Stage355 by binding the Stage355 integrity result into a
+    runtime verification gate. If Stage355 is missing, rejected, inconsistent,
+    or contains violations, the runtime decision becomes block. Local execution
+    is marked as warn, while CI execution can be allowed only when the required
+    checks pass.
+  </p>
+  <ul>
+    <li><a href="./runtime/stage356_runtime_fail_closed_gate.json">Stage356 Runtime Fail-Closed Gate JSON</a></li>
+    <li><a href="./runtime/stage356_runtime_execution_receipt.json">Stage356 Runtime Execution Receipt JSON</a></li>
+    <li><a href="./runtime/stage356_runtime_summary.txt">Stage356 Summary TXT</a></li>
+  </ul>
+</section>
+
+
+<section>
+  <h2>Stage357: Runtime Context Action & Isolation Enforcer</h2>
+  <p>
+    Stage357 extends Stage356 by mapping runtime decisions into defensive
+    actions. allow continues execution, warn isolates risky capabilities and
+    continues safely, and block terminates execution. Stage357 binds the
+    Stage356 receipt_sha256 as previous_hash and publishes metadata-only action
+    receipts without exposing private runners, secrets, payloads, or exploit code.
+  </p>
+  <ul>
+    <li><a href="./actions/stage357_runtime_action_policy.json">Stage357 Runtime Action Policy JSON</a></li>
+    <li><a href="./actions/stage357_runtime_action_receipt.json">Stage357 Runtime Action Receipt JSON</a></li>
+    <li><a href="./actions/stage357_runtime_action_summary.txt">Stage357 Summary TXT</a></li>
+  </ul>
+</section>
+
+
+<section>
+  <h2>Stage358: Signing-Time Validity Enforcement Layer</h2>
+  <p>
+    Stage358 extends Stage357 by enforcing temporal validity between signing_time
+    and key lifecycle windows. It checks valid_from <= signing_time <= valid_until
+    and signing_time < revoked_at when revocation metadata exists. Stage358 binds
+    the Stage357 action receipt SHA256 as previous_hash and publishes metadata-only
+    temporal validation without claiming real GPG, Sigstore, Rekor, or PQC signature
+    verification.
+  </p>
+  <ul>
+    <li><a href="./time-validity/stage358_signing_time_validity_policy.json">Stage358 Signing-Time Validity Policy JSON</a></li>
+    <li><a href="./time-validity/stage358_signing_time_validity_result.json">Stage358 Signing-Time Validity Result JSON</a></li>
+    <li><a href="./time-validity/stage358_signing_time_validity_summary.txt">Stage358 Summary TXT</a></li>
+  </ul>
+</section>
+
+
+<section>
+  <h2>Stage359: Real Public Key Fingerprint Validation Layer</h2>
+  <p>
+    Stage359 extends Stage358 by binding the Stage358 temporal validity result
+    into public-key fingerprint validation. It checks public_key_fingerprint
+    presence and SHA256 format, validates key_id / algorithm / validity-window
+    consistency, preserves PQC ML-DSA as intent_only, and records readiness for
+    future external timestamp and revocation proof verification without exposing
+    private keys or real key material.
+  </p>
+  <ul>
+    <li><a href="./keys/stage359_public_key_fingerprint_policy.json">Stage359 Public Key Fingerprint Policy JSON</a></li>
+    <li><a href="./keys/stage359_public_key_fingerprint_result.json">Stage359 Public Key Fingerprint Result JSON</a></li>
+    <li><a href="./keys/stage359_public_key_fingerprint_summary.txt">Stage359 Summary TXT</a></li>
+  </ul>
+</section>
+
+
+<section>
+  <h2>Stage360: External Timestamp Proof Binding Layer</h2>
+  <p>
+    Stage360 extends Stage359 by binding the Stage359 public-key fingerprint
+    result into external timestamp proof metadata. It creates a timestamp target
+    SHA256, records OpenTimestamps and RFC3161 proof readiness, returns
+    pending_timestamp_proof when real external proof is not present, and blocks
+    fake verified timestamp claims. Stage360 does not claim real OTS or RFC3161
+    verification.
+  </p>
+  <ul>
+    <li><a href="./timestamp-proof/stage360_external_timestamp_proof_policy.json">Stage360 External Timestamp Proof Policy JSON</a></li>
+    <li><a href="./timestamp-proof/stage360_external_timestamp_proof_result.json">Stage360 External Timestamp Proof Result JSON</a></li>
+    <li><a href="./timestamp-proof/stage360_external_timestamp_proof_summary.txt">Stage360 Summary TXT</a></li>
+  </ul>
+</section>
+
+
+<section>
+  <h2>Stage361: Revocation Proof Injection Gate</h2>
+  <p>
+    Stage361 extends Stage360 by adding a revocation proof injection gate to the QSP evidence rail.
+  </p>
+  <p>
+    Stage360 binds the Stage359 public key fingerprint result into external timestamp proof metadata.
+    Stage361 adds the next missing verification layer: whether the related key or certificate is revoked.
+  </p>
+  <ul>
+    <li>Stage360 external timestamp proof result is bound as previous_hash.</li>
+    <li>Stage359 public key fingerprint is used as the revocation target.</li>
+    <li>OCSP proof metadata receiver is created.</li>
+    <li>CRL proof metadata receiver is created.</li>
+    <li>Signed revocation metadata receiver is created.</li>
+    <li>Missing real revocation proof returns pending_revocation_proof.</li>
+    <li>Revoked status, fake OCSP verified claims, fake CRL verified claims, and private material leakage are blocked.</li>
+    <li>Stage361 does not claim real OCSP or CRL cryptographic verification.</li>
+  </ul>
+  <p>
+    <a href="./revocation/stage361_revocation_proof_injection_result.json">Stage361 Revocation Proof Injection Result JSON</a><br>
+    <a href="./revocation/stage361_revocation_proof_injection_summary.txt">Stage361 Summary TXT</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage362: Asynchronous Proof Promotion Gate</h2>
+  <p>
+    Stage362 extends Stage361 by adding an asynchronous proof promotion gate.
+    It does not treat pending proof as acceptance.
+    It decides whether pending timestamp or revocation proof can be promoted after new proof metadata is added.
+  </p>
+  <p>
+    Stage361 created the revocation proof receiver.
+    Stage362 reviews whether that pending proof may be promoted, kept pending, rejected, or blocked.
+  </p>
+  <ul>
+    <li>Stage361 revocation proof result is bound as previous_hash.</li>
+    <li>Missing proof returns <code>keep_pending</code>.</li>
+    <li>Consistent proof can return <code>promote</code>.</li>
+    <li>Inconsistent proof returns <code>reject_promotion</code>.</li>
+    <li>Revoked status, fake verified claims, unknown-as-good, and private material leakage return <code>block</code>.</li>
+    <li>Stage362 does not claim real OCSP, CRL, OpenTimestamps, RFC3161, Rekor, or Sigstore verification.</li>
+  </ul>
+  <p>
+    <a href="./promotion/stage362_promotion_request.json">Stage362 Promotion Request JSON</a><br>
+    <a href="./promotion/stage362_asynchronous_proof_promotion_result.json">Stage362 Promotion Result JSON</a><br>
+    <a href="./promotion/stage362_asynchronous_proof_promotion_summary.txt">Stage362 Summary TXT</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage363: External Timestamp Proof Verification Gate</h2>
+  <p>
+    Stage363 extends Stage362 by adding an external timestamp proof verification gate for OpenTimestamps and RFC3161.
+    It focuses on timestamp proof verification and does not verify OCSP or CRL revocation status.
+  </p>
+  <p>
+    Stage360 created the external timestamp proof binding receiver.
+    Stage362 created the asynchronous proof promotion gate.
+    Stage363 checks whether external timestamp proof metadata can support timestamp verification.
+  </p>
+  <ul>
+    <li>Stage362 promotion result is bound as previous_hash.</li>
+    <li>Stage360 timestamp target hash is used as the verification target.</li>
+    <li>Missing proof returns <code>timestamp_pending</code>.</li>
+    <li>Target hash mismatch returns <code>timestamp_rejected</code>.</li>
+    <li>Verified timestamp proof can return <code>timestamp_verified</code>.</li>
+    <li>Fake verified claims, secret leakage, Stage360 missing, or Stage362 block return <code>block</code>.</li>
+    <li>Stage363 does not treat a .ots file alone or an RFC3161 token alone as verified.</li>
+  </ul>
+  <p>
+    <a href="./timestamp-verification/stage363_external_timestamp_proof_input.json">Stage363 Timestamp Proof Input JSON</a><br>
+    <a href="./timestamp-verification/stage363_external_timestamp_verification_result.json">Stage363 Timestamp Verification Result JSON</a><br>
+    <a href="./timestamp-verification/stage363_external_timestamp_verification_summary.txt">Stage363 Summary TXT</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage364: Real Timestamp Proof Injection & Promotion Engine</h2>
+  <p>
+    Stage364 extends Stage363 by adding a real timestamp proof injection and promotion engine for OpenTimestamps and RFC3161.
+    It reviews whether <code>timestamp_pending</code> can be promoted to <code>timestamp_verified</code>.
+  </p>
+  <p>
+    Stage363 created the external timestamp proof verification gate.
+    Stage364 injects real timestamp verification evidence and checks whether the target hash matches the Stage360 timestamp target.
+  </p>
+  <ul>
+    <li>Stage363 timestamp verification result is bound as previous_hash.</li>
+    <li>Stage360 timestamp target hash is used as the promotion target.</li>
+    <li>Missing real verification evidence returns <code>timestamp_pending</code>.</li>
+    <li>Target hash mismatch returns <code>timestamp_rejected</code>.</li>
+    <li>Valid OpenTimestamps or RFC3161 verification evidence with matching target hash can return <code>timestamp_verified</code>.</li>
+    <li>Fake verified claims, secret leakage, Stage360 missing, or Stage363 block return <code>block</code>.</li>
+    <li>Stage364 does not treat a .ots file alone, an RFC3161 token alone, or a TSA name alone as verified.</li>
+  </ul>
+  <p>
+    <a href="./timestamp-promotion/stage364_real_timestamp_proof_injection_input.json">Stage364 Timestamp Proof Injection Input JSON</a><br>
+    <a href="./timestamp-promotion/stage364_real_timestamp_proof_promotion_result.json">Stage364 Timestamp Promotion Result JSON</a><br>
+    <a href="./timestamp-promotion/stage364_real_timestamp_proof_promotion_summary.txt">Stage364 Summary TXT</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage365: Verified Timestamp Promotion Test Harness</h2>
+  <p>
+    Stage365 extends Stage364 by adding a safe timestamp promotion test harness with a fake-verified claim guard.
+    It does not convert production evidence to <code>timestamp_verified</code>.
+  </p>
+  <p>
+    Stage365 tests whether the timestamp promotion path is safe before connecting a real OpenTimestamps or RFC3161 verifier adapter.
+  </p>
+  <ul>
+    <li>Stage364 timestamp promotion result is bound as previous_hash.</li>
+    <li>Production decision remains <code>timestamp_pending</code>.</li>
+    <li>Valid simulated promotion path returns <code>promotion_path_ready</code>.</li>
+    <li>Target hash mismatch returns <code>timestamp_rejected_expected</code>.</li>
+    <li>Fake verified claim returns <code>fake_verified_block_expected</code>.</li>
+    <li>Simulation output is clearly separated from production verification.</li>
+    <li>Stage365 does not claim real OpenTimestamps, RFC3161, Sigstore, Rekor, OCSP, or CRL verification.</li>
+  </ul>
+  <p>
+    <a href="./timestamp-test/stage365_timestamp_promotion_test_cases.json">Stage365 Timestamp Promotion Test Cases JSON</a><br>
+    <a href="./timestamp-test/stage365_verified_timestamp_promotion_test_result.json">Stage365 Test Result JSON</a><br>
+    <a href="./timestamp-test/stage365_verified_timestamp_promotion_test_summary.txt">Stage365 Summary TXT</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage366: Real OpenTimestamps / RFC3161 Verifier Adapter</h2>
+  <p>
+    Stage366 extends Stage365 by adding a real OpenTimestamps / RFC3161 verifier adapter.
+    It does not treat Stage365 simulation as production timestamp verification.
+  </p>
+  <p>
+    Stage365 safely tested the timestamp promotion path.
+    Stage366 connects that safe test result to real verifier output readiness.
+  </p>
+  <ul>
+    <li>Stage365 promotion test result is bound as previous_hash.</li>
+    <li>Stage365 simulation is not treated as production verification.</li>
+    <li>Stage360 timestamp target hash is used as the verification target.</li>
+    <li>Missing real verifier output returns <code>verifier_pending</code>.</li>
+    <li>Target hash mismatch returns <code>verifier_rejected</code>.</li>
+    <li>Real OpenTimestamps or RFC3161 verifier output with matching target hash can return <code>timestamp_verified</code>.</li>
+    <li>Fake verified claims, secret leakage, missing Stage365 test, or Stage365 test failure return <code>block</code>.</li>
+  </ul>
+  <p>
+    <a href="./timestamp-verifier/stage366_real_timestamp_verifier_adapter_input.json">Stage366 Verifier Adapter Input JSON</a><br>
+    <a href="./timestamp-verifier/stage366_real_timestamp_verifier_adapter_result.json">Stage366 Verifier Adapter Result JSON</a><br>
+    <a href="./timestamp-verifier/stage366_real_timestamp_verifier_adapter_summary.txt">Stage366 Summary TXT</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage367: Production Timestamp Verification Activation Gate</h2>
+  <p>
+    Stage367 extends Stage366 by adding a production timestamp verification activation gate for OpenTimestamps / RFC3161.
+    It can move <code>verifier_pending</code> to <code>timestamp_verified</code> only when real verifier output exists.
+  </p>
+  <p>
+    Stage366 created the real verifier adapter.
+    Stage367 activates production verification with matching Stage360 target hash and verified output evidence.
+  </p>
+  <ul>
+    <li>Stage366 verifier adapter result is bound as previous_hash.</li>
+    <li>Stage360 timestamp target hash is used as the activation target.</li>
+    <li>Missing real verifier output returns <code>verifier_pending</code>.</li>
+    <li>Target hash mismatch returns <code>verifier_rejected</code>.</li>
+    <li>Real OpenTimestamps or RFC3161 verifier output with matching target hash can return <code>timestamp_verified</code>.</li>
+    <li>Fake verified claims, secret leakage, Stage360 missing, or Stage366 block return <code>block</code>.</li>
+    <li>Stage367 does not publish raw timestamp binaries by default.</li>
+  </ul>
+  <p>
+    <a href="./timestamp-activation/stage367_production_timestamp_activation_input.json">Stage367 Activation Input JSON</a><br>
+    <a href="./timestamp-activation/stage367_production_timestamp_activation_result.json">Stage367 Activation Result JSON</a><br>
+    <a href="./timestamp-activation/stage367_production_timestamp_activation_summary.txt">Stage367 Summary TXT</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage368: Production Timestamp Verification Receipt Layer</h2>
+  <p>
+    Stage368 extends Stage367 by adding a production timestamp verification receipt layer for OpenTimestamps / RFC3161.
+    It records real verification command receipts as metadata.
+  </p>
+  <p>
+    Stage367 created the activation gate.
+    Stage368 fixes command receipt metadata such as exit code, output SHA256, and verified target hash.
+  </p>
+  <ul>
+    <li>Stage367 activation result is bound as previous_hash.</li>
+    <li>Stage360 timestamp target hash is used as the receipt target.</li>
+    <li>Missing command receipt metadata returns <code>verifier_pending</code>.</li>
+    <li>Target hash mismatch returns <code>verifier_rejected</code>.</li>
+    <li>exit_code=0, output SHA256, and matching verified_target_hash can return <code>timestamp_verified</code>.</li>
+    <li>Fake verified claims, secret leakage, raw timestamp binary exposure, Stage360 missing, or Stage367 block return <code>block</code>.</li>
+    <li>Stage368 publishes metadata receipts only and does not publish raw timestamp binaries.</li>
+  </ul>
+  <p>
+    <a href="./timestamp-receipt/stage368_production_timestamp_verification_receipt_input.json">Stage368 Receipt Input JSON</a><br>
+    <a href="./timestamp-receipt/stage368_production_timestamp_verification_receipt_result.json">Stage368 Receipt Result JSON</a><br>
+    <a href="./timestamp-receipt/stage368_production_timestamp_verification_receipt_summary.txt">Stage368 Summary TXT</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage369: Real Timestamp Verifier Runner with Production Receipt Generation</h2>
+  <p>
+    Stage369 extends Stage368 by adding a real timestamp verifier runner for OpenTimestamps / RFC3161.
+    It runs or prepares verifier commands and converts their outputs into metadata receipts.
+  </p>
+  <p>
+    Stage368 created the receipt layer.
+    Stage369 generates production receipt metadata, but it does not final-accept <code>timestamp_verified</code>.
+  </p>
+  <ul>
+    <li>Stage368 receipt result is bound as previous_hash.</li>
+    <li>Real verifier commands are not executed unless explicitly enabled.</li>
+    <li>Runner output is converted into SHA256 metadata receipts.</li>
+    <li>Missing command target returns <code>runner_pending</code>.</li>
+    <li>Command failure returns <code>runner_rejected</code>.</li>
+    <li>exit_code=0 and matching verified_target_hash can return <code>receipt_generated</code>.</li>
+    <li>Fake verified claims, secret leakage, raw timestamp binary exposure, Stage360 missing, or Stage368 block return <code>block</code>.</li>
+    <li>Stage369 does not final-accept <code>timestamp_verified</code>; acceptance belongs to the next gate.</li>
+  </ul>
+  <p>
+    <a href="./timestamp-runner/stage369_real_timestamp_verifier_runner_input.json">Stage369 Runner Input JSON</a><br>
+    <a href="./timestamp-runner/stage369_real_timestamp_verifier_runner_result.json">Stage369 Runner Result JSON</a><br>
+    <a href="./timestamp-runner/stage369_real_timestamp_verifier_runner_summary.txt">Stage369 Summary TXT</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage370: Runner Safety Brake Test Gate</h2>
+  <p>
+    Stage370 extends Stage369 by adding a runner safety brake test gate.
+    It verifies that the timestamp runner fails safely before real timestamp verification success is accepted.
+  </p>
+  <p>
+    Stage369 created the real timestamp verifier runner.
+    Stage370 confirms that bad commands, incomplete metadata, fake verified claims, and raw timestamp binary references do not pass.
+  </p>
+  <ul>
+    <li>Stage369 runner result is bound as previous_hash.</li>
+    <li>A deliberately failing safe command must return <code>runner_rejected</code>.</li>
+    <li>Missing metadata must not become accepted.</li>
+    <li>Fake <code>timestamp_verified</code> claims must return <code>block</code>.</li>
+    <li>Raw timestamp binary references must return <code>block</code>.</li>
+    <li>Stage370 does not final-accept <code>timestamp_verified</code>.</li>
+    <li>Real timestamp success belongs to the next gate.</li>
+  </ul>
+  <p>
+    <a href="./runner-safety/stage370_runner_safety_brake_test_input.json">Stage370 Safety Test Input JSON</a><br>
+    <a href="./runner-safety/stage370_runner_safety_brake_test_result.json">Stage370 Safety Test Result JSON</a><br>
+    <a href="./runner-safety/stage370_runner_safety_brake_test_summary.txt">Stage370 Summary TXT</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage371: Real Timestamp First Successful Receipt Gate</h2>
+  <p>
+    Stage371 extends Stage370 by adding a real timestamp first successful receipt gate for OpenTimestamps / RFC3161.
+    It can generate the first successful timestamp receipt only after the Stage370 safety brake tests pass.
+  </p>
+  <p>
+    Stage370 confirmed that bad commands, incomplete metadata, fake verified claims, and raw timestamp binary references do not pass.
+    Stage371 uses that safety result before allowing any first successful receipt generation.
+  </p>
+  <ul>
+    <li>Stage370 safety brake result is bound as previous_hash.</li>
+    <li>Stage370 <code>safety_test_pass</code> is required before first receipt generation.</li>
+    <li>Missing real verifier command returns <code>first_receipt_pending</code>.</li>
+    <li>Command failure returns <code>first_receipt_rejected</code>.</li>
+    <li>exit_code=0 and matching verified_target_hash can return <code>first_receipt_generated</code>.</li>
+    <li>Fake verified claims, secret leakage, raw timestamp binary exposure, Stage360 missing, or Stage370 failure return <code>block</code>.</li>
+    <li>Stage371 does not final-accept <code>timestamp_verified</code>; final acceptance belongs to the next gate.</li>
+  </ul>
+  <p>
+    <a href="./timestamp-first-receipt/stage371_real_timestamp_first_receipt_input.json">Stage371 First Receipt Input JSON</a><br>
+    <a href="./timestamp-first-receipt/stage371_real_timestamp_first_receipt_result.json">Stage371 First Receipt Result JSON</a><br>
+    <a href="./timestamp-first-receipt/stage371_real_timestamp_first_receipt_summary.txt">Stage371 Summary TXT</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage372: Timestamp Verification Final Acceptance Gate</h2>
+  <p>
+    Stage372 extends Stage371 by adding the final timestamp verification acceptance gate.
+    It reviews the Stage371 first receipt and decides whether timestamp verification can be finally accepted.
+  </p>
+  <p>
+    Stage371 can generate the first successful timestamp receipt.
+    Stage372 is the first layer that may set <code>timestamp_verified: true</code>, but only when the Stage371 receipt is complete and consistent.
+  </p>
+  <ul>
+    <li>Stage371 first receipt result is bound as previous_hash.</li>
+    <li>If Stage371 is pending, Stage372 returns <code>final_acceptance_pending</code>.</li>
+    <li>If Stage371 is rejected or blocked, Stage372 rejects or blocks.</li>
+    <li>If Stage371 is <code>first_receipt_generated</code> and receipt metadata is complete, Stage372 can return <code>timestamp_verified</code>.</li>
+    <li>Final acceptance is written as a public metadata manifest.</li>
+    <li>Raw timestamp binaries, secrets, and fake verified claims are blocked.</li>
+  </ul>
+  <p>
+    <a href="./timestamp-final-acceptance/stage372_timestamp_verification_final_acceptance_result.json">Stage372 Final Acceptance Result JSON</a><br>
+    <a href="./timestamp-final-acceptance/stage372_final_acceptance_manifest.json">Stage372 Final Acceptance Manifest JSON</a><br>
+    <a href="./timestamp-final-acceptance/stage372_timestamp_verification_final_acceptance_summary.txt">Stage372 Summary TXT</a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage373: Final Acceptance Attestation &amp; External Transparency Binding Gate</h2>
+
+  <p>
+    Stage373 extends Stage372 by binding the Stage372 final-acceptance result
+    and manifest into one canonical attestation.
+  </p>
+
+  <p>
+    Stage373 does not repeat OpenTimestamps or RFC3161 verification.
+    It validates the Stage372 result and manifest hashes, generates a shared
+    binding hash, and prepares external Sigstore, Rekor, and optional
+    standalone ML-DSA verification.
+  </p>
+
+  <h3>Stage372 to Stage373</h3>
+
+  <p>
+    Stage372 final acceptance result<br>
+    + Stage372 final acceptance manifest<br>
+    &darr;<br>
+    independent SHA256 validation<br>
+    &darr;<br>
+    canonical Stage372 binding<br>
+    &darr;<br>
+    Stage373 final acceptance attestation<br>
+    &darr;<br>
+    Sigstore signature verification<br>
+    + Rekor inclusion-proof verification<br>
+    + optional standalone ML-DSA verification
+  </p>
+
+  <h3>Current Initial State</h3>
+
+  <ul>
+    <li>Stage372 decision: <code>final_acceptance_pending</code></li>
+    <li>Stage372 timestamp verified: <code>false</code></li>
+    <li>Stage373 decision: <code>attestation_pending</code></li>
+    <li>External transparency bound: <code>false</code></li>
+    <li>PQC signature verified: <code>false</code></li>
+  </ul>
+
+  <p>
+    Stage373 never converts the current pending Stage372 result into a
+    verified final acceptance.
+  </p>
+
+  <h3>External Transparency Checks</h3>
+
+  <ul>
+    <li>Stage372 result SHA256 validation</li>
+    <li>Stage372 manifest SHA256 validation</li>
+    <li>Result and manifest consistency validation</li>
+    <li>Canonical Stage372 binding SHA256 generation</li>
+    <li>Sigstore signed-attestation binding</li>
+    <li>Signer identity and OIDC issuer verification</li>
+    <li>Rekor log ID and log index confirmation</li>
+    <li>Rekor Signed Entry Timestamp verification</li>
+    <li>Rekor inclusion-proof verification</li>
+    <li>Optional standalone ML-DSA verification</li>
+  </ul>
+
+  <h3>Safety Boundary</h3>
+
+  <ul>
+    <li>No private keys are published.</li>
+    <li>No raw secrets or OIDC tokens are published.</li>
+    <li>No raw QKD key material is published.</li>
+    <li>No raw timestamp binaries are published in public docs.</li>
+    <li>Unsupported verified claims are blocked.</li>
+    <li>ML-DSA remains unverified until real verification evidence exists.</li>
+  </ul>
+
+  <p>
+    <a href="./final-acceptance-attestation/stage373_external_transparency_input.json">
+      Stage373 External Transparency Input JSON
+    </a><br>
+
+    <a href="./final-acceptance-attestation/stage373_final_acceptance_attestation.json">
+      Stage373 Final Acceptance Attestation JSON
+    </a><br>
+
+    <a href="./final-acceptance-attestation/stage373_external_transparency_binding_result.json">
+      Stage373 External Transparency Binding Result JSON
+    </a><br>
+
+    <a href="./final-acceptance-attestation/stage373_external_transparency_binding_summary.txt">
+      Stage373 Summary TXT
+    </a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage374: Production Sigstore Signing &amp; Rekor Inclusion Verification Gate</h2>
+
+  <p>
+    Stage374 extends Stage373 by performing production Sigstore signing
+    and Rekor transparency-log inclusion verification for the Stage373
+    final-acceptance attestation.
+  </p>
+
+  <p>
+    Stage373 prepared the attestation and external verification receiver.
+    Stage374 uses GitHub Actions OIDC, Cosign, and a Sigstore bundle to
+    produce real external verification evidence.
+  </p>
+
+  <h3>Stage373 to Stage374</h3>
+
+  <p>
+    Stage373 attestation<br>
+    &darr;<br>
+    SHA256 revalidation<br>
+    &darr;<br>
+    GitHub Actions OIDC<br>
+    &darr;<br>
+    Cosign sign-blob<br>
+    &darr;<br>
+    Sigstore bundle<br>
+    &darr;<br>
+    identity and issuer verification<br>
+    &darr;<br>
+    Rekor inclusion verification<br>
+    &darr;<br>
+    external transparency binding result
+  </p>
+
+  <h3>Current Initial State</h3>
+
+  <ul>
+    <li>Decision: <code>production_execution_pending</code></li>
+    <li>External transparency bound: <code>false</code></li>
+    <li>Stage372 final acceptance: <code>false</code></li>
+  </ul>
+
+  <p>
+    After complete Sigstore and Rekor verification, while Stage372 remains
+    pending, the correct decision becomes
+    <code>pending_state_transparency_bound</code>.
+  </p>
+
+  <h3>Current Verified State</h3>
+
+  <ul>
+    <li>
+      Decision:
+      <code>pending_state_transparency_bound</code>
+    </li>
+    <li>
+      External transparency bound:
+      <code>true</code>
+    </li>
+    <li>
+      Stage372 final acceptance:
+      <code>false</code>
+    </li>
+    <li>
+      GitHub Actions run:
+      <code>29295518405</code>
+    </li>
+    <li>
+      Cosign version:
+      <code>3.1.1</code>
+    </li>
+    <li>
+      Signature verified:
+      <code>true</code>
+    </li>
+    <li>
+      Workflow identity verified:
+      <code>true</code>
+    </li>
+    <li>
+      GitHub Actions OIDC issuer verified:
+      <code>true</code>
+    </li>
+    <li>
+      Rekor inclusion verified:
+      <code>true</code>
+    </li>
+  </ul>
+
+  <p>
+    This means that the Stage372 pending state was successfully signed
+    through GitHub Actions OIDC and bound to the external Sigstore/Rekor
+    transparency infrastructure. It does not mean that Stage372 timestamp
+    final acceptance has completed.
+  </p>
+
+  <h3>Verification Requirements</h3>
+
+  <ul>
+    <li>Stage373 attestation SHA256 must match.</li>
+    <li>Cosign version must satisfy the security floor.</li>
+    <li>Cosign signing must succeed.</li>
+    <li>Sigstore bundle must be generated.</li>
+    <li>Cosign verify-blob must succeed.</li>
+    <li>GitHub Actions workflow identity must match.</li>
+    <li>OIDC issuer must match.</li>
+    <li>Rekor inclusion verification must succeed.</li>
+    <li>Bundle SHA256 must match all receipts.</li>
+  </ul>
+
+  <h3>Safety Boundary</h3>
+
+  <ul>
+    <li>No private keys are published.</li>
+    <li>No OIDC or GitHub tokens are published.</li>
+    <li>No raw QKD key material is published.</li>
+    <li>No raw timestamp binaries are published.</li>
+    <li>No free-form shell command is accepted.</li>
+    <li>The workflow has no repository write permission.</li>
+  </ul>
+
+  <p>
+    <a href="./sigstore-production/stage374_production_sigstore_input.json">
+      Stage374 Production Input JSON
+    </a><br>
+
+    <a href="./sigstore-production/stage374_cosign_execution_receipt.json">
+      Stage374 Cosign Execution Receipt JSON
+    </a><br>
+
+    <a href="./sigstore-production/stage374_rekor_inclusion_receipt.json">
+      Stage374 Rekor Inclusion Receipt JSON
+    </a><br>
+
+    <a href="./sigstore-production/stage374_production_external_binding_result.json">
+      Stage374 External Binding Result JSON
+    </a><br>
+
+    <a href="./sigstore-production/stage374_production_external_binding_summary.txt">
+      Stage374 Summary TXT
+    </a>
+  </p>
+</section>
+
+
+<section>
+  <h2>Stage375: Production ML-DSA-65 Dual-Signature Verification &amp; Downgrade Prevention Gate</h2>
+
+  <p>
+    Stage375 extends Stage374 by adding real ML-DSA-65 signing and
+    verification for the same Stage373 attestation blob already verified
+    through Sigstore, Cosign, GitHub Actions OIDC, and Rekor.
+  </p>
+
+  <h3>Stage374 to Stage375</h3>
+
+  <p>
+    Stage374 verified Sigstore/Rekor evidence<br>
+    &darr;<br>
+    Stage373 attestation blob SHA256 validation<br>
+    &darr;<br>
+    ML-DSA-65 signing<br>
+    &darr;<br>
+    ML-DSA-65 signature verification<br>
+    &darr;<br>
+    Sigstore and ML-DSA target comparison<br>
+    &darr;<br>
+    fail-closed downgrade prevention
+  </p>
+
+  <h3>Current Initial State</h3>
+
+  <ul>
+    <li>Decision: <code>mldsa_execution_pending</code></li>
+    <li>Sigstore signature verified: <code>true</code></li>
+    <li>Rekor inclusion verified: <code>true</code></li>
+    <li>ML-DSA-65 signature verified: <code>false</code></li>
+    <li>Dual-signature target matches: <code>false</code></li>
+    <li>PQC downgrade prevented: <code>false</code></li>
+  </ul>
+
+  <h3>Successful State</h3>
+
+  <ul>
+    <li>
+      Decision:
+      <code>quantum_safe_dual_signature_verified</code>
+    </li>
+    <li>Sigstore signature verified: <code>true</code></li>
+    <li>Rekor inclusion verified: <code>true</code></li>
+    <li>ML-DSA-65 signature verified: <code>true</code></li>
+    <li>Dual-signature target matches: <code>true</code></li>
+    <li>PQC downgrade prevented: <code>true</code></li>
+  </ul>
+
+  <h3>Current Verified State</h3>
+
+  <ul>
+    <li>
+      Decision:
+      <code>quantum_safe_dual_signature_verified</code>
+    </li>
+    <li>Sigstore signature verified: <code>true</code></li>
+    <li>Rekor inclusion verified: <code>true</code></li>
+    <li>ML-DSA-65 signature verified: <code>true</code></li>
+    <li>Dual-signature target matches: <code>true</code></li>
+    <li>PQC downgrade prevented: <code>true</code></li>
+    <li>GitHub Actions run: <code>29327350883</code></li>
+    <li>OpenSSL version: <code>3.5.7</code></li>
+  </ul>
+
+  <p>
+    The Stage374 Sigstore/Rekor signature and the Stage375 ML-DSA-65
+    signature were verified against the same Stage373 attestation blob.
+    The ML-DSA private key was not published.
+  </p>
+
+  <h3>Downgrade Prevention</h3>
+
+  <p>
+    When <code>pqc_required</code> is enabled, a valid Sigstore signature
+    alone is not sufficient. A missing, invalid, removed, or mismatched
+    ML-DSA-65 signature fails closed.
+  </p>
+
+  <h3>Safety Boundary</h3>
+
+  <ul>
+    <li>No ML-DSA private key is published.</li>
+    <li>No ML-DSA seed is published.</li>
+    <li>The production workflow uses an encrypted GitHub Actions secret. A local development copy of the private key may exist outside the public repository.</li>
+    <li>The temporary private key created inside the GitHub Actions runner is deleted before artifact upload.</li>
+    <li>The public key and signature may be published.</li>
+    <li>No raw QKD key material is published.</li>
+    <li>No OIDC or GitHub token is published.</li>
+  </ul>
+
+  <p>
+    <a href="./mldsa-production/stage375_mldsa65_input.json">
+      Stage375 ML-DSA-65 Input JSON
+    </a><br>
+
+    <a href="./mldsa-production/stage375_mldsa65_public_key.pem">
+      Stage375 ML-DSA-65 Public Key
+    </a><br>
+
+    <a href="./mldsa-production/stage375_mldsa65_execution_receipt.json">
+      Stage375 ML-DSA-65 Execution Receipt
+    </a><br>
+
+    <a href="./mldsa-production/stage375_dual_signature_verification_result.json">
+      Stage375 Dual-Signature Result
+    </a><br>
+
+    <a href="./mldsa-production/stage375_dual_signature_verification_summary.txt">
+      Stage375 Summary
+    </a>
+  </p>
+</section>
+
+<section id="stage376">
+  <h2>
+    Stage376: Production Dual-Timestamp Verification
+    &amp; Superseding Final Acceptance Gate
+  </h2>
+
+  <p>
+    Stage376 extends Stage375 by applying two independent external
+    timestamp verification methods—RFC3161 and OpenTimestamps—to the
+    canonical Stage360 timestamp target.
+  </p>
+
+  <p>
+    Stage376 does not rewrite the historic Stage372 record.
+    Stage372 remains preserved as
+    <code>final_acceptance_pending</code>.
+    Stage376 creates a new effective final-acceptance state only after
+    both timestamp verification methods are independently verified
+    against the same canonical target.
+  </p>
+
+  <h3>Stage375 to Stage376</h3>
+
+  <pre>
+Stage375 quantum-safe dual-signature verification
+↓
+Stage360 canonical timestamp target validation
+↓
+RFC3161 production timestamp verification
++
+OpenTimestamps public-anchor verification
+↓
+independent verification receipt validation
+↓
+dual-timestamp target comparison
+↓
+superseding final acceptance
+↓
+maximum timestamp assurance
+  </pre>
+
+  <h3>Canonical Timestamp Target</h3>
+
+  <p>
+    The timestamp target is reconstructed from the Stage360 canonical
+    timestamp-binding object.
+  </p>
+
+  <pre>052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5</pre>
+
+  <ul>
+    <li>Source stage: <code>360</code></li>
+    <li>
+      Canonical format:
+      <code>JSON / UTF-8 / sorted keys / no trailing newline</code>
+    </li>
+    <li>
+      Stage360 canonical reconstruction verified:
+      <code>true</code>
+    </li>
+  </ul>
+
+  <h3>Stage375 Prerequisite State</h3>
+
+  <ul>
+    <li>
+      Stage375 decision:
+      <code>quantum_safe_dual_signature_verified</code>
+    </li>
+    <li>Sigstore signature verified: <code>true</code></li>
+    <li>Rekor inclusion verified: <code>true</code></li>
+    <li>ML-DSA-65 signature verified: <code>true</code></li>
+    <li>Dual-signature target matches: <code>true</code></li>
+    <li>PQC downgrade prevented: <code>true</code></li>
+  </ul>
+
+
+  <h3>Current Production State</h3>
+
+  <ul>
+    <li>
+      Canonical Stage360 target SHA256:
+      <code>052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5</code>
+    </li>
+
+    <li>
+      Input type:
+      <code>production_dual_timestamp_superseding_final_acceptance_input</code>
+    </li>
+    <li>
+      Current decision:
+      <code>dual_timestamp_execution_pending</code>
+    </li>
+    <li>RFC3161 execution status: <code>not_executed</code></li>
+    <li>RFC3161 verified: <code>false</code></li>
+    <li>DigiCert TSA URL: <code>not_recorded</code></li>
+    <li>DigiCert TSA HTTP response: <code>not_recorded</code></li>
+    <li>
+      OpenSSL timestamp verification exit code:
+      <code>not_recorded</code>
+    </li>
+    <li>TSA signature verified: <code>false</code></li>
+    <li>Certificate chain verified: <code>false</code></li>
+    <li>RFC3161 message imprint matches: <code>false</code></li>
+    <li>RFC3161 nonce matches: <code>false</code></li>
+    <li>OpenTimestamps status: <code>not_executed</code></li>
+    <li>OpenTimestamps verified: <code>false</code></li>
+    <li>OpenTimestamps public anchor confirmed: <code>false</code></li>
+    <li>Effective final acceptance: <code>false</code></li>
+    <li>Timestamp verified as a dual proof: <code>false</code></li>
+    <li>Maximum timestamp assurance: <code>false</code></li>
+  </ul>
+
+  <p>
+    Stage376 is currently in a safe pending state.
+    The canonical Stage360 timestamp target and the fixed production
+    workflow inputs have been prepared, but neither RFC3161 nor
+    OpenTimestamps production verification has completed.
+  </p>
+
+  <p>
+    Stage376 must not claim timestamp verification, external final
+    acceptance, or maximum timestamp assurance until independently
+    valid RFC3161 and OpenTimestamps verification receipts are imported
+    and validated against the same Stage360 target.
+  </p>
+
+
+  <h3>RFC3161 Production Verification</h3>
+
+  <p>
+    Stage376 is designed to generate an RFC3161 timestamp request for
+    the canonical Stage360 target, submit it to a configured Timestamp
+    Authority, receive the timestamp response, and verify the response
+    cryptographically with OpenSSL.
+  </p>
+
+  <p>
+    The current public RFC3161 receipt is an initial safety receipt.
+    Its execution status is <code>not_executed</code>, and the TSA URL,
+    request hash, response hash, timestamp-token hash, message imprint,
+    generation time, verification exit code, TSA signature result, and
+    certificate-chain result have not yet been recorded.
+  </p>
+
+  <p>
+    RFC3161 verification may be marked as successful only after a fixed
+    GitHub Actions workflow produces a complete metadata receipt whose
+    target hash matches the canonical Stage360 target.
+  </p>
+
+<h3>OpenTimestamps Verification</h3>
+
+  <p>
+    OpenTimestamps is the second independent timestamp method required
+    by the Stage376 dual-timestamp policy.
+  </p>
+
+  <p>
+    Until an OpenTimestamps proof is independently verified against the
+    same Stage360 target and a confirmed public anchor is recorded,
+    Stage376 remains in a partial verification state.
+  </p>
+
+  <h3>Final Acceptance Rule</h3>
+
+  <p>
+    Stage376 may return
+    <code>dual_timestamp_final_acceptance_verified</code>
+    only when every required condition below is satisfied.
+  </p>
+
+  <ul>
+    <li>Stage375 quantum-safe dual-signature verification remains valid.</li>
+    <li>RFC3161 verification succeeds.</li>
+    <li>OpenTimestamps verification succeeds.</li>
+    <li>Both proofs bind the same Stage360 target SHA256.</li>
+    <li>The RFC3161 TSA signature is valid.</li>
+    <li>The RFC3161 certificate chain is valid.</li>
+    <li>The OpenTimestamps public anchor is confirmed.</li>
+    <li>No target-hash mismatch exists.</li>
+    <li>No fake verified claim exists.</li>
+    <li>No private or prohibited material is exposed.</li>
+  </ul>
+
+  <h3>Successful Final State</h3>
+
+  <p>
+    Only after all acceptance conditions pass may Stage376 publish the
+    following state:
+  </p>
+
+  <pre>
+decision: dual_timestamp_final_acceptance_verified
+rfc3161_verified: true
+opentimestamps_verified: true
+dual_timestamp_target_matches: true
+effective_final_acceptance: true
+timestamp_verified: true
+maximum_timestamp_assurance: true
+  </pre>
+
+  <h3>Historic Stage372 Preservation</h3>
+
+  <ul>
+    <li>
+      Historic Stage372 decision:
+      <code>final_acceptance_pending</code>
+    </li>
+    <li>Historic Stage372 timestamp verified: <code>false</code></li>
+    <li>Historic Stage372 record modified: <code>false</code></li>
+  </ul>
+
+  <p>
+    Stage376 does not alter or overwrite Stage372.
+    Instead, it preserves Stage372 as historical evidence and creates a
+    later superseding operational state after stronger external proof
+    requirements are satisfied.
+  </p>
+
+  <h3>Fail-Closed Enforcement</h3>
+
+  <ul>
+    <li>RFC3161 success alone is not dual-timestamp acceptance.</li>
+    <li>OpenTimestamps success alone is not dual-timestamp acceptance.</li>
+    <li>A target-hash mismatch blocks final acceptance.</li>
+    <li>A missing verification receipt keeps the result pending.</li>
+    <li>An unsupported verified claim is blocked.</li>
+    <li>A fake verified claim is blocked.</li>
+    <li>A failed Stage375 prerequisite blocks final acceptance.</li>
+  </ul>
+
+  <h3>Publication Boundary</h3>
+
+  <ul>
+    <li>No private keys are published.</li>
+    <li>No ML-DSA private key or seed is published.</li>
+    <li>No OIDC or GitHub token is published.</li>
+    <li>No raw QKD key material is published.</li>
+    <li>No raw TSQ file is published.</li>
+    <li>No raw TSR file is published.</li>
+    <li>No raw RFC3161 timestamp token is published.</li>
+    <li>No raw OpenTimestamps binary proof is published by default.</li>
+    <li>No TSA certificate bundle is published.</li>
+    <li>No free-form timestamp command is accepted.</li>
+    <li>Only metadata receipts and public verification results are published.</li>
+  </ul>
+
+  <h3>Public Evidence</h3>
+
+  <p>
+    <a href="./timestamp-evidence/stage376_stage360_timestamp_target.json">
+      Stage376 Stage360 Timestamp Target JSON
+    </a><br>
+
+    <a href="./final-acceptance-v2/input/stage376_final_acceptance_input.json">
+      Stage376 Dual-Timestamp Final Acceptance Input JSON
+    </a><br>
+
+    <a href="./timestamp-evidence/stage376_rfc3161_verification_receipt.json">
+      Stage376 RFC3161 Verification Receipt JSON
+    </a><br>
+
+    <a href="./timestamp-evidence/stage376_opentimestamps_verification_receipt.json">
+      Stage376 OpenTimestamps Verification Receipt JSON
+    </a>
+  </p>
+
+  <h3>Current Meaning</h3>
+
+  <p>
+    Stage376 currently proves that the dual-timestamp verification
+    target, policy, fixed execution mode, safety boundaries, and initial
+    metadata receivers have been prepared.
+  </p>
+
+  <p>
+    The historic Stage372 evidence remains preserved without
+    modification. Stage376 is designed to create a later superseding
+    effective state rather than rewriting the original Stage372 record.
+  </p>
+
+  <p>
+    It does not yet prove successful RFC3161 verification,
+    OpenTimestamps verification, dual-timestamp final acceptance, or
+    maximum timestamp assurance.
+  </p>
+
+  <p>
+    Stage376 prepares a cryptographically verifiable superseding
+    final acceptance state while preserving the complete historical
+    Stage372 evidence unchanged.
+  </p>
+
+
+
+<!-- STAGE377_APPEND_ONLY_START -->
+<section id="stage377-production-dual-timestamp-finalization">
+
+  <h2>Stage377</h2>
+
+  <h3>
+    Production Dual-Timestamp Finalization and
+    Superseding Final Acceptance Gate
+  </h3>
+
+  <p>
+    Stage377 adds production dual-timestamp finalization directly
+    on top of Stage376.
+  </p>
+
+  <p>
+    Stage376 prepared the fixed Stage360 timestamp target,
+    dual-timestamp verification policy, Fail-Closed requirements,
+    publication boundary, and initial metadata receipt structures.
+  </p>
+
+  <p>
+    Stage377 connects that prepared state to production RFC3161
+    and OpenTimestamps verification receipts.
+  </p>
+
+  <p>
+    Stage377 does not remove, reorganize, replace, or rewrite the
+    Stage376 page. The complete Stage376 page remains preserved
+    before this Stage377 section.
+  </p>
+
+  <h3>Stage377 Purpose</h3>
+
+  <p>
+    Stage377 establishes a later superseding effective final
+    acceptance only when RFC3161 and OpenTimestamps independently
+    verify the same fixed Stage360 target.
+  </p>
+
+  <pre>Stage376 Prepared Dual-Timestamp State
+↓
+Production RFC3161 Verification
++
+Production OpenTimestamps Verification
+↓
+Same Stage360 Target Confirmation
+↓
+Stage377 Dual-Timestamp Finalization Gate
+↓
+Verified / Pending / Block</pre>
+
+  <h3>Current Fail-Closed State</h3>
+
+  <p>
+    <strong>Decision:</strong>
+    <code>timestamp_finalization_pending</code>
+  </p>
+
+  <p>
+    <strong>RFC3161 Verified:</strong> False<br>
+    <strong>OpenTimestamps Verified:</strong> False<br>
+    <strong>Effective Final Acceptance:</strong> False<br>
+    <strong>Maximum Timestamp Assurance:</strong> False
+  </p>
+
+  <p>
+    This is the correct initial state. Stage377 must not claim
+    successful dual-timestamp final acceptance until both
+    independent external verification receipts satisfy every
+    required condition.
+  </p>
+
+  <h3>Stage377 Adds</h3>
+
+  <ul>
+    <li>Production RFC3161 timestamp acquisition and verification</li>
+    <li>RFC3161 message-imprint verification</li>
+    <li>TSA signature verification</li>
+    <li>TSA certificate-chain verification</li>
+    <li>Production OpenTimestamps proof generation</li>
+    <li>OpenTimestamps public-anchor verification</li>
+    <li>Verified timestamp-time confirmation</li>
+    <li>Same Stage360 target SHA256 enforcement</li>
+    <li>Two-independent-proof requirement</li>
+    <li>Superseding effective final-acceptance decision</li>
+    <li>Metadata-only public verification receipts</li>
+    <li>Fail-Closed pending and block decisions</li>
+  </ul>
+
+  <h3>Production RFC3161 Verification</h3>
+
+  <p>
+    The RFC3161 workflow creates a timestamp request for the fixed
+    canonical Stage360 target.
+  </p>
+
+  <p>
+    The returned timestamp response is checked with OpenSSL.
+    Stage377 requires verification of the target message imprint,
+    TSA signature, certificate chain, generation time, and fixed
+    target SHA256.
+  </p>
+
+  <p>
+    Raw TSQ, TSR, RFC3161 token, and certificate-bundle files
+    remain outside the public <code>docs</code> directory.
+    Only a metadata verification receipt may be published.
+  </p>
+
+  <h3>Production OpenTimestamps Verification</h3>
+
+  <p>
+    The OpenTimestamps workflow creates a proof for the same fixed
+    Stage360 target.
+  </p>
+
+  <p>
+    A newly created OpenTimestamps proof may remain pending while
+    waiting for confirmation by a public blockchain anchor.
+    Stage377 preserves that waiting state and does not convert it
+    into a false success.
+  </p>
+
+  <p>
+    The proof is not accepted as verified until its target hash,
+    public anchor, anchor reference, and verified time satisfy the
+    Stage377 policy.
+  </p>
+
+  <h3>Stage377 Acceptance Conditions</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Requirement</th>
+        <th>Mandatory condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Stage376 prerequisite</td>
+        <td>Required Stage376 result and fixed hash are valid</td>
+      </tr>
+      <tr>
+        <td>Historic Stage372 evidence</td>
+        <td>Fixed Stage372 evidence hash remains unchanged</td>
+      </tr>
+      <tr>
+        <td>RFC3161 target</td>
+        <td>Message imprint matches the fixed Stage360 target</td>
+      </tr>
+      <tr>
+        <td>RFC3161 signature</td>
+        <td>TSA signature verification succeeds</td>
+      </tr>
+      <tr>
+        <td>RFC3161 certificate</td>
+        <td>TSA certificate-chain verification succeeds</td>
+      </tr>
+      <tr>
+        <td>OpenTimestamps target</td>
+        <td>Proof target matches the fixed Stage360 target</td>
+      </tr>
+      <tr>
+        <td>OpenTimestamps anchor</td>
+        <td>Public anchor and verified time are confirmed</td>
+      </tr>
+      <tr>
+        <td>Common target</td>
+        <td>Both receipts bind to the same Stage360 SHA256</td>
+      </tr>
+      <tr>
+        <td>Verified proof count</td>
+        <td>Two independent timestamp proofs are verified</td>
+      </tr>
+      <tr>
+        <td>Publication boundary</td>
+        <td>No raw proof or private material exists under docs</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Stage377 Decisions</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Decision</th>
+        <th>Meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <code>timestamp_finalization_pending</code>
+        </td>
+        <td>
+          Neither external timestamp system has completed all
+          final verification requirements.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <code>rfc3161_verified_opentimestamps_pending</code>
+        </td>
+        <td>
+          RFC3161 is verified, but OpenTimestamps remains pending.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <code>opentimestamps_verified_rfc3161_pending</code>
+        </td>
+        <td>
+          OpenTimestamps is verified, but RFC3161 remains pending.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <code>dual_timestamp_final_acceptance_verified</code>
+        </td>
+        <td>
+          Both independent proofs verified the same Stage360
+          target and the superseding effective final-acceptance
+          state was established.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <code>block</code>
+        </td>
+        <td>
+          A prerequisite, required hash, proof, claim,
+          consistency rule, or publication boundary failed.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Fail-Closed Enforcement</h3>
+
+  <ul>
+    <li>
+      RFC3161 success alone is not dual-timestamp final acceptance.
+    </li>
+    <li>
+      OpenTimestamps success alone is not dual-timestamp final
+      acceptance.
+    </li>
+    <li>
+      A missing verification receipt keeps the state pending.
+    </li>
+    <li>
+      A target-hash mismatch blocks final acceptance.
+    </li>
+    <li>
+      A previous-hash mismatch blocks final acceptance.
+    </li>
+    <li>
+      An internally inconsistent receipt is blocked.
+    </li>
+    <li>
+      An unsupported verified claim is blocked.
+    </li>
+    <li>
+      A fabricated verified claim is blocked.
+    </li>
+    <li>
+      A publication-boundary violation is blocked.
+    </li>
+    <li>
+      A failed Stage376 prerequisite blocks final acceptance.
+    </li>
+  </ul>
+
+  <h3>Fixed Hash Bindings</h3>
+
+  <p>
+    <strong>Stage376 result SHA256</strong><br>
+    <code>32ff58a1f4d5837518226eee70b32833a8147617df3142ff2f641eca3f116138</code>
+  </p>
+
+  <p>
+    <strong>Stage360 target SHA256</strong><br>
+    <code>052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5</code>
+  </p>
+
+  <p>
+    <strong>Historic Stage372 result SHA256</strong><br>
+    <code>ef1847f09c7862d271d71e548f403f75c91b93b2ffc21dec6016f53e0db7c3aa</code>
+  </p>
+
+  <h3>Public Stage377 Evidence</h3>
+
+  <ul>
+    <li>
+      <a href="./timestamp-policy/stage377_dual_timestamp_finalization_policy.json">
+        Stage377 Dual-Timestamp Finalization Policy JSON
+      </a>
+    </li>
+    <li>
+      <a href="./timestamp-evidence/stage377_rfc3161_verification_receipt.json">
+        Stage377 RFC3161 Verification Receipt JSON
+      </a>
+    </li>
+    <li>
+      <a href="./timestamp-evidence/stage377_opentimestamps_verification_receipt.json">
+        Stage377 OpenTimestamps Verification Receipt JSON
+      </a>
+    </li>
+    <li>
+      <a href="./timestamp-finalization/stage377_dual_timestamp_finalization_result.json">
+        Stage377 Dual-Timestamp Finalization Result JSON
+      </a>
+    </li>
+    <li>
+      <a href="./timestamp-finalization/stage377_superseding_final_acceptance_manifest.json">
+        Stage377 Superseding Final Acceptance Manifest JSON
+      </a>
+    </li>
+    <li>
+      <a href="./timestamp-finalization/stage377_dual_timestamp_finalization_summary.txt">
+        Stage377 Dual-Timestamp Finalization Summary
+      </a>
+    </li>
+  </ul>
+
+  <h3>Stage377 GitHub Actions</h3>
+
+  <ul>
+    <li>
+      <code>stage377-production-rfc3161.yml</code>
+    </li>
+    <li>
+      <code>stage377-production-opentimestamps.yml</code>
+    </li>
+    <li>
+      <code>stage377-dual-final-acceptance.yml</code>
+    </li>
+  </ul>
+
+  <h3>Publication Boundary</h3>
+
+  <ul>
+    <li>No private key is published.</li>
+    <li>No ML-DSA private key or seed is published.</li>
+    <li>No OIDC or GitHub token is published.</li>
+    <li>No raw QKD key material is published.</li>
+    <li>No raw RFC3161 TSQ file is published.</li>
+    <li>No raw RFC3161 TSR file is published.</li>
+    <li>No raw RFC3161 timestamp token is published.</li>
+    <li>No raw OpenTimestamps binary proof is published.</li>
+    <li>No TSA certificate bundle is published.</li>
+    <li>No free-form timestamp command is accepted.</li>
+    <li>
+      Only metadata receipts and public verification results are
+      published.
+    </li>
+  </ul>
+
+  <h3>Historic Preservation</h3>
+
+  <p>
+    Stage377 does not alter or overwrite Stage372 or Stage376.
+    It preserves both earlier stages as historical evidence.
+  </p>
+
+  <p>
+    Stage377 creates a later superseding operational state only
+    after the stronger dual-timestamp requirements are satisfied.
+    It does not rewrite an earlier final-acceptance record.
+  </p>
+
+  <h3>Current Meaning</h3>
+
+  <p>
+    Stage377 currently proves that the production dual-timestamp
+    workflows, fixed hash bindings, Fail-Closed finalization
+    engine, metadata receipt structures, and publication boundary
+    have been prepared.
+  </p>
+
+  <p>
+    The current initial result remains
+    <code>timestamp_finalization_pending</code>.
+  </p>
+
+  <p>
+    Stage377 therefore does not yet claim successful RFC3161
+    verification, successful OpenTimestamps verification,
+    dual-timestamp final acceptance, or maximum timestamp
+    assurance.
+  </p>
+
+  <p>
+    After both independent systems verify the same fixed Stage360
+    target, Stage377 can establish the later superseding effective
+    final-acceptance state.
+  </p>
+
+  <p>
+    <strong>License:</strong> MIT License
+  </p>
+
+</section>
+<!-- STAGE377_APPEND_ONLY_END -->\n\n<!-- STAGE378_APPEND_ONLY_START -->
+<section id="stage378">
+  <h2>Stage378: QKD Safety Metadata Binding &amp; Evidence Classification Gate</h2>
+  <p>Stage378 extends Stage377 by binding public QKD safety metadata to the validated Stage377 result hash.</p>
+  <p>It classifies evidence as metadata only, QKD simulator, controlled testbed, or physical QKD system, while verifying that no raw or derived QKD secret material is published.</p>
+  <h3>Stage377 to Stage378</h3>
+  <p>Stage377 dual-timestamp finalization result<br>↓<br>Stage377 result SHA256 validation<br>↓<br><code>previous_hash</code> binding<br>↓<br>QKD safety metadata validation<br>↓<br>evidence classification<br>↓<br>QKD evidence-level assignment<br>↓<br>Stage378 decision</p>
+  <h3>Current State</h3>
+  <ul>
+    <li>Stage377 decision: <code>timestamp_finalization_pending</code></li>
+    <li>Stage377 verified proof count: <code>0</code></li>
+    <li>Stage378 decision: <code>qkd_binding_pending_previous_stage</code></li>
+    <li>Evidence classification: <code>metadata_only</code></li>
+    <li>Evidence level: <code>QKD-E1</code></li>
+    <li>QKD metadata bound: <code>false</code></li>
+  </ul>
+  <p>This is the expected Fail-Closed state. Stage378 does not convert an incomplete Stage377 result into a completed QKD metadata binding.</p>
+  <h3>Evidence Classifications</h3>
+  <ul>
+    <li><code>metadata_only</code>: public safety metadata only</li>
+    <li><code>qkd_simulator</code>: QKD simulator evidence</li>
+    <li><code>controlled_testbed</code>: controlled QKD test-environment evidence</li>
+    <li><code>physical_qkd_system</code>: identified physical QKD-system evidence</li>
+  </ul>
+  <h3>QKD Evidence Levels</h3>
+  <ul>
+    <li><code>QKD-E0</code>: invalid, insufficient, inconsistent, or unsafe evidence</li>
+    <li><code>QKD-E1</code>: safe metadata-only evidence</li>
+    <li><code>QKD-E2</code>: QKD simulator evidence</li>
+    <li><code>QKD-E3</code>: controlled QKD testbed evidence</li>
+    <li><code>QKD-E4</code>: physical QKD-system evidence satisfying required checks</li>
+  </ul>
+  <h3>QBER Metadata</h3>
+  <p>Stage378 does not hard-code one universal QBER threshold. It validates <code>observed_qber</code>, <code>declared_qber_limit</code>, <code>qber_within_declared_limit</code>, and <code>limit_source</code>.</p>
+  <h3>Public Stage378 Evidence</h3>
+  <ul>
+    <li><a href="./qkd/stage378_qkd_safety_metadata_input.json">Stage378 QKD Safety Metadata Input JSON</a></li>
+    <li><a href="./qkd/stage378_evidence_classification.json">Stage378 Evidence Classification JSON</a></li>
+    <li><a href="./qkd/stage378_qkd_safety_metadata_binding_result.json">Stage378 QKD Safety Metadata Binding Result JSON</a></li>
+    <li><a href="./qkd/stage378_qkd_safety_metadata_binding_summary.txt">Stage378 QKD Safety Metadata Binding Summary</a></li>
+  </ul>
+  <h3>Publication Boundary</h3>
+  <ul>
+    <li>No raw QKD key material is published.</li>
+    <li>No sifted, reconciled, or final QKD secret material is published.</li>
+    <li>No private key, device credential, GitHub token, or OIDC token is published.</li>
+    <li>No raw RFC3161 or OpenTimestamps proof binary is published.</li>
+    <li>Only public metadata and verification results are published.</li>
+  </ul>
+  <p>Stage378 does not modify or overwrite Stage377.</p>
+  <p><strong>License:</strong> MIT License</p>
+</section>
+<!-- STAGE378_APPEND_ONLY_END -->
+
+</body>
+</html>

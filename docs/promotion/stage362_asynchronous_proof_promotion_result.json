@@ -1,0 +1,62 @@
+{
+  "stage": 362,
+  "engine": "Asynchronous Proof Promotion Gate with Stage361 Revocation Proof Binding",
+  "created_at": "2026-06-28T04:05:51.130584+00:00",
+  "source_stage": 361,
+  "previous_hash": "0c8345b0a4c86d41fb0217ba458f592080fe2ded4148af989b3b602d6caf9671",
+  "stage361_decision": "pending_revocation_proof",
+  "promotion_status": "not_promoted",
+  "decision": "keep_pending",
+  "reasons": [
+    "proof_missing"
+  ],
+  "checks": {
+    "stage361_result_present": true,
+    "stage361_previous_hash_bound": true,
+    "promotion_request_present": true,
+    "promotion_target_matches": true,
+    "proof_sha256_present": false,
+    "claimed_status": "pending",
+    "verified_claim": false,
+    "private_material_detected": false,
+    "fake_verified_claim_detected": false,
+    "revoked_detected": false,
+    "unknown_treated_as_good_detected": false
+  },
+  "promotion_request": {
+    "stage": 362,
+    "promotion_target": "stage361_revocation_proof",
+    "requested_promotion": "pending_to_accept",
+    "proof_type": "none",
+    "proof_sha256": null,
+    "claimed_status": "pending",
+    "verified_claim": false,
+    "note": "Default placeholder. No real asynchronous proof has been injected yet."
+  },
+  "safety_boundary": {
+    "no_private_keys": true,
+    "no_raw_secrets": true,
+    "no_raw_qkd_key_material": true,
+    "no_false_verified_claims": true,
+    "pending_is_not_treated_as_accept": true,
+    "unknown_is_not_treated_as_good": true
+  },
+  "guarantee": {
+    "what_stage362_guarantees": [
+      "Stage361 result is bound as previous_hash when present.",
+      "Pending proof is not automatically accepted.",
+      "A promotion request can be evaluated asynchronously.",
+      "Missing proof remains keep_pending.",
+      "Mismatched or insufficient proof becomes reject_promotion.",
+      "Revoked status, fake verified claims, unknown-as-good, and secret leakage are blocked."
+    ],
+    "what_stage362_does_not_guarantee": [
+      "It does not perform real OCSP cryptographic verification.",
+      "It does not perform real CRL cryptographic verification.",
+      "It does not perform real OpenTimestamps or RFC3161 verification.",
+      "It does not perform real Rekor verification.",
+      "It does not prove that a certificate is currently good."
+    ]
+  },
+  "result_sha256": "e435f4ee894fbb1b8e2f3859a9b16743a8a9ead03752d21b2d5ee8681a22a0c3"
+}

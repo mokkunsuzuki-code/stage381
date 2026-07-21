@@ -1,0 +1,31 @@
+{
+  "assigned_evidence_level": "QKD-E1",
+  "classification_mapping": {
+    "controlled_testbed": "QKD-E3",
+    "invalid_or_unsafe": "QKD-E0",
+    "metadata_only": "QKD-E1",
+    "physical_qkd_system": "QKD-E4",
+    "qkd_simulator": "QKD-E2"
+  },
+  "classification_sha256": "d5b6b45d81e737bc6dbdded5a3230728b7db664899123e860a3cbed18d751edf",
+  "classification_type": "qkd_evidence_classification",
+  "classification_valid": true,
+  "created_at": "2026-07-21T10:59:09.917724+00:00",
+  "key_safety_passed": true,
+  "metadata_file_sha256": "e8d1ee7e15dda22b77fbac8faea1baffdc669e0d5dd7d04a4dd1ac4f8f536dd4",
+  "missing_requirements": [],
+  "previous_hash": "52df4d3c78d693c621af73e788148f541f71b139002911bb39dd9661dc2976dd",
+  "public_boundary_passed": true,
+  "qber_assessment": {
+    "declared_qber_limit": null,
+    "limit_source": null,
+    "observed_qber": null,
+    "qber_within_declared_limit": null,
+    "status": "not_provided",
+    "values_valid": true
+  },
+  "requested_classification": "metadata_only",
+  "requirements_satisfied": true,
+  "source_stage": 377,
+  "stage": 378
+}

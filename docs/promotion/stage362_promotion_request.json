@@ -1,0 +1,10 @@
+{
+  "stage": 362,
+  "promotion_target": "stage361_revocation_proof",
+  "requested_promotion": "pending_to_accept",
+  "proof_type": "none",
+  "proof_sha256": null,
+  "claimed_status": "pending",
+  "verified_claim": false,
+  "note": "Default placeholder. No real asynchronous proof has been injected yet."
+}

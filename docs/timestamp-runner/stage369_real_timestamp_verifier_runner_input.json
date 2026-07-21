@@ -1,0 +1,25 @@
+{
+  "stage": 369,
+  "engine": "Real Timestamp Verifier Runner Input",
+  "target_source_stage": 360,
+  "target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+  "runner_mode": "metadata_only_no_raw_timestamp_binaries",
+  "execute_commands": false,
+  "opentimestamps_runner": {
+    "enabled": true,
+    "command": null,
+    "stamped_file_sha256": null,
+    "ots_file_sha256": null,
+    "verified_target_hash": null
+  },
+  "rfc3161_runner": {
+    "enabled": true,
+    "command": null,
+    "original_file_sha256": null,
+    "timestamp_token_sha256": null,
+    "message_imprint_sha256": null,
+    "tsa_certificate_fingerprint": null,
+    "verified_target_hash": null
+  },
+  "note": "Default runner input. Commands are not executed unless execute_commands is true and safe command metadata is supplied."
+}

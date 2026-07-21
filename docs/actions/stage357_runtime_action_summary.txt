@@ -1,0 +1,37 @@
+Stage357 Runtime Context Action & Isolation Enforcer
+
+Action decision:
+isolate_and_continue
+
+Isolation mode:
+safe_metadata_only
+
+What Stage357 adds:
+- Reads Stage356 runtime execution receipt
+- Reads Stage356 runtime fail-closed gate result
+- Binds Stage356 receipt_sha256 as Stage357 previous_hash
+- Maps runtime decision to action
+- allow -> continue
+- warn -> isolate risky capabilities and continue safely
+- block -> terminate runtime
+- Publishes action metadata only
+- Does not publish private runners, raw payloads, secrets, or exploit code
+
+Stage356 receipt previous hash:
+39f95a4a0a4602d6a73a8062fdc9ae7aa5fffb67edb98f88c776ad6259916636
+
+Stage357 action entry hash:
+df05e4eedc85d83c046b3bd148200bb6e668b6091c940bbd2207f35bcc85f4f9
+
+Generated files:
+- docs/actions/stage357_runtime_action_policy.json
+- docs/actions/stage357_runtime_action_receipt.json
+- docs/actions/stage357_runtime_action_summary.txt
+
+Safety boundary:
+- No private keys
+- No raw secrets
+- No raw payloads
+- No exploit code
+- No internal runner code
+- Metadata-only action receipt

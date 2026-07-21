@@ -1,0 +1,25 @@
+Stage373: Final Acceptance Attestation
+and External Transparency Binding Gate
+
+Decision: attestation_pending
+Stage372 Final Acceptance: False
+External Transparency Bound: False
+PQC Signature Verified: False
+
+Previous Hash: ef1847f09c7862d271d71e548f403f75c91b93b2ffc21dec6016f53e0db7c3aa
+Stage372 Manifest SHA256: 31272a949567c4f74d6c2afa88db12e945bc554489bedab958648827b0427d08
+Stage372 Binding SHA256: e5427f6362cd9a03f225610804aa73a0b519a049b17ae4ddab97512319735cb4
+Attestation SHA256: d54b7524ced420f664da9d370985585d649ce80584b64bdf87342f89dbfde89f
+Result SHA256: 165a919a371f74c6d296dbfe4408cd18a99590ab6ac797e879afb17069153866
+
+Reasons:
+- external_verification_not_executed
+- stage372_final_acceptance_pending
+- sigstore_verification_pending
+- rekor_inclusion_verification_pending
+- pqc_signature_verification_pending
+
+Meaning:
+Stage373 binds the Stage372 result and manifest into one final-acceptance attestation.
+Because Stage372 is currently pending and no real Sigstore, Rekor, or ML-DSA verification has been executed, the correct initial decision is attestation_pending.
+Stage373 never converts a pending Stage372 result into a verified final acceptance.

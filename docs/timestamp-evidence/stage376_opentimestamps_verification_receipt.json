@@ -1,0 +1,21 @@
+{
+  "stage": 376,
+  "receipt_type": "opentimestamps_production_verification_receipt",
+  "source_stage": 375,
+  "execution_status": "not_executed",
+  "execution_mode": "fixed_github_actions_workflow",
+  "timestamp_target_sha256": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+  "proof_sha256": null,
+  "verified_target_sha256": null,
+  "confirmed_anchor_type": null,
+  "confirmed_anchor_reference": null,
+  "verified_time": null,
+  "verify_exit_code": null,
+  "verification_output_sha256": null,
+  "target_hash_matches": false,
+  "confirmed_public_anchor": false,
+  "verified": false,
+  "raw_proof_published": false,
+  "private_key_published": false,
+  "note": "Safe initial receipt. OpenTimestamps verification is not claimed until the fixed production workflow verifies the proof against the canonical Stage360 target and confirms a public anchor."
+}

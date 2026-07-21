@@ -1,0 +1,25 @@
+{
+  "stage": 363,
+  "proof_scope": "external_timestamp",
+  "target_source_stage": 360,
+  "timestamp_target_sha256": null,
+  "opentimestamps": {
+    "provided": false,
+    "ots_file_sha256": null,
+    "ots_verification_result_sha256": null,
+    "ots_verified": false,
+    "bitcoin_block_height": null,
+    "bitcoin_attestation_time": null
+  },
+  "rfc3161": {
+    "provided": false,
+    "timestamp_token_sha256": null,
+    "message_imprint_sha256": null,
+    "tsa_certificate_fingerprint": null,
+    "tsa_signature_verified": false,
+    "gen_time": null
+  },
+  "claimed_status": "pending",
+  "timestamp_verified": false,
+  "note": "Default placeholder. No real OpenTimestamps or RFC3161 proof has been verified yet."
+}

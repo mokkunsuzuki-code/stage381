@@ -1,0 +1,36 @@
+{
+  "stage": 370,
+  "engine": "Runner Safety Brake Test Gate Input",
+  "simulation_only": false,
+  "purpose": "Verify that unsafe, failing, incomplete, or fake runner conditions do not become accepted.",
+  "test_cases": [
+    {
+      "case_id": "safe_bad_command_test",
+      "execute_commands": true,
+      "command": "false",
+      "expected_decision": "runner_rejected",
+      "expected_reason": "safe_bad_command_rejected"
+    },
+    {
+      "case_id": "missing_metadata_test",
+      "execute_commands": false,
+      "pretend_exit_code": 0,
+      "verified_target_hash": null,
+      "expected_decision": "runner_rejected",
+      "expected_reason": "missing_metadata_rejected"
+    },
+    {
+      "case_id": "fake_verified_claim_test",
+      "timestamp_verified": true,
+      "exit_code": null,
+      "expected_decision": "block",
+      "expected_reason": "fake_verified_claim_blocked"
+    },
+    {
+      "case_id": "raw_binary_guard_test",
+      "raw_binary_reference": "example.ots",
+      "expected_decision": "block",
+      "expected_reason": "raw_binary_reference_blocked"
+    }
+  ]
+}

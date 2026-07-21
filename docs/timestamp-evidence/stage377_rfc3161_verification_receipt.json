@@ -1,0 +1,54 @@
+{
+  "stage": 377,
+  "engine": "production_rfc3161_timestamp_verification",
+  "source_stage": 376,
+  "previous_hash": "32ff58a1f4d5837518226eee70b32833a8147617df3142ff2f641eca3f116138",
+  "execution_status": "not_executed",
+  "rfc3161_verified": false,
+  "verification_exit_code": null,
+  "timestamp_authority": {
+    "provider": null,
+    "url": null,
+    "http_status": null,
+    "response_content_type": null
+  },
+  "timestamp_target": {
+    "path": "docs/timestamp-evidence/stage376_stage360_timestamp_target.json",
+    "sha256": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+    "stage360_target_sha256": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+    "digest_matches_stage360": true
+  },
+  "timestamp_request": {
+    "digest_algorithm": "sha256",
+    "certificate_requested": true,
+    "nonce_requested": true,
+    "request_sha256": null,
+    "raw_request_published": false
+  },
+  "timestamp_response": {
+    "response_status": null,
+    "policy_oid": null,
+    "serial_number": null,
+    "generation_time": null,
+    "response_sha256": null,
+    "timestamp_token_sha256": null,
+    "raw_response_published": false
+  },
+  "verification": {
+    "openssl_ts_verify": false,
+    "target_message_imprint_match": false,
+    "tsa_signature_valid": false,
+    "certificate_chain_valid": false,
+    "verification_output_sha256": null
+  },
+  "publication_boundary": {
+    "public_metadata_receipt_only": true,
+    "raw_tsq_published": false,
+    "raw_tsr_published": false,
+    "raw_token_published": false,
+    "tsa_certificate_bundle_published": false,
+    "private_key_used": false
+  },
+  "generated_at": null,
+  "note": "Safe initial Stage377 receipt. No RFC3161 production verification is claimed."
+}

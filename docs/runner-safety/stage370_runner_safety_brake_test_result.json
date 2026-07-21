@@ -1,0 +1,108 @@
+{
+  "stage": 370,
+  "engine": "Runner Safety Brake Test Gate with Stage369 Receipt Generation Binding",
+  "created_at": "2026-07-05T05:18:19.070493+00:00",
+  "source_stage": 369,
+  "previous_hash": "9e99b19d907d27836a06cfc55f0f564245c55d305886c37211fa454da056d8a1",
+  "stage369_decision": "runner_pending",
+  "decision": "safety_test_pass",
+  "reasons": [
+    "runner_safety_brake_tests_passed"
+  ],
+  "test_results": [
+    {
+      "case_id": "safe_bad_command_test",
+      "decision": "runner_rejected",
+      "reason": "safe_bad_command_rejected",
+      "command_receipt": {
+        "exit_code": 1,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "combined_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "test_pass": true
+    },
+    {
+      "case_id": "missing_metadata_test",
+      "decision": "runner_rejected",
+      "reason": "missing_metadata_rejected",
+      "test_pass": true
+    },
+    {
+      "case_id": "fake_verified_claim_test",
+      "decision": "block",
+      "reason": "fake_verified_claim_blocked",
+      "test_pass": true
+    },
+    {
+      "case_id": "raw_binary_guard_test",
+      "decision": "block",
+      "reason": "raw_binary_reference_blocked",
+      "test_pass": true
+    }
+  ],
+  "all_tests_passed": true,
+  "safety_boundary": {
+    "no_private_keys": true,
+    "no_raw_secrets": true,
+    "no_raw_qkd_key_material": true,
+    "no_raw_timestamp_binaries_in_public_docs": true,
+    "bad_command_must_reject": true,
+    "missing_metadata_must_reject": true,
+    "fake_verified_claim_must_block": true,
+    "stage370_does_not_accept_timestamp_verified": true
+  },
+  "guarantee": {
+    "what_stage370_guarantees": [
+      "Stage369 runner result is bound as previous_hash when present.",
+      "A deliberately failing safe command must land in runner_rejected.",
+      "Missing metadata must not become accepted.",
+      "Fake timestamp_verified claims must be blocked.",
+      "Raw timestamp binary references must be blocked.",
+      "Stage370 does not final-accept timestamp_verified."
+    ],
+    "what_stage370_does_not_guarantee": [
+      "It does not perform a real successful OpenTimestamps verification.",
+      "It does not perform a real successful RFC3161 verification.",
+      "It does not publish raw timestamp binaries.",
+      "It does not verify Sigstore, Rekor, OCSP, or CRL."
+    ]
+  },
+  "test_input": {
+    "stage": 370,
+    "engine": "Runner Safety Brake Test Gate Input",
+    "simulation_only": false,
+    "purpose": "Verify that unsafe, failing, incomplete, or fake runner conditions do not become accepted.",
+    "test_cases": [
+      {
+        "case_id": "safe_bad_command_test",
+        "execute_commands": true,
+        "command": "false",
+        "expected_decision": "runner_rejected",
+        "expected_reason": "safe_bad_command_rejected"
+      },
+      {
+        "case_id": "missing_metadata_test",
+        "execute_commands": false,
+        "pretend_exit_code": 0,
+        "verified_target_hash": null,
+        "expected_decision": "runner_rejected",
+        "expected_reason": "missing_metadata_rejected"
+      },
+      {
+        "case_id": "fake_verified_claim_test",
+        "timestamp_verified": true,
+        "exit_code": null,
+        "expected_decision": "block",
+        "expected_reason": "fake_verified_claim_blocked"
+      },
+      {
+        "case_id": "raw_binary_guard_test",
+        "raw_binary_reference": "example.ots",
+        "expected_decision": "block",
+        "expected_reason": "raw_binary_reference_blocked"
+      }
+    ]
+  },
+  "result_sha256": "14cae203b951802cdadbb0c487fc8cef46a6459afa3270a2c9a31d54212ed4ec"
+}

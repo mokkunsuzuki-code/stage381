@@ -1,0 +1,54 @@
+{
+  "stage": 357,
+  "engine": "Runtime Context Action & Isolation Enforcer",
+  "source_stage": 356,
+  "created_at": "2026-06-24T05:03:08Z",
+  "previous_hash": "39f95a4a0a4602d6a73a8062fdc9ae7aa5fffb67edb98f88c776ad6259916636",
+  "action_entry_hash": "df05e4eedc85d83c046b3bd148200bb6e668b6091c940bbd2207f35bcc85f4f9",
+  "action_decision": "isolate_and_continue",
+  "isolation_mode": "safe_metadata_only",
+  "runtime_decision_from_stage356": "warn",
+  "checks": {
+    "stage356_receipt_exists": true,
+    "stage356_gate_exists": true,
+    "stage356_receipt_sha256_present": true,
+    "stage356_entry_hash_present": true,
+    "stage356_runtime_decision_present": true,
+    "stage356_violations_empty": true,
+    "stage356_checks_acceptable": true,
+    "stage356_receipt_matches_gate": true,
+    "action_mapping_applied": true,
+    "isolation_metadata_only": true,
+    "no_private_keys": true,
+    "no_raw_payloads": true,
+    "no_internal_runner_published": true
+  },
+  "violations": [],
+  "actions": [
+    {
+      "action": "isolate_capability",
+      "target": "private_runner",
+      "status": "disabled",
+      "reason": "local_runtime_context_warn"
+    },
+    {
+      "action": "isolate_capability",
+      "target": "unsafe_payload_fetch",
+      "status": "disabled",
+      "reason": "no_raw_payloads_public_boundary"
+    },
+    {
+      "action": "isolate_capability",
+      "target": "secret_material_access",
+      "status": "disabled",
+      "reason": "no_private_keys_boundary"
+    },
+    {
+      "action": "continue_runtime",
+      "target": "public_metadata_verification",
+      "status": "allowed",
+      "reason": "safe_metadata_only_execution"
+    }
+  ],
+  "action_receipt_sha256": "041c90b66507d8013ce613f64c85d7e30d3b691ea566453f077274493761525a"
+}

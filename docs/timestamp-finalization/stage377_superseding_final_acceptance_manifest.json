@@ -1,0 +1,25 @@
+{
+  "stage": 377,
+  "manifest_type": "dual_timestamp_finalization_and_superseding_final_acceptance_manifest",
+  "created_at": "2026-07-21T01:32:09.142641+00:00",
+  "source_stage": 376,
+  "previous_hash": "32ff58a1f4d5837518226eee70b32833a8147617df3142ff2f641eca3f116138",
+  "historic_stage372_result_sha256": "ef1847f09c7862d271d71e548f403f75c91b93b2ffc21dec6016f53e0db7c3aa",
+  "stage372_record_modified": false,
+  "stage376_record_modified": false,
+  "timestamp_target_sha256": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+  "rfc3161_verified": false,
+  "opentimestamps_verified": false,
+  "verified_proof_count": 0,
+  "required_verified_proof_count": 2,
+  "timestamp_verified": false,
+  "effective_final_acceptance": false,
+  "maximum_timestamp_assurance": false,
+  "supersedes_stage372_pending": false,
+  "supersedes_stage376_pending": false,
+  "decision": "timestamp_finalization_pending",
+  "reasons": [
+    "production_dual_timestamp_receipts_not_verified"
+  ],
+  "manifest_sha256": "ae5ac43f1da69c038f00a3d7b6912f48eb9a44c969388147648a8d6b682dc921"
+}

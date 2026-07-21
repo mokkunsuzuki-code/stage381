@@ -1,0 +1,39 @@
+Stage358 Signing-Time Validity Enforcement Layer
+
+Decision:
+accept_temporal_validity
+
+What Stage358 adds:
+- Reads Stage357 runtime action receipt
+- Binds Stage357 action_receipt_sha256 as Stage358 previous_hash
+- Defines signing_time metadata
+- Defines key validity window metadata
+- Checks valid_from <= signing_time <= valid_until
+- Checks signing_time < revoked_at when revoked_at exists
+- Fails closed on temporal validity violation
+- Publishes metadata-only temporal validation
+- Does not claim real GPG, Sigstore, Rekor, or PQC signature verification
+
+Previous hash from Stage357:
+041c90b66507d8013ce613f64c85d7e30d3b691ea566453f077274493761525a
+
+Stage358 entry hash:
+987d0ab79189f2ff71caa2192d0d01c3e97744d6e347ab49daf2b57cdf7a52aa
+
+Signing time:
+2026-06-24T00:00:00Z
+
+Validity window:
+2026-01-01T00:00:00Z -> 2026-12-31T23:59:59Z
+
+Generated files:
+- docs/time-validity/stage358_signing_time_validity_policy.json
+- docs/time-validity/stage358_signing_time_validity_result.json
+- docs/time-validity/stage358_signing_time_validity_summary.txt
+
+Safety boundary:
+- No private keys
+- No raw secrets
+- No real signature claim
+- No real PQC signature claim
+- Metadata-only temporal validation

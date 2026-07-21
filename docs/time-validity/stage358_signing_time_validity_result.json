@@ -1,0 +1,42 @@
+{
+  "stage": 358,
+  "engine": "Signing-Time Validity Enforcement Layer",
+  "source_stage": 357,
+  "created_at": "2026-06-26T03:22:01Z",
+  "decision": "accept_temporal_validity",
+  "previous_hash": "041c90b66507d8013ce613f64c85d7e30d3b691ea566453f077274493761525a",
+  "entry_hash": "987d0ab79189f2ff71caa2192d0d01c3e97744d6e347ab49daf2b57cdf7a52aa",
+  "checks": {
+    "stage357_receipt_exists": true,
+    "stage357_policy_exists": true,
+    "stage354_ledger_exists": true,
+    "stage357_receipt_sha256_present": true,
+    "stage357_action_entry_hash_present": true,
+    "signing_time_present": true,
+    "valid_from_present": true,
+    "valid_until_present": true,
+    "signing_time_after_or_equal_valid_from": true,
+    "signing_time_before_or_equal_valid_until": true,
+    "signing_time_before_revoked_at": true,
+    "no_real_signature_claim": true,
+    "no_real_pqc_signature_claim": true,
+    "no_private_keys": true,
+    "no_raw_secrets": true,
+    "metadata_only_temporal_validation": true
+  },
+  "violations": [],
+  "reasons": [
+    "stage357_receipt_bound",
+    "signing_time_present",
+    "key_validity_window_present",
+    "signing_time_within_validity_window",
+    "signing_time_not_after_revocation",
+    "no_real_signature_claim",
+    "no_private_keys_published"
+  ],
+  "signing_time": "2026-06-24T00:00:00Z",
+  "valid_from": "2026-01-01T00:00:00Z",
+  "valid_until": "2026-12-31T23:59:59Z",
+  "revoked_at": null,
+  "result_sha256": "941e6e819d0af9d33abcb4f964491989cc152bee8926a1e77dd02d9f75eb69cd"
+}

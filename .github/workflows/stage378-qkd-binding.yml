@@ -1,0 +1,137 @@
+name: Stage378 QKD Safety Metadata Binding Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/stage378_qkd_safety_metadata_binding_gate.py"
+      - "docs/qkd/**"
+      - ".github/workflows/stage378-qkd-binding.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  stage378-qkd-binding:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Stage378 gate
+        run: |
+          python3 scripts/stage378_qkd_safety_metadata_binding_gate.py
+
+      - name: Validate Stage378 outputs
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          required = [
+              Path("docs/qkd/stage378_qkd_safety_metadata_input.json"),
+              Path("docs/qkd/stage378_evidence_classification.json"),
+              Path("docs/qkd/stage378_qkd_safety_metadata_binding_result.json"),
+              Path("docs/qkd/stage378_qkd_safety_metadata_binding_summary.txt"),
+          ]
+
+          missing = [str(path) for path in required if not path.is_file()]
+          if missing:
+              raise SystemExit(f"Missing Stage378 files: {missing}")
+
+          result_path = Path(
+              "docs/qkd/stage378_qkd_safety_metadata_binding_result.json"
+          )
+          result = json.loads(result_path.read_text(encoding="utf-8"))
+
+          required_fields = [
+              "stage",
+              "decision",
+              "previous_hash",
+              "stage377_hash_valid",
+              "stage377_final_acceptance_verified",
+              "evidence_classification",
+              "evidence_level",
+              "forbidden_public_files",
+              "private_content_candidates",
+              "private_material_content_detected",
+              "raw_qkd_key_publication_detected",
+              "result_sha256",
+          ]
+
+          absent = [field for field in required_fields if field not in result]
+          if absent:
+              raise SystemExit(f"Missing result fields: {absent}")
+
+          if result["stage"] != 378:
+              raise SystemExit("Stage number is not 378.")
+
+          if result["forbidden_public_files"]:
+              raise SystemExit("Forbidden public file detected.")
+
+          if result["private_content_candidates"]:
+              raise SystemExit("Private content candidate detected.")
+
+          if result["private_material_content_detected"] is not False:
+              raise SystemExit("Private material content detected.")
+
+          if result["raw_qkd_key_publication_detected"] is not False:
+              raise SystemExit("Raw QKD key publication detected.")
+
+          expected = result["result_sha256"]
+          unsigned = dict(result)
+          unsigned.pop("result_sha256", None)
+
+          actual = hashlib.sha256(
+              json.dumps(
+                  unsigned,
+                  ensure_ascii=False,
+                  sort_keys=True,
+                  indent=2,
+              ).encode("utf-8")
+          ).hexdigest()
+
+          if actual != expected:
+              raise SystemExit(
+                  f"Result SHA256 mismatch: expected={expected} actual={actual}"
+              )
+
+          print(f"decision={result['decision']}")
+          print(
+              "evidence_classification="
+              f"{result['evidence_classification']}"
+          )
+          print(f"evidence_level={result['evidence_level']}")
+          print("public_forbidden_file_count=0")
+          print("result_sha256_verified=true")
+          PY
+
+      - name: Scan public tree for forbidden files
+        run: |
+          count="$(
+            find docs -type f               \(                 -iname "qkd_raw_key*"                 -o -iname "qkd_secret_key*"                 -o -iname "qkd_sifted_key*"                 -o -iname "qkd_reconciled_key*"                 -o -iname "qkd_final_key*"                 -o -name "*.qkdkey"                 -o -name "*.rawkey"                 -o -name "*.siftedkey"                 -o -name "*.reconciledkey"                 -o -name "*.finalkey"                 -o -name "*.key"                 -o -name "*.pem"                 -o -name "*.p12"                 -o -name "*.pfx"                 -o -name "*.seed"                 -o -name "*.pk8"                 -o -name "*.ots"                 -o -name "*.tsq"                 -o -name "*.tsr"                 -o -name "*.tst"               \) -print | wc -l | tr -d " "
+          )"
+
+          echo "public_forbidden_file_count=${count}"
+
+          test "${count}" = "0"
+
+      - name: Upload Stage378 public evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage378-qkd-safety-metadata-binding
+          path: |
+            docs/qkd/stage378_qkd_safety_metadata_input.json
+            docs/qkd/stage378_evidence_classification.json
+            docs/qkd/stage378_qkd_safety_metadata_binding_result.json
+            docs/qkd/stage378_qkd_safety_metadata_binding_summary.txt
+          if-no-files-found: error

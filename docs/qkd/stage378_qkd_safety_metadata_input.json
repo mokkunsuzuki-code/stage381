@@ -1,0 +1,53 @@
+{
+  "stage": 378,
+  "source_stage": 377,
+  "input_type": "qkd_safety_metadata",
+  "evidence_classification": "metadata_only",
+  "qkd_system": {
+    "system_identifier": null,
+    "vendor_or_operator": null,
+    "protocol_family": null,
+    "deployment_environment": null,
+    "device_model": null,
+    "firmware_or_software_version": null
+  },
+  "execution_context": {
+    "execution_id": null,
+    "executed_at": null,
+    "location_classification": null,
+    "operator_identifier": null
+  },
+  "qber": {
+    "observed_qber": null,
+    "declared_qber_limit": null,
+    "qber_within_declared_limit": null,
+    "limit_source": null
+  },
+  "key_safety": {
+    "raw_key_included": false,
+    "sifted_key_included": false,
+    "reconciled_key_included": false,
+    "final_secret_key_included": false,
+    "key_material_publicly_recoverable": false,
+    "key_length_disclosed": false,
+    "key_identifier": null
+  },
+  "evidence": {
+    "measurement_summary_present": false,
+    "device_attestation_present": false,
+    "operator_attestation_present": false,
+    "testbed_description_present": false,
+    "simulator_description_present": false,
+    "calibration_record_present": false,
+    "external_verification_present": false,
+    "evidence_files": []
+  },
+  "publication_boundary": {
+    "metadata_only": true,
+    "raw_qkd_key_publication_prohibited": true,
+    "derived_secret_publication_prohibited": true,
+    "private_device_credentials_prohibited": true,
+    "personal_data_prohibited": true
+  },
+  "note": "Default safe metadata-only input. No physical QKD, testbed, or simulator evidence has been asserted."
+}

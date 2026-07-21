@@ -1,0 +1,107 @@
+{
+  "stage": 365,
+  "engine": "Verified Timestamp Promotion Test Harness with Fake-Verified Claim Guard",
+  "created_at": "2026-06-29T10:14:16.591886+00:00",
+  "source_stage": 364,
+  "previous_hash": "baed1294dfd8c9d48fd4227bd65fc03d1b348cbd7bdf5168f35f93624a8b2534",
+  "stage364_decision": "timestamp_pending",
+  "stage360_target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+  "production_decision": "timestamp_pending",
+  "test_decision": "test_pass",
+  "simulated_promotion_result": "timestamp_verified",
+  "simulation_only": true,
+  "reasons": [
+    "all_timestamp_promotion_safety_tests_passed"
+  ],
+  "test_results": [
+    {
+      "case_id": "valid_simulated_promotion",
+      "test_decision": "promotion_path_ready",
+      "expected_test_decision": "promotion_path_ready",
+      "test_pass": true,
+      "reason": "simulated_evidence_present_and_target_hash_matched",
+      "simulation_only": true
+    },
+    {
+      "case_id": "mismatch_rejection_test",
+      "test_decision": "timestamp_rejected_expected",
+      "expected_test_decision": "timestamp_rejected_expected",
+      "test_pass": true,
+      "reason": "target_hash_mismatch_expected",
+      "simulation_only": true
+    },
+    {
+      "case_id": "fake_verified_block_test",
+      "test_decision": "fake_verified_block_expected",
+      "expected_test_decision": "fake_verified_block_expected",
+      "test_pass": true,
+      "reason": "fake_verified_claim_detected_in_test",
+      "simulation_only": true
+    }
+  ],
+  "all_tests_passed": true,
+  "safety_boundary": {
+    "no_private_keys": true,
+    "no_raw_secrets": true,
+    "no_raw_qkd_key_material": true,
+    "no_real_timestamp_verified_claim": true,
+    "simulation_result_is_not_production_result": true,
+    "fake_verified_claim_guard_enabled": true
+  },
+  "guarantee": {
+    "what_stage365_guarantees": [
+      "Stage364 result is bound as previous_hash when present.",
+      "The production decision remains timestamp_pending.",
+      "The timestamp_verified path is tested only as simulation.",
+      "Target hash mismatch is expected to be rejected.",
+      "Fake verified claims are expected to be blocked.",
+      "Simulation output is clearly separated from production verification."
+    ],
+    "what_stage365_does_not_guarantee": [
+      "It does not perform real OpenTimestamps verification.",
+      "It does not perform real RFC3161 TimeStampToken verification.",
+      "It does not promote production evidence to timestamp_verified.",
+      "It does not verify Sigstore, Rekor, OCSP, or CRL."
+    ]
+  },
+  "test_cases": {
+    "stage": 365,
+    "engine": "Verified Timestamp Promotion Test Harness with Fake-Verified Claim Guard",
+    "simulation_only": true,
+    "production_decision_must_remain": "timestamp_pending",
+    "note": "These are safe simulation test cases. They do not claim real OpenTimestamps or RFC3161 verification.",
+    "test_cases": [
+      {
+        "case_id": "valid_simulated_promotion",
+        "purpose": "Confirm the promotion path can become ready when target hash matches and simulated verification metadata exists.",
+        "simulation_only": true,
+        "target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+        "simulated_ots_verification_result_sha256": "032426665efcadeeb76458e3701f6575c9bbe4c08bc05853025fdca5b3cc3bba",
+        "simulated_rfc3161_verification_result_sha256": null,
+        "timestamp_verified": false,
+        "expected_test_decision": "promotion_path_ready"
+      },
+      {
+        "case_id": "mismatch_rejection_test",
+        "purpose": "Confirm mismatch is rejected.",
+        "simulation_only": true,
+        "target_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "simulated_ots_verification_result_sha256": "1e7d06a21113853ba482015922a871107f949a7dd0cd7b841079069ac66f07f4",
+        "simulated_rfc3161_verification_result_sha256": null,
+        "timestamp_verified": false,
+        "expected_test_decision": "timestamp_rejected_expected"
+      },
+      {
+        "case_id": "fake_verified_block_test",
+        "purpose": "Confirm fake verified claims are blocked.",
+        "simulation_only": true,
+        "target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+        "simulated_ots_verification_result_sha256": null,
+        "simulated_rfc3161_verification_result_sha256": null,
+        "timestamp_verified": true,
+        "expected_test_decision": "fake_verified_block_expected"
+      }
+    ]
+  },
+  "result_sha256": "ff9290bc565255042732d13a12e25f8d45cbe359d98c9adb4bdd3f4c6733d5c2"
+}

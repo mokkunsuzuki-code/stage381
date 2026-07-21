@@ -1,0 +1,74 @@
+{
+  "stage": 374,
+  "engine": "Production Sigstore Signing and Rekor Inclusion Verification Gate",
+  "created_at": "2026-07-14T00:43:27.864673+00:00",
+  "source_stage": 373,
+  "previous_hash": "d54b7524ced420f664da9d370985585d649ce80584b64bdf87342f89dbfde89f",
+  "stage373_attestation_sha256": "d54b7524ced420f664da9d370985585d649ce80584b64bdf87342f89dbfde89f",
+  "expected_identity": "https://github.com/mokkunsuzuki-code/stage374/.github/workflows/stage374-production-sigstore.yml@refs/heads/main",
+  "expected_oidc_issuer": "https://token.actions.githubusercontent.com",
+  "minimum_cosign_version": "3.0.4",
+  "observed_cosign_version": "3.1.1",
+  "stage372_final_acceptance": false,
+  "decision": "pending_state_transparency_bound",
+  "external_transparency_bound": true,
+  "reasons": [
+    "stage372_pending_state_external_binding_verified"
+  ],
+  "checks": {
+    "stage373_attestation_present": true,
+    "stage373_result_present": true,
+    "stage374_input_present": true,
+    "cosign_execution_receipt_present": true,
+    "rekor_receipt_present": true,
+    "attestation_declared_sha256_valid": true,
+    "attestation_sha256_matches": true,
+    "stage373_result_attestation_matches": true,
+    "input_expected_attestation_matches": true,
+    "receipt_target_blob_sha256_matches": true,
+    "receipt_logical_attestation_sha256_matches": true,
+    "rekor_artifact_blob_sha256_matches": true,
+    "rekor_logical_attestation_sha256_matches": true,
+    "cosign_version_supported": true,
+    "cosign_execution_complete": true,
+    "bundle_present": true,
+    "bundle_sha256_valid": true,
+    "bundle_sha256_matches_execution_receipt": true,
+    "bundle_sha256_matches_rekor_receipt": true,
+    "rekor_log_id_present": true,
+    "rekor_log_index_valid": true,
+    "rekor_integrated_time_valid": true,
+    "rekor_inclusion_root_hash_present": true,
+    "rekor_inclusion_tree_size_present": true,
+    "rekor_signed_entry_timestamp_sha256_valid": true,
+    "rekor_verification_complete": true,
+    "private_material_detected": false,
+    "forbidden_public_file_detected": false
+  },
+  "safety_boundary": {
+    "no_private_keys": true,
+    "no_oidc_tokens": true,
+    "no_github_tokens": true,
+    "no_raw_qkd_key_material": true,
+    "no_raw_timestamp_binaries": true,
+    "no_free_form_shell_command": true,
+    "github_actions_least_privilege": true,
+    "cosign_version_floor_enforced": true,
+    "metadata_and_public_bundle_only": true
+  },
+  "guarantee": {
+    "what_stage374_guarantees": [
+      "Stage373 attestation is re-hashed before external binding.",
+      "Cosign verification must succeed for the expected GitHub Actions identity and OIDC issuer.",
+      "The Sigstore bundle must match both execution and Rekor receipts.",
+      "External transparency binding becomes true only after complete verification.",
+      "Stage372 pending status is preserved even after successful external binding."
+    ],
+    "what_stage374_does_not_guarantee": [
+      "It does not change Stage372 timestamp verification.",
+      "It does not perform ML-DSA signing or verification.",
+      "It does not publish OIDC tokens or GitHub credentials."
+    ]
+  },
+  "result_sha256": "a9bb9a971dc638579bcdd8b4d1f2b529ac5a1d6a6936548715be4ab1cf896173"
+}

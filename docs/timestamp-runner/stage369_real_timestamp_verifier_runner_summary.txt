@@ -1,0 +1,12 @@
+Stage369: Real Timestamp Verifier Runner
+with Production Receipt Generation
+
+Decision: runner_pending
+Runner Status: not_executed
+Previous Hash: 1432ab540397b0fed14eab5b577d61729cefe750118b6b393a52c66be5bf7290
+Result SHA256: a72de64c72ad3dfb5d77d36fd220de46fb54d4cc4cb2e1ba3754f7f2188472ab
+
+Meaning:
+Stage369 runs or prepares real timestamp verifier commands and converts their outputs into metadata receipts.
+It can generate a production receipt only with exit_code=0 and matching verified_target_hash.
+It does not final-accept timestamp_verified; acceptance belongs to the next gate.

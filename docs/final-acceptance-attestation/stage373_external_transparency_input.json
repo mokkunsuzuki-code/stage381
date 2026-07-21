@@ -1,0 +1,48 @@
+{
+  "stage": 373,
+  "input_type": "external_transparency_binding_input",
+  "source_stage": 372,
+  "execute_external_verification": false,
+  "sigstore": {
+    "enabled": true,
+    "status": "not_executed",
+    "bundle_path": null,
+    "bundle_sha256": null,
+    "signed_attestation_sha256": null,
+    "verification_exit_code": null,
+    "verification_output_sha256": null,
+    "signature_verified": false,
+    "expected_identity": null,
+    "verified_identity": null,
+    "identity_verified": false,
+    "expected_oidc_issuer": null,
+    "verified_oidc_issuer": null,
+    "oidc_issuer_verified": false
+  },
+  "rekor": {
+    "enabled": true,
+    "status": "not_verified",
+    "log_id": null,
+    "log_index": null,
+    "entry_uuid": null,
+    "integrated_time": null,
+    "artifact_digest": null,
+    "artifact_digest_matches": false,
+    "signed_entry_timestamp_verified": false,
+    "inclusion_proof_verified": false
+  },
+  "pqc": {
+    "enabled": true,
+    "algorithm": "ML-DSA-65",
+    "algorithm_policy_status": "provisional",
+    "mode": "standalone_optional",
+    "status": "not_executed",
+    "public_key_fingerprint": null,
+    "signature_sha256": null,
+    "signed_attestation_sha256": null,
+    "verification_exit_code": null,
+    "verification_output_sha256": null,
+    "verified": false
+  },
+  "note": "Default safe input. No Sigstore, Rekor, or ML-DSA verification is claimed until real verification evidence exists."
+}

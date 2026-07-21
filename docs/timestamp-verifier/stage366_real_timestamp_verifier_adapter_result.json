@@ -1,0 +1,83 @@
+{
+  "stage": 366,
+  "engine": "Real OpenTimestamps / RFC3161 Verifier Adapter with Stage365 Promotion Test Binding",
+  "created_at": "2026-06-29T10:42:07.061273+00:00",
+  "source_stage": 365,
+  "previous_hash": "74f1ccd25c14c917b6a85f22e3bfd16b9ebf037f8ef799cb48f20a02a514843e",
+  "stage365_test_decision": "test_pass",
+  "stage365_simulation_only": true,
+  "stage360_target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+  "decision": "verifier_pending",
+  "verification_status": "not_verified",
+  "reasons": [
+    "real_verifier_output_missing"
+  ],
+  "checks": {
+    "stage365_result_present": true,
+    "stage365_previous_hash_bound": true,
+    "stage365_test_pass": true,
+    "stage365_simulation_only": true,
+    "stage360_result_present": true,
+    "stage360_target_hash_present": true,
+    "adapter_input_present": true,
+    "adapter_target_hash_present": true,
+    "target_hash_matches_stage360": true,
+    "ots_real_output_present": false,
+    "ots_verified_claim": false,
+    "rfc3161_real_output_present": false,
+    "rfc3161_verified_claim": false,
+    "timestamp_verified_claim": false,
+    "private_material_detected": false,
+    "fake_verified_claim_detected": false
+  },
+  "adapter_input": {
+    "stage": 366,
+    "engine": "Real OpenTimestamps / RFC3161 Verifier Adapter Input",
+    "target_source_stage": 360,
+    "target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+    "adapter_mode": "metadata_only_until_real_cli_output_exists",
+    "opentimestamps": {
+      "enabled": true,
+      "ots_file_path": null,
+      "stamped_file_path": null,
+      "ots_cli_command": "ots verify <file>",
+      "ots_cli_output_sha256": null,
+      "ots_verified": false
+    },
+    "rfc3161": {
+      "enabled": true,
+      "timestamp_token_path": null,
+      "original_file_path": null,
+      "message_imprint_sha256": null,
+      "tsa_certificate_fingerprint": null,
+      "rfc3161_verifier_output_sha256": null,
+      "rfc3161_verified": false
+    },
+    "timestamp_verified": false,
+    "note": "Default adapter input. No real OpenTimestamps CLI or RFC3161 verifier output has been supplied yet."
+  },
+  "safety_boundary": {
+    "no_private_keys": true,
+    "no_raw_secrets": true,
+    "no_raw_qkd_key_material": true,
+    "no_false_timestamp_verified_claims": true,
+    "real_cli_output_required_for_verified": true,
+    "simulation_result_is_not_treated_as_production_verified": true
+  },
+  "guarantee": {
+    "what_stage366_guarantees": [
+      "Stage365 test result is bound as previous_hash when present.",
+      "Stage365 simulation is not treated as production timestamp verification.",
+      "Real OpenTimestamps or RFC3161 verifier output is required before timestamp_verified.",
+      "Target hash must match the Stage360 timestamp target.",
+      "Fake verified claims and secret leakage are blocked."
+    ],
+    "what_stage366_does_not_guarantee": [
+      "It does not create a real .ots proof file.",
+      "It does not create a real RFC3161 TimeStampToken.",
+      "It does not verify Sigstore, Rekor, OCSP, or CRL.",
+      "It does not publish private keys or raw secrets."
+    ]
+  },
+  "result_sha256": "9e826300643da70e49fe572e123022570fdc6017cbc5d066056936e203ce2ed0"
+}

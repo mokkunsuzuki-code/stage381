@@ -1,0 +1,77 @@
+{
+  "stage": 376,
+  "engine": "Production Dual-Timestamp Verification and Superseding Final Acceptance Gate",
+  "created_at": "2026-07-14T23:02:27.237761+00:00",
+  "source_stage": 375,
+  "previous_hash": "fb0a43e582e5e581ddbf06d2ad2636bdafd8a944bc74d049bf4e072db50d918c",
+  "historic_stage372_result_sha256": "ef1847f09c7862d271d71e548f403f75c91b93b2ffc21dec6016f53e0db7c3aa",
+  "historic_stage372_decision": "final_acceptance_pending",
+  "stage372_record_modified": false,
+  "timestamp_target_sha256": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+  "decision": "timestamp_execution_pending",
+  "effective_final_acceptance": false,
+  "timestamp_verified": false,
+  "supersedes_stage372_pending": false,
+  "rfc3161_verified": false,
+  "opentimestamps_verified": false,
+  "maximum_timestamp_assurance": false,
+  "verified_proof_count": 0,
+  "required_verified_proof_count": 2,
+  "manifest_sha256": "238dfde1d317b8aaf5b7fcb3aab274162e7c52040b7dc21bfd70e5978aab21f9",
+  "reasons": [
+    "production_timestamp_receipts_not_verified"
+  ],
+  "checks": {
+    "input_present": true,
+    "policy_present": true,
+    "stage375_result_present": true,
+    "stage375_result_sha256_valid": true,
+    "stage375_result_sha256_matches": true,
+    "stage375_result_sha256_is_established": true,
+    "previous_hash_matches_stage375": true,
+    "stage375_quantum_safe_verified": true,
+    "stage372_result_present": true,
+    "stage372_result_sha256_valid": true,
+    "stage372_result_sha256_matches": true,
+    "stage372_result_sha256_is_established": true,
+    "stage372_original_decision_pending": true,
+    "stage372_original_timestamp_false": true,
+    "stage372_record_unmodified": true,
+    "stage360_result_present": true,
+    "timestamp_target_matches_established": true,
+    "rfc3161_receipt_present": true,
+    "opentimestamps_receipt_present": true,
+    "rfc3161_verified": false,
+    "opentimestamps_verified": false,
+    "required_proof_count_valid": true,
+    "verified_proof_count_satisfied": false,
+    "private_material_detected": false,
+    "forbidden_public_file_detected": false
+  },
+  "safety_boundary": {
+    "stage372_history_preserved": true,
+    "no_raw_rfc3161_response_in_public_docs": true,
+    "no_raw_opentimestamps_proof_in_public_docs": true,
+    "no_tsa_private_key_published": true,
+    "no_oidc_token_published": true,
+    "no_github_token_published": true,
+    "no_raw_qkd_key_material": true,
+    "no_free_form_commands": true,
+    "fail_closed": true
+  },
+  "guarantee": {
+    "what_stage376_guarantees": [
+      "Stage375 quantum-safe dual-signature verification remains bound.",
+      "The historic Stage372 pending record is not modified.",
+      "RFC3161 and OpenTimestamps must verify the established Stage360 target.",
+      "Effective final acceptance becomes true only when both timestamp proofs verify.",
+      "Raw timestamp binaries and private material are excluded from public docs."
+    ],
+    "what_stage376_does_not_guarantee": [
+      "It does not rewrite the historic Stage372 result.",
+      "It does not claim RFC3161 verification before a trusted TSA receipt is imported.",
+      "It does not claim OpenTimestamps confirmation before a public anchor is independently verified."
+    ]
+  },
+  "result_sha256": "32ff58a1f4d5837518226eee70b32833a8147617df3142ff2f641eca3f116138"
+}

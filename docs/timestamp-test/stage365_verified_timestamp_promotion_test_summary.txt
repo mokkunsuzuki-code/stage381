@@ -1,0 +1,13 @@
+Stage365: Verified Timestamp Promotion Test Harness
+with Fake-Verified Claim Guard
+
+Production Decision: timestamp_pending
+Test Decision: test_pass
+Simulation Only: True
+Previous Hash: baed1294dfd8c9d48fd4227bd65fc03d1b348cbd7bdf5168f35f93624a8b2534
+Result SHA256: ff9290bc565255042732d13a12e25f8d45cbe359d98c9adb4bdd3f4c6733d5c2
+
+Meaning:
+Stage365 safely tests the timestamp promotion path.
+It does not convert production evidence to timestamp_verified.
+Fake verified claims and target hash mismatches are tested as expected failures.

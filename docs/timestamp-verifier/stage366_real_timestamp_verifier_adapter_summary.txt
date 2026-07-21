@@ -1,0 +1,12 @@
+Stage366: Real OpenTimestamps / RFC3161 Verifier Adapter
+with Stage365 Promotion Test Binding
+
+Decision: verifier_pending
+Verification Status: not_verified
+Previous Hash: 74f1ccd25c14c917b6a85f22e3bfd16b9ebf037f8ef799cb48f20a02a514843e
+Result SHA256: 9e826300643da70e49fe572e123022570fdc6017cbc5d066056936e203ce2ed0
+
+Meaning:
+Stage366 connects the safe Stage365 promotion test result to a real timestamp verifier adapter.
+It does not treat simulation results as production timestamp verification.
+Without real OpenTimestamps or RFC3161 verifier output, the correct decision is verifier_pending.

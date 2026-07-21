@@ -1,0 +1,17 @@
+Stage374: Production Sigstore Signing
+and Rekor Inclusion Verification Gate
+
+Decision: pending_state_transparency_bound
+External Transparency Bound: True
+Stage372 Final Acceptance: False
+Stage373 Attestation SHA256: d54b7524ced420f664da9d370985585d649ce80584b64bdf87342f89dbfde89f
+Observed Cosign Version: 3.1.1
+Result SHA256: a9bb9a971dc638579bcdd8b4d1f2b529ac5a1d6a6936548715be4ab1cf896173
+
+Reasons:
+- stage372_pending_state_external_binding_verified
+
+Meaning:
+Stage374 performs production Sigstore and Rekor verification for the Stage373 attestation.
+Until a verified GitHub Actions artifact is imported, the correct decision is production_execution_pending.
+If external verification succeeds while Stage372 remains pending, the correct decision is pending_state_transparency_bound.

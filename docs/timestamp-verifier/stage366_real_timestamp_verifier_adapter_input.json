@@ -1,0 +1,26 @@
+{
+  "stage": 366,
+  "engine": "Real OpenTimestamps / RFC3161 Verifier Adapter Input",
+  "target_source_stage": 360,
+  "target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+  "adapter_mode": "metadata_only_until_real_cli_output_exists",
+  "opentimestamps": {
+    "enabled": true,
+    "ots_file_path": null,
+    "stamped_file_path": null,
+    "ots_cli_command": "ots verify <file>",
+    "ots_cli_output_sha256": null,
+    "ots_verified": false
+  },
+  "rfc3161": {
+    "enabled": true,
+    "timestamp_token_path": null,
+    "original_file_path": null,
+    "message_imprint_sha256": null,
+    "tsa_certificate_fingerprint": null,
+    "rfc3161_verifier_output_sha256": null,
+    "rfc3161_verified": false
+  },
+  "timestamp_verified": false,
+  "note": "Default adapter input. No real OpenTimestamps CLI or RFC3161 verifier output has been supplied yet."
+}

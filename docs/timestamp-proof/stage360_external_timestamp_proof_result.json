@@ -1,0 +1,47 @@
+{
+  "stage": 360,
+  "engine": "External Timestamp Proof Binding Layer",
+  "source_stage": 359,
+  "created_at": "2026-06-26T04:31:53Z",
+  "decision": "pending_timestamp_proof",
+  "previous_hash": "a081c57c22eebf76384a2c8d4a9bc7cba13a7013705095c97fd1ec4ceaee6a95",
+  "entry_hash": "23591f8724a6b7ea0c7b74d6a1c26e4568277223250df64553ce65d286dcc2d7",
+  "stage359_result_sha256": "a081c57c22eebf76384a2c8d4a9bc7cba13a7013705095c97fd1ec4ceaee6a95",
+  "timestamp_target_sha256": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+  "public_key_fingerprint": "sha256:9b9f3f4d5e5b8e04a60f2f0c1f3b2a6df01af45b217bbd85e82f2ac52b3d5c10",
+  "proof_status": "pending_timestamp_proof",
+  "checks": {
+    "stage359_result_exists": true,
+    "stage359_policy_exists": true,
+    "stage359_decision_accept": true,
+    "stage359_result_sha256_present": true,
+    "stage359_entry_hash_present": true,
+    "public_key_fingerprint_present": true,
+    "timestamp_target_created": true,
+    "timestamp_target_sha256_present": true,
+    "external_timestamp_proof_metadata_present": true,
+    "opentimestamps_metadata_present": true,
+    "rfc3161_metadata_present": true,
+    "no_fake_ots_verified_claim": true,
+    "no_fake_rfc3161_verified_claim": true,
+    "no_fake_external_timestamp_verified_claim": true,
+    "no_private_keys": true,
+    "no_raw_secrets": true,
+    "timestamp_proof_binding_metadata_only": true
+  },
+  "violations": [],
+  "reasons": [
+    "stage359_result_bound",
+    "timestamp_target_created",
+    "timestamp_target_sha256_created",
+    "external_timestamp_proof_metadata_recorded",
+    "opentimestamps_and_rfc3161_readiness_recorded",
+    "no_fake_verified_timestamp_claim",
+    "real_external_timestamp_verification_not_claimed"
+  ],
+  "supported_proof_types": [
+    "OpenTimestamps",
+    "RFC3161"
+  ],
+  "result_sha256": "4f2a216093822fc745d79e0feef3d99fbea77f2d1a4e966527c40e68e2b536ce"
+}

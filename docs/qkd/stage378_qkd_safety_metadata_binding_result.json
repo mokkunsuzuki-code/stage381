@@ -1,0 +1,61 @@
+{
+  "checks": {
+    "classification_hash_created": true,
+    "classification_requirements_satisfied": true,
+    "declared_publication_boundary_valid": true,
+    "evidence_classification_valid": true,
+    "key_safety_metadata_valid": true,
+    "metadata_input_present": true,
+    "metadata_stage_valid": true,
+    "public_forbidden_file_absent": true,
+    "public_private_content_absent": true,
+    "qber_values_valid": true,
+    "stage377_final_acceptance_verified": false,
+    "stage377_result_hash_valid": true,
+    "stage377_result_present": true,
+    "stage377_stage_valid": true
+  },
+  "classification_path": "docs/qkd/stage378_evidence_classification.json",
+  "classification_sha256": "d5b6b45d81e737bc6dbdded5a3230728b7db664899123e860a3cbed18d751edf",
+  "created_at": "2026-07-21T10:59:09.917724+00:00",
+  "decision": "qkd_binding_pending_previous_stage",
+  "engine": "QKD Safety Metadata Binding & Evidence Classification Gate",
+  "evidence_classification": "metadata_only",
+  "evidence_level": "QKD-E1",
+  "forbidden_public_files": [],
+  "guarantee": "Stage378 binds public QKD safety metadata to the declared Stage377 result hash, classifies the evidence source, prevents publication of raw or derived QKD secret material, and fails closed when required conditions are not satisfied.",
+  "metadata_input_path": "docs/qkd/stage378_qkd_safety_metadata_input.json",
+  "metadata_input_sha256": "e8d1ee7e15dda22b77fbac8faea1baffdc669e0d5dd7d04a4dd1ac4f8f536dd4",
+  "previous_hash": "52df4d3c78d693c621af73e788148f541f71b139002911bb39dd9661dc2976dd",
+  "private_content_candidates": [],
+  "private_material_content_detected": false,
+  "qber_assessment": {
+    "declared_qber_limit": null,
+    "limit_source": null,
+    "observed_qber": null,
+    "qber_within_declared_limit": null,
+    "status": "not_provided",
+    "values_valid": true
+  },
+  "qkd_metadata_bound": false,
+  "raw_qkd_key_publication_detected": false,
+  "reasons": [
+    "stage377_dual_timestamp_final_acceptance_pending"
+  ],
+  "result_sha256": "acb4d920bcee2c4629e4c94577d74a0ae40bf18fcd5606506c9ad375cf0a42f5",
+  "safety_boundary": {
+    "declared_qber_limit_required_for_qber_claim": true,
+    "derived_qkd_secret_publication_prohibited": true,
+    "metadata_only_publication": true,
+    "private_key_publication_prohibited": true,
+    "raw_qkd_key_publication_prohibited": true,
+    "timestamp_raw_binary_publication_prohibited": true,
+    "universal_qber_threshold_hardcoded": false
+  },
+  "source_stage": 377,
+  "stage": 378,
+  "stage377_decision": "timestamp_finalization_pending",
+  "stage377_result_path": "docs/timestamp-finalization/stage377_dual_timestamp_finalization_result.json",
+  "stage377_result_sha256": "52df4d3c78d693c621af73e788148f541f71b139002911bb39dd9661dc2976dd",
+  "stage377_verified_proof_count": 0
+}

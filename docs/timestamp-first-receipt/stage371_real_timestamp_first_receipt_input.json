@@ -1,0 +1,28 @@
+{
+  "stage": 371,
+  "engine": "Real Timestamp First Successful Receipt Input",
+  "target_source_stage": 360,
+  "target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+  "receipt_mode": "metadata_only_no_raw_timestamp_binaries",
+  "execute_commands": false,
+  "opentimestamps_first_receipt": {
+    "enabled": true,
+    "command": null,
+    "stamped_file_sha256": null,
+    "ots_file_sha256": null,
+    "verified_target_hash": null,
+    "ots_verified": false
+  },
+  "rfc3161_first_receipt": {
+    "enabled": true,
+    "command": null,
+    "original_file_sha256": null,
+    "timestamp_token_sha256": null,
+    "message_imprint_sha256": null,
+    "tsa_certificate_fingerprint": null,
+    "verified_target_hash": null,
+    "rfc3161_verified": false
+  },
+  "timestamp_verified": false,
+  "note": "Default input. Stage371 can generate first_receipt_generated only when real verifier command output exists, exit_code=0, and verified_target_hash matches Stage360."
+}

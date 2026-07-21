@@ -1,0 +1,84 @@
+{
+  "stage": 369,
+  "engine": "Real Timestamp Verifier Runner with Production Receipt Generation",
+  "created_at": "2026-07-04T05:16:03.504495+00:00",
+  "source_stage": 368,
+  "previous_hash": "1432ab540397b0fed14eab5b577d61729cefe750118b6b393a52c66be5bf7290",
+  "stage368_decision": "verifier_pending",
+  "stage360_target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+  "decision": "runner_pending",
+  "runner_status": "not_executed",
+  "reasons": [
+    "execute_commands_false"
+  ],
+  "checks": {
+    "stage368_result_present": true,
+    "stage368_previous_hash_bound": true,
+    "stage368_not_block": true,
+    "stage360_result_present": true,
+    "stage360_target_hash_present": true,
+    "runner_input_present": true,
+    "runner_target_hash_present": true,
+    "target_hash_matches_stage360": true,
+    "execute_commands": false,
+    "ots_command_supplied": false,
+    "rfc3161_command_supplied": false,
+    "ots_receipt_generated": false,
+    "rfc3161_receipt_generated": false,
+    "private_material_detected": false,
+    "raw_binary_path_detected": false
+  },
+  "runner_input": {
+    "stage": 369,
+    "engine": "Real Timestamp Verifier Runner Input",
+    "target_source_stage": 360,
+    "target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+    "runner_mode": "metadata_only_no_raw_timestamp_binaries",
+    "execute_commands": false,
+    "opentimestamps_runner": {
+      "enabled": true,
+      "command": null,
+      "stamped_file_sha256": null,
+      "ots_file_sha256": null,
+      "verified_target_hash": null
+    },
+    "rfc3161_runner": {
+      "enabled": true,
+      "command": null,
+      "original_file_sha256": null,
+      "timestamp_token_sha256": null,
+      "message_imprint_sha256": null,
+      "tsa_certificate_fingerprint": null,
+      "verified_target_hash": null
+    },
+    "note": "Default runner input. Commands are not executed unless execute_commands is true and safe command metadata is supplied."
+  },
+  "command_receipts": {
+    "opentimestamps": null,
+    "rfc3161": null
+  },
+  "safety_boundary": {
+    "no_private_keys": true,
+    "no_raw_secrets": true,
+    "no_raw_qkd_key_material": true,
+    "no_raw_timestamp_binaries_in_public_docs": true,
+    "metadata_receipt_only": true,
+    "stage369_does_not_final_accept_timestamp_verified": true
+  },
+  "guarantee": {
+    "what_stage369_guarantees": [
+      "Stage368 receipt result is bound as previous_hash when present.",
+      "Real verifier commands are not executed unless explicitly enabled.",
+      "Runner output is converted into SHA256 metadata receipts.",
+      "receipt_generated requires exit_code=0 and matching verified_target_hash.",
+      "Stage369 does not final-accept timestamp_verified.",
+      "Raw timestamp binaries and secret leakage are blocked."
+    ],
+    "what_stage369_does_not_guarantee": [
+      "It does not publish raw .ots or RFC3161 token binaries.",
+      "It does not final-accept timestamp_verified.",
+      "It does not verify Sigstore, Rekor, OCSP, or CRL."
+    ]
+  },
+  "result_sha256": "a72de64c72ad3dfb5d77d36fd220de46fb54d4cc4cb2e1ba3754f7f2188472ab"
+}

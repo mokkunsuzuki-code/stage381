@@ -1,0 +1,34 @@
+{
+  "stage": 377,
+  "engine": "production_opentimestamps_verification",
+  "source_stage": 376,
+  "previous_hash": "32ff58a1f4d5837518226eee70b32833a8147617df3142ff2f641eca3f116138",
+  "execution_status": "not_executed",
+  "opentimestamps_verified": false,
+  "verification_exit_code": null,
+  "timestamp_target": {
+    "path": "docs/timestamp-evidence/stage376_stage360_timestamp_target.json",
+    "sha256": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+    "stage360_target_sha256": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+    "digest_matches_stage360": true
+  },
+  "proof": {
+    "proof_sha256": null,
+    "raw_proof_published": false
+  },
+  "verification": {
+    "target_hash_matches": false,
+    "confirmed_public_anchor": false,
+    "confirmed_anchor_type": null,
+    "confirmed_anchor_reference": null,
+    "verified_time": null,
+    "verification_output_sha256": null
+  },
+  "publication_boundary": {
+    "public_metadata_receipt_only": true,
+    "raw_ots_published": false,
+    "private_key_used": false
+  },
+  "generated_at": null,
+  "note": "Safe initial Stage377 receipt. No OpenTimestamps public-anchor verification is claimed."
+}

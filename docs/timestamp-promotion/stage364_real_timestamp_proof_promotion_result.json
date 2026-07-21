@@ -1,0 +1,84 @@
+{
+  "stage": 364,
+  "engine": "Real Timestamp Proof Injection and Promotion Engine for OpenTimestamps and RFC3161",
+  "created_at": "2026-06-29T02:52:26.746466+00:00",
+  "source_stage": 363,
+  "previous_hash": "b0f5e6b88d227065d0792f4bc4d8a764ebacf5fbe9eb6a918b996214ac606fe9",
+  "stage363_decision": "timestamp_pending",
+  "stage360_target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+  "promotion_status": "not_promoted",
+  "decision": "timestamp_pending",
+  "reasons": [
+    "real_timestamp_proof_injection_target_hash_missing"
+  ],
+  "checks": {
+    "stage363_result_present": true,
+    "stage363_previous_hash_bound": true,
+    "stage363_not_block": true,
+    "stage360_result_present": true,
+    "stage360_target_hash_present": true,
+    "injection_input_present": true,
+    "injection_target_hash_present": false,
+    "target_hash_matches_stage360": false,
+    "ots_real_verification_evidence_present": false,
+    "rfc3161_real_verification_evidence_present": false,
+    "timestamp_verified_claim": false,
+    "private_material_detected": false,
+    "fake_verified_claim_detected": false,
+    "future_time_claim_detected": false
+  },
+  "injection_input": {
+    "stage": 364,
+    "engine": "Real Timestamp Proof Injection Input",
+    "target_source_stage": 360,
+    "target_hash": null,
+    "proof_type": "none",
+    "opentimestamps": {
+      "provided": false,
+      "ots_file_sha256": null,
+      "ots_verification_result_sha256": null,
+      "ots_verified": false,
+      "bitcoin_block_height": null,
+      "bitcoin_attestation_time": null
+    },
+    "rfc3161": {
+      "provided": false,
+      "timestamp_token_sha256": null,
+      "message_imprint_sha256": null,
+      "rfc3161_verification_result_sha256": null,
+      "tsa_certificate_fingerprint": null,
+      "tsa_signature_verified": false,
+      "gen_time": null
+    },
+    "claimed_promotion": "timestamp_pending_to_timestamp_verified",
+    "timestamp_verified": false,
+    "note": "Default placeholder. No real OpenTimestamps or RFC3161 verification evidence has been injected yet."
+  },
+  "safety_boundary": {
+    "no_private_keys": true,
+    "no_raw_secrets": true,
+    "no_raw_qkd_key_material": true,
+    "no_false_timestamp_verified_claims": true,
+    "ots_file_alone_is_not_verified": true,
+    "rfc3161_token_alone_is_not_verified": true,
+    "tsa_name_alone_is_not_verified": true
+  },
+  "guarantee": {
+    "what_stage364_guarantees": [
+      "Stage363 result is bound as previous_hash when present.",
+      "Stage360 timestamp target hash is used as the promotion target when available.",
+      "Missing real timestamp verification evidence remains timestamp_pending.",
+      "Target hash mismatch becomes timestamp_rejected.",
+      "OpenTimestamps or RFC3161 verification evidence can promote timestamp_pending to timestamp_verified only when target hash matches.",
+      "Fake verified claims and secret leakage are blocked."
+    ],
+    "what_stage364_does_not_guarantee": [
+      "It does not treat a .ots file alone as verified.",
+      "It does not treat an RFC3161 token alone as verified.",
+      "It does not verify OCSP or CRL revocation status.",
+      "It does not verify Sigstore or Rekor transparency log inclusion.",
+      "It does not publish private keys or raw secrets."
+    ]
+  },
+  "result_sha256": "e1cf89ee142fd40f0597d238177808b3cb8b898263f9657fba3899588f288cf8"
+}

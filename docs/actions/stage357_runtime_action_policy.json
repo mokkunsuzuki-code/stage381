@@ -1,0 +1,72 @@
+{
+  "stage": 357,
+  "engine": "Runtime Context Action & Isolation Enforcer",
+  "source_stage": 356,
+  "created_at": "2026-06-24T05:03:08Z",
+  "previous_hash": "39f95a4a0a4602d6a73a8062fdc9ae7aa5fffb67edb98f88c776ad6259916636",
+  "stage356_binding": {
+    "stage356_receipt_path": "docs/runtime/stage356_runtime_execution_receipt.json",
+    "stage356_gate_path": "docs/runtime/stage356_runtime_fail_closed_gate.json",
+    "stage356_receipt_sha256": "39f95a4a0a4602d6a73a8062fdc9ae7aa5fffb67edb98f88c776ad6259916636",
+    "stage356_entry_hash": "f420837afc3755c69b09528ef7e5c6cc5c4fbdb3b89e5bc5cfad2060eb4dcab6",
+    "stage356_runtime_decision": "warn"
+  },
+  "checks": {
+    "stage356_receipt_exists": true,
+    "stage356_gate_exists": true,
+    "stage356_receipt_sha256_present": true,
+    "stage356_entry_hash_present": true,
+    "stage356_runtime_decision_present": true,
+    "stage356_violations_empty": true,
+    "stage356_checks_acceptable": true,
+    "stage356_receipt_matches_gate": true,
+    "action_mapping_applied": true,
+    "isolation_metadata_only": true,
+    "no_private_keys": true,
+    "no_raw_payloads": true,
+    "no_internal_runner_published": true
+  },
+  "violations": [],
+  "runtime_action_mapping": {
+    "allow": "continue",
+    "warn": "isolate_and_continue",
+    "block": "terminate"
+  },
+  "action_decision": "isolate_and_continue",
+  "isolation_mode": "safe_metadata_only",
+  "actions": [
+    {
+      "action": "isolate_capability",
+      "target": "private_runner",
+      "status": "disabled",
+      "reason": "local_runtime_context_warn"
+    },
+    {
+      "action": "isolate_capability",
+      "target": "unsafe_payload_fetch",
+      "status": "disabled",
+      "reason": "no_raw_payloads_public_boundary"
+    },
+    {
+      "action": "isolate_capability",
+      "target": "secret_material_access",
+      "status": "disabled",
+      "reason": "no_private_keys_boundary"
+    },
+    {
+      "action": "continue_runtime",
+      "target": "public_metadata_verification",
+      "status": "allowed",
+      "reason": "safe_metadata_only_execution"
+    }
+  ],
+  "safety_boundary": {
+    "no_private_keys": true,
+    "no_raw_secrets": true,
+    "no_raw_payloads": true,
+    "no_exploit_code": true,
+    "no_internal_runner_code": true,
+    "metadata_only_action_receipt": true
+  },
+  "action_entry_hash": "df05e4eedc85d83c046b3bd148200bb6e668b6091c940bbd2207f35bcc85f4f9"
+}

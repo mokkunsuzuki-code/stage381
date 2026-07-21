@@ -1,0 +1,12 @@
+Stage364: Real Timestamp Proof Injection & Promotion Engine
+for OpenTimestamps and RFC3161
+
+Decision: timestamp_pending
+Promotion Status: not_promoted
+Previous Hash: b0f5e6b88d227065d0792f4bc4d8a764ebacf5fbe9eb6a918b996214ac606fe9
+Result SHA256: e1cf89ee142fd40f0597d238177808b3cb8b898263f9657fba3899588f288cf8
+
+Meaning:
+Stage364 injects real timestamp verification evidence into the QSP evidence rail.
+It can promote timestamp_pending to timestamp_verified only when target hash matches and verification evidence is present.
+Without real verification evidence, the correct decision remains timestamp_pending.

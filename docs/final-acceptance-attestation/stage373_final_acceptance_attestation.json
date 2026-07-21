@@ -1,0 +1,20 @@
+{
+  "stage": 373,
+  "attestation_type": "stage372_final_acceptance_external_transparency_attestation",
+  "created_at": "2026-07-12T06:59:14.930415+00:00",
+  "source_stage": 372,
+  "previous_hash": "ef1847f09c7862d271d71e548f403f75c91b93b2ffc21dec6016f53e0db7c3aa",
+  "stage372_result_sha256": "ef1847f09c7862d271d71e548f403f75c91b93b2ffc21dec6016f53e0db7c3aa",
+  "stage372_manifest_sha256": "31272a949567c4f74d6c2afa88db12e945bc554489bedab958648827b0427d08",
+  "stage372_binding_sha256": "e5427f6362cd9a03f225610804aa73a0b519a049b17ae4ddab97512319735cb4",
+  "stage372_decision": "final_acceptance_pending",
+  "stage372_timestamp_verified": false,
+  "binding_payload": {
+    "source_stage": 372,
+    "stage372_result_sha256": "ef1847f09c7862d271d71e548f403f75c91b93b2ffc21dec6016f53e0db7c3aa",
+    "stage372_manifest_sha256": "31272a949567c4f74d6c2afa88db12e945bc554489bedab958648827b0427d08",
+    "stage372_decision": "final_acceptance_pending",
+    "stage372_timestamp_verified": false
+  },
+  "attestation_sha256": "d54b7524ced420f664da9d370985585d649ce80584b64bdf87342f89dbfde89f"
+}

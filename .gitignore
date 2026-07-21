@@ -1,0 +1,253 @@
+core/
+private_core/
+private/
+secrets/
+keys/
+*.pem
+*.key
+*.p12
+*.pfx
+*.asc
+*.gpg
+*.env
+.env
+.DS_Store
+
+.github/
+audit/
+backup_stage336_docs/
+data/
+downloaded_stage345_artifact/
+intelligence/
+tools/
+README.md.stage347.bak
+execution_session.json
+execution_session.json.sig
+requirements.txt
+index.html
+stage354_key_rotation_ledger.py
+stage355_key_status_verification.py
+stage356_runtime_fail_closed_gate.py
+stage357_runtime_action_isolation_enforcer.py
+stage358_signing_time_validity_enforcer.py
+stage359_public_key_fingerprint_validator.py
+stage360_external_timestamp_proof_binding.py
+
+!docs/
+!docs/**
+
+*.ots
+*.tsr
+*.tsa
+*.token
+*.der
+docs/**/*.ots
+docs/**/*.tsr
+docs/**/*.tsa
+docs/**/*.token
+docs/**/*.der
+
+__pycache__/
+*.pyc
+
+# Stage373 private verification material
+credentials/
+tokens/
+oidc/
+runner-private/
+
+# Secret and private-key formats
+*.seed
+*.secret
+*.token.private
+*.credentials
+.env.*
+
+# Runtime caches
+
+# Raw timestamp binaries must not be public
+
+# Stage374 private execution output
+private/stage374-sigstore/
+stage374-artifact-download/
+stage374-artifact-download.zip
+
+# Authentication material
+*.jwt
+*.oidc
+*.credential
+*.private
+*_TOKEN
+*_SECRET
+
+# Python cache
+
+# Permit only the public Stage374 workflow
+!.github/
+!.github/workflows/
+!.github/workflows/stage374-production-sigstore.yml
+
+# Keep inherited workflows private in Stage374
+.github/workflows/stage336-live-intel.yml
+.github/workflows/stage342-external-anchor.yml
+.github/workflows/stage350-enforcement.yml
+.github/workflows/stage351-hybrid-signature-manifest.yml
+.github/workflows/stage352-signature-manifest-verification.yml
+.github/workflows/stage353-verification-transparency-chain.yml
+
+# Keep Stage374 workflow public
+
+
+
+# Stage375 ML-DSA private material
+private/stage375-mldsa/
+stage375-artifact-download/
+stage375-artifact-download.zip
+
+# Never publish private ML-DSA material
+*.mldsa-private.pem
+*.mldsa-private.der
+*.mldsa-seed
+*.pk8
+*.private-key
+*_PRIVATE_KEY*
+*_PRIVATE_KEY_B64*
+
+# Stage375 temporary build files
+openssl-source/
+openssl-build/
+openssl-install/
+
+# Keep inherited workflows private
+.github/workflows/stage374-production-sigstore.yml
+
+# Publish only the Stage375 workflow
+!.github/workflows/stage375-production-mldsa.yml
+
+# Stage375 public ML-DSA verification key
+!docs/mldsa-production/
+!docs/mldsa-production/stage375_mldsa65_public_key.pem
+
+
+# Stage376 private timestamp material
+private/stage376-timestamps/
+stage376-artifact-download/
+stage376-artifact-download.zip
+
+# Raw RFC3161 and OpenTimestamps files
+*.tsq
+*.tst
+*.timestamp-token
+*.tsa-response
+
+# TSA trust material is private by default
+*.tsa.pem
+*.tsa.crt
+*.tsa.cer
+
+# Runtime output and command logs
+private/stage376-output/
+stage376-runtime/
+*.timestamp-command-output
+
+# Keep inherited executable workflows private in Stage376
+.github/workflows/stage375-production-mldsa.yml
+
+# Stage376 public workflows will be explicitly allowed
+!.github/workflows/stage376-production-rfc3161.yml
+!.github/workflows/stage376-production-opentimestamps.yml
+
+# Stage376 raw RFC3161 material
+*.p7s
+*.p7b
+private/rfc3161/
+
+# Stage377 private dual-timestamp execution material
+private/stage377-timestamps/
+private/opentimestamps/
+runner-output/
+
+# Stage377 workflows explicitly allowed
+!.github/workflows/stage377-production-rfc3161.yml
+!.github/workflows/stage377-production-opentimestamps.yml
+!.github/workflows/stage377-dual-final-acceptance.yml
+tmp/
+
+# ============================================================
+# Stage378 local/private safety boundary
+# QKD Safety Metadata Binding & Evidence Classification Gate
+# ============================================================
+
+# Stage378 local source record
+.stage378-source-local.txt
+
+# Private implementation and core
+
+# Temporary runner/download outputs
+imported/
+artifacts/
+artifact-download/
+downloaded_stage*_artifact/
+downloaded_stage*_artifacts/
+stage*-artifact-download/
+temp/
+.cache/
+
+# Local development environments
+.venv/
+venv/
+node_modules/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Backup and editor files
+*.bak
+*.backup
+*.orig
+*.swp
+*.swo
+*~
+README.md.stage*.bak
+backup_stage*_docs/
+
+# Raw timestamp proofs and private timestamp material
+*.enc
+
+# Private keys and certificate containers
+*.jks
+*.keystore
+
+# QKD raw or derived secret key material
+*.qkdkey
+*.rawkey
+*.siftedkey
+*.reconciledkey
+*.finalkey
+*.secretbits
+*.keybits
+*.otpkey
+
+# Explicit QKD private-material names
+raw_key*
+sifted_key*
+reconciled_key*
+final_key*
+secret_key*
+private_key*
+qkd_raw_key*
+qkd_secret*
+qkd_key_material*
+
+# Stage378 explicit QKD raw-key filename protection
+qkd_secret_key*
+qkd_sifted_key*
+qkd_reconciled_key*
+qkd_final_key*
+
+# Stage378 public workflow
+!.github/workflows/stage378-qkd-binding.yml
+
+# Stage378: publish only this workflow
+.github/workflows/*
+!.github/workflows/stage378-qkd-binding.yml

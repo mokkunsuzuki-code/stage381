@@ -1,0 +1,12 @@
+Stage363: External Timestamp Proof Verification Gate
+for OpenTimestamps and RFC3161
+
+Decision: timestamp_pending
+Verification Status: not_verified
+Previous Hash: 46eed2fc27a57a17193d02a7c30c802aab8b7a1c2d7ddbfa6e81847cfce0f71b
+Result SHA256: 1ad88c5b868eb62b6a3a9949e1830f7c2e5818a16063a6e267c2940b0f033100
+
+Meaning:
+Stage363 verifies external timestamp proof readiness for OpenTimestamps and RFC3161.
+It does not treat .ots files or RFC3161 tokens alone as verified.
+Without real verification evidence, the correct decision is timestamp_pending.

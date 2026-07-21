@@ -1,0 +1,104 @@
+{
+  "stage": 373,
+  "engine": "Final Acceptance Attestation and External Transparency Binding Gate",
+  "created_at": "2026-07-12T06:59:14.930415+00:00",
+  "source_stage": 372,
+  "previous_hash": "ef1847f09c7862d271d71e548f403f75c91b93b2ffc21dec6016f53e0db7c3aa",
+  "stage372_result_sha256": "ef1847f09c7862d271d71e548f403f75c91b93b2ffc21dec6016f53e0db7c3aa",
+  "stage372_manifest_sha256": "31272a949567c4f74d6c2afa88db12e945bc554489bedab958648827b0427d08",
+  "stage372_binding_sha256": "e5427f6362cd9a03f225610804aa73a0b519a049b17ae4ddab97512319735cb4",
+  "attestation_sha256": "d54b7524ced420f664da9d370985585d649ce80584b64bdf87342f89dbfde89f",
+  "stage372_decision": "final_acceptance_pending",
+  "stage372_timestamp_verified": false,
+  "stage372_final_acceptance": false,
+  "decision": "attestation_pending",
+  "external_transparency_bound": false,
+  "pqc_signature_verified": false,
+  "reasons": [
+    "external_verification_not_executed",
+    "stage372_final_acceptance_pending",
+    "sigstore_verification_pending",
+    "rekor_inclusion_verification_pending",
+    "pqc_signature_verification_pending"
+  ],
+  "checks": {
+    "stage372_result_present": true,
+    "stage372_manifest_present": true,
+    "stage373_input_present": true,
+    "stage372_result_declared_sha256_valid": true,
+    "stage372_result_sha256_matches": true,
+    "stage372_manifest_declared_sha256_valid": true,
+    "stage372_manifest_sha256_matches": true,
+    "embedded_manifest_sha256_matches": true,
+    "stage372_result_manifest_decision_consistent": true,
+    "stage372_result_manifest_timestamp_consistent": true,
+    "stage372_binding_sha256_generated": true,
+    "attestation_sha256_generated": true,
+    "execute_external_verification": false,
+    "sigstore_receipt_complete": false,
+    "sigstore_signature_verified": false,
+    "sigstore_identity_verified": false,
+    "sigstore_oidc_issuer_verified": false,
+    "rekor_metadata_complete": false,
+    "rekor_signed_entry_timestamp_verified": false,
+    "rekor_inclusion_proof_verified": false,
+    "rekor_artifact_digest_matches": false,
+    "pqc_receipt_complete": false,
+    "pqc_signature_verified": false,
+    "private_material_detected": false,
+    "raw_private_or_timestamp_file_detected": false
+  },
+  "external_verification": {
+    "sigstore": {
+      "status": "not_executed",
+      "bundle_sha256": null,
+      "signature_verified": false,
+      "identity_verified": false,
+      "oidc_issuer_verified": false
+    },
+    "rekor": {
+      "status": "not_verified",
+      "log_id": null,
+      "log_index": null,
+      "entry_uuid": null,
+      "integrated_time": null,
+      "artifact_digest_matches": false,
+      "signed_entry_timestamp_verified": false,
+      "inclusion_proof_verified": false
+    },
+    "pqc": {
+      "algorithm": "ML-DSA-65",
+      "algorithm_policy_status": "provisional",
+      "mode": "standalone_optional",
+      "status": "not_executed",
+      "verified": false
+    }
+  },
+  "safety_boundary": {
+    "no_private_keys": true,
+    "no_raw_secrets": true,
+    "no_oidc_tokens": true,
+    "no_raw_qkd_key_material": true,
+    "no_raw_timestamp_binaries_in_public_docs": true,
+    "public_keys_and_signatures_may_be_public": true,
+    "sigstore_bundle_may_be_public": true,
+    "metadata_only_until_real_verification": true
+  },
+  "guarantee": {
+    "what_stage373_guarantees": [
+      "Stage372 result and manifest are independently hash-validated.",
+      "Stage372 result and manifest are bound into one canonical attestation.",
+      "Stage372 pending status is not converted into final acceptance.",
+      "Sigstore and Rekor verification remain pending until complete verification receipts exist.",
+      "ML-DSA remains unverified until real standalone verification evidence exists.",
+      "Unsupported verified claims and public secret material are blocked."
+    ],
+    "what_stage373_does_not_guarantee": [
+      "It does not execute Cosign, Rekor, or ML-DSA commands by default.",
+      "It does not claim Stage372 timestamp verification has succeeded while Stage372 remains pending.",
+      "It does not claim native ML-DSA integration with Sigstore or Rekor.",
+      "It does not publish private keys, OIDC tokens, QKD raw keys, or raw timestamp binaries."
+    ]
+  },
+  "result_sha256": "165a919a371f74c6d296dbfe4408cd18a99590ab6ac797e879afb17069153866"
+}

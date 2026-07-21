@@ -1,0 +1,35 @@
+{
+  "stage": 368,
+  "engine": "Production Timestamp Verification Receipt Input",
+  "target_source_stage": 360,
+  "target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+  "receipt_mode": "metadata_only_no_raw_timestamp_binaries",
+  "opentimestamps_receipt": {
+    "enabled": true,
+    "command": "ots verify <stamped_file>",
+    "exit_code": null,
+    "stdout_sha256": null,
+    "stderr_sha256": null,
+    "ots_cli_output_sha256": null,
+    "stamped_file_sha256": null,
+    "ots_file_sha256": null,
+    "verified_target_hash": null,
+    "ots_verified": false
+  },
+  "rfc3161_receipt": {
+    "enabled": true,
+    "command": "openssl ts -verify ...",
+    "exit_code": null,
+    "stdout_sha256": null,
+    "stderr_sha256": null,
+    "rfc3161_verifier_output_sha256": null,
+    "original_file_sha256": null,
+    "timestamp_token_sha256": null,
+    "message_imprint_sha256": null,
+    "tsa_certificate_fingerprint": null,
+    "verified_target_hash": null,
+    "rfc3161_verified": false
+  },
+  "timestamp_verified": false,
+  "note": "Default receipt input. No real OpenTimestamps or RFC3161 command receipt has been added yet."
+}

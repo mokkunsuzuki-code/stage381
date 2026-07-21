@@ -1,0 +1,73 @@
+{
+  "stage": 361,
+  "engine": "Revocation Proof Injection Gate with Stage360 External Timestamp Binding",
+  "created_at": "2026-06-26T04:59:43.974928+00:00",
+  "source_stage": 360,
+  "previous_hash": "a99b52181342a3140425ff75496f752a6378e04ebc351f8a7c25cb5598a58acc",
+  "revocation_target": {
+    "source": "stage359_public_key_fingerprint",
+    "public_key_fingerprint": "sha256:9b9f3f4d5e5b8e04a60f2f0c1f3b2a6df01af45b217bbd85e82f2ac52b3d5c10",
+    "note": "Stage359 fingerprint is used as revocation target when available."
+  },
+  "revocation_status": "pending",
+  "decision": "pending_revocation_proof",
+  "block_reasons": [],
+  "checks": {
+    "stage360_result_present": true,
+    "stage360_previous_hash_bound": true,
+    "stage359_revocation_target_present": true,
+    "private_material_detected": false,
+    "fake_verified_claim_detected": false,
+    "revoked_detected": false,
+    "unknown_treated_as_good_detected": false,
+    "real_ocsp_verification_performed": false,
+    "real_crl_verification_performed": false
+  },
+  "revocation_evidence": {
+    "ocsp": {
+      "provided": false,
+      "status": "not_provided",
+      "ocsp_response_der_sha256": null,
+      "ocsp_verified": false,
+      "note": "No real OCSP cryptographic verification is performed in Stage361."
+    },
+    "crl": {
+      "provided": false,
+      "status": "not_provided",
+      "crl_der_sha256": null,
+      "crl_verified": false,
+      "note": "No real CRL cryptographic verification is performed in Stage361."
+    },
+    "signed_revocation_metadata": {
+      "provided": false,
+      "status": "not_provided",
+      "metadata_sha256": null,
+      "signature_verified": false,
+      "note": "Stage361 creates the safe receiver for future signed revocation metadata."
+    }
+  },
+  "safety_boundary": {
+    "no_private_keys": true,
+    "no_raw_secrets": true,
+    "no_raw_qkd_key_material": true,
+    "no_real_ocsp_verified_claim": true,
+    "no_real_crl_verified_claim": true,
+    "safe_metadata_only": true
+  },
+  "guarantee": {
+    "what_stage361_guarantees": [
+      "Stage360 result hash is bound as previous_hash when present.",
+      "A revocation proof receiver is created for OCSP, CRL, and signed revocation metadata.",
+      "The system does not falsely claim real OCSP or CRL verification.",
+      "Missing proof remains pending_revocation_proof.",
+      "Dangerous or false verified claims are blocked."
+    ],
+    "what_stage361_does_not_guarantee": [
+      "It does not perform real OCSP response signature verification.",
+      "It does not perform real CRL signature verification.",
+      "It does not prove that the certificate is currently good.",
+      "It does not handle private keys or raw secrets."
+    ]
+  },
+  "result_sha256": "f4c7f134e04ad7a61f1bc3ab8f770dd118689d018dcbc58fb076dc8771d24bf4"
+}

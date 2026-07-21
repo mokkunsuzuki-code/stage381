@@ -1,0 +1,12 @@
+Stage367: Production Timestamp Verification Activation Gate
+for OpenTimestamps / RFC3161
+
+Decision: verifier_pending
+Verification Status: not_verified
+Previous Hash: ab87f4a068dd0a7b8165f82c4040c3457e5f3b01c92944acabbff4d63f007ca6
+Result SHA256: 6bc5ba8d36ecae2d50ddb64592bd51934e683d62b44074465c3787e0e79f13e3
+
+Meaning:
+Stage367 activates production timestamp verification only when real verifier output exists.
+It can move verifier_pending to timestamp_verified only with matching target hash and verified output evidence.
+Without real verifier output, the correct decision remains verifier_pending.

@@ -1,0 +1,9 @@
+{
+  "stage": 334,
+  "status": "ai-vulnerability-watch-atlas-built",
+  "source_count": 4,
+  "pattern_count": 5,
+  "atlas_sha256": "3629042c129974b5bcf9fcafd54836521aaeece5963dabb6afa21adf9e04cdab",
+  "updated_at": "2026-05-26T11:45:16.755855+00:00",
+  "meaning": "Stage334 adds a safe 24-hour style AI vulnerability intelligence layer. It builds a public atlas of AI failure patterns without publishing exploit code."
+}

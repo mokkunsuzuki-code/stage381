@@ -1,0 +1,73 @@
+{
+  "stage": 375,
+  "engine": "Production ML-DSA-65 Dual-Signature Verification and Downgrade Prevention Gate",
+  "created_at": "2026-07-14T11:05:06.504659+00:00",
+  "source_stage": 374,
+  "previous_hash": "a9bb9a971dc638579bcdd8b4d1f2b529ac5a1d6a6936548715be4ab1cf896173",
+  "stage374_external_transparency_bound": true,
+  "target_blob_sha256": "6ecf58d0070d8db920744b7d32331e01e8e1aef2eded02dde428b80def79d5e6",
+  "attestation_sha256": "d54b7524ced420f664da9d370985585d649ce80584b64bdf87342f89dbfde89f",
+  "algorithm": "ML-DSA-65",
+  "fips_standard": "FIPS 204",
+  "decision": "quantum_safe_dual_signature_verified",
+  "sigstore_signature_verified": true,
+  "rekor_inclusion_verified": true,
+  "mldsa_signature_verified": true,
+  "dual_signature_target_matches": true,
+  "pqc_required": true,
+  "pqc_downgrade_prevented": true,
+  "reasons": [
+    "sigstore_rekor_and_mldsa65_same_target_verified"
+  ],
+  "checks": {
+    "stage374_result_present": true,
+    "stage374_result_sha256_valid": true,
+    "stage374_result_sha256_matches": true,
+    "previous_hash_matches_stage374": true,
+    "stage374_external_transparency_bound": true,
+    "stage374_sigstore_signature_verified": true,
+    "stage374_identity_verified": true,
+    "stage374_oidc_issuer_verified": true,
+    "target_present": true,
+    "target_blob_sha256_matches": true,
+    "logical_attestation_sha256_matches": true,
+    "public_key_present": true,
+    "public_key_pem_sha256_matches": true,
+    "signature_present": true,
+    "signature_sha256_valid": true,
+    "mldsa_receipt_present": true,
+    "mldsa_signature_verified": true,
+    "sigstore_and_mldsa_target_match": true,
+    "dual_signature_complete": true,
+    "private_key_marker_detected": false,
+    "forbidden_public_file_detected": false,
+    "pqc_required": true,
+    "downgrade_detected": false
+  },
+  "safety_boundary": {
+    "no_private_key_in_repository": true,
+    "private_key_stored_in_github_secret": true,
+    "public_key_may_be_public": true,
+    "signature_may_be_public": true,
+    "no_raw_qkd_key_material": true,
+    "no_oidc_token_published": true,
+    "no_free_form_shell_command": true,
+    "fail_closed_on_pqc_downgrade": true
+  },
+  "guarantee": {
+    "what_stage375_guarantees": [
+      "The Stage374 Sigstore/Rekor verification remains bound.",
+      "A real ML-DSA-65 signature is verified using the published key.",
+      "Sigstore and ML-DSA signatures must target the same exact blob.",
+      "The logical Stage373 attestation hash must also match.",
+      "When PQC is required, missing or invalid ML-DSA evidence fails closed."
+    ],
+    "what_stage375_does_not_guarantee": [
+      "It does not claim native ML-DSA integration inside Cosign.",
+      "It does not claim that this OpenSSL build is a FIPS 140 validated module.",
+      "It does not publish the ML-DSA private key.",
+      "It does not change Stage372 timestamp final acceptance."
+    ]
+  },
+  "result_sha256": "fb0a43e582e5e581ddbf06d2ad2636bdafd8a944bc74d049bf4e072db50d918c"
+}

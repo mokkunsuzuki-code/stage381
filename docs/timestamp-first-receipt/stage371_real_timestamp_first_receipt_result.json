@@ -1,0 +1,91 @@
+{
+  "stage": 371,
+  "engine": "Real Timestamp First Successful Receipt Gate with Stage370 Safety Brake Binding",
+  "created_at": "2026-07-10T01:42:48.472024+00:00",
+  "source_stage": 370,
+  "previous_hash": "af4c98c8e7a22a3d01565c2b9544f57f060e940355172754c537aac0ff896225",
+  "stage370_decision": "safety_test_pass",
+  "stage370_all_tests_passed": true,
+  "stage360_target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+  "decision": "first_receipt_pending",
+  "receipt_status": "not_generated",
+  "reasons": [
+    "execute_commands_false"
+  ],
+  "checks": {
+    "stage370_result_present": true,
+    "stage370_previous_hash_bound": true,
+    "stage370_safety_test_pass": true,
+    "stage370_all_tests_passed": true,
+    "stage360_result_present": true,
+    "stage360_target_hash_present": true,
+    "input_present": true,
+    "target_hash_present": true,
+    "target_hash_matches_stage360": true,
+    "execute_commands": false,
+    "ots_command_supplied": false,
+    "rfc3161_command_supplied": false,
+    "ots_first_receipt_ready": false,
+    "rfc3161_first_receipt_ready": false,
+    "timestamp_verified_claim": false,
+    "private_material_detected": false,
+    "raw_binary_marker_detected": false
+  },
+  "input": {
+    "stage": 371,
+    "engine": "Real Timestamp First Successful Receipt Input",
+    "target_source_stage": 360,
+    "target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+    "receipt_mode": "metadata_only_no_raw_timestamp_binaries",
+    "execute_commands": false,
+    "opentimestamps_first_receipt": {
+      "enabled": true,
+      "command": null,
+      "stamped_file_sha256": null,
+      "ots_file_sha256": null,
+      "verified_target_hash": null,
+      "ots_verified": false
+    },
+    "rfc3161_first_receipt": {
+      "enabled": true,
+      "command": null,
+      "original_file_sha256": null,
+      "timestamp_token_sha256": null,
+      "message_imprint_sha256": null,
+      "tsa_certificate_fingerprint": null,
+      "verified_target_hash": null,
+      "rfc3161_verified": false
+    },
+    "timestamp_verified": false,
+    "note": "Default input. Stage371 can generate first_receipt_generated only when real verifier command output exists, exit_code=0, and verified_target_hash matches Stage360."
+  },
+  "command_receipts": {
+    "opentimestamps": null,
+    "rfc3161": null
+  },
+  "safety_boundary": {
+    "no_private_keys": true,
+    "no_raw_secrets": true,
+    "no_raw_qkd_key_material": true,
+    "no_raw_timestamp_binaries_in_public_docs": true,
+    "metadata_receipt_only": true,
+    "stage371_does_not_final_accept_timestamp_verified": true,
+    "stage370_safety_brake_required": true
+  },
+  "guarantee": {
+    "what_stage371_guarantees": [
+      "Stage370 safety brake result is bound as previous_hash when present.",
+      "Stage370 safety_test_pass is required before first receipt generation.",
+      "first_receipt_generated requires exit_code=0 and matching verified_target_hash.",
+      "OpenTimestamps and RFC3161 successful receipts are represented as metadata only.",
+      "Stage371 does not final-accept timestamp_verified.",
+      "Raw timestamp binaries and secret leakage are blocked."
+    ],
+    "what_stage371_does_not_guarantee": [
+      "It does not publish raw .ots or RFC3161 token binaries.",
+      "It does not final-accept timestamp_verified.",
+      "It does not verify Sigstore, Rekor, OCSP, or CRL."
+    ]
+  },
+  "result_sha256": "581d2354f9aad758e551968634a79695cdd64aec2298f443e1376b646700c54f"
+}

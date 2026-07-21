@@ -1,0 +1,12 @@
+Stage371: Real Timestamp First Successful Receipt Gate
+with Stage370 Safety Brake Binding
+
+Decision: first_receipt_pending
+Receipt Status: not_generated
+Previous Hash: af4c98c8e7a22a3d01565c2b9544f57f060e940355172754c537aac0ff896225
+Result SHA256: 581d2354f9aad758e551968634a79695cdd64aec2298f443e1376b646700c54f
+
+Meaning:
+Stage371 can generate the first real successful timestamp receipt only after Stage370 safety brake tests pass.
+It requires exit_code=0, matching verified_target_hash, and metadata-only receipt evidence.
+Stage371 does not final-accept timestamp_verified; final acceptance belongs to the next gate.

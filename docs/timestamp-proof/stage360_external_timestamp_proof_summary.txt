@@ -1,0 +1,41 @@
+Stage360 External Timestamp Proof Binding Layer
+
+Decision:
+pending_timestamp_proof
+
+What Stage360 adds:
+- Reads Stage359 public key fingerprint result
+- Binds Stage359 result_sha256 as Stage360 previous_hash
+- Uses Stage359 public_key_fingerprint as timestamp target input
+- Generates timestamp_target_sha256
+- Records OpenTimestamps proof metadata
+- Records RFC3161 proof metadata
+- Returns pending_timestamp_proof when real proof is not present
+- Blocks fake verified timestamp claims
+- Does not claim real OpenTimestamps verification
+- Does not claim real RFC3161 verification
+
+Previous hash from Stage359:
+a081c57c22eebf76384a2c8d4a9bc7cba13a7013705095c97fd1ec4ceaee6a95
+
+Stage360 entry hash:
+23591f8724a6b7ea0c7b74d6a1c26e4568277223250df64553ce65d286dcc2d7
+
+Timestamp target SHA256:
+052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5
+
+Proof status:
+pending_timestamp_proof
+
+Generated files:
+- docs/timestamp-proof/stage360_external_timestamp_proof_policy.json
+- docs/timestamp-proof/stage360_external_timestamp_proof_result.json
+- docs/timestamp-proof/stage360_external_timestamp_proof_summary.txt
+
+Safety boundary:
+- No private keys
+- No raw secrets
+- No real OTS verification claim
+- No real RFC3161 verification claim
+- No external timestamp verified claim
+- Timestamp proof binding metadata only

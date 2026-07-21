@@ -1,0 +1,64 @@
+{
+  "stage": 372,
+  "engine": "Timestamp Verification Final Acceptance Gate with Stage371 First Receipt Binding",
+  "created_at": "2026-07-11T07:37:33.428897+00:00",
+  "source_stage": 371,
+  "previous_hash": "a938c34f6d29796faac735a349286e4812020b944adc716f3fa080be1cd96d3f",
+  "decision": "final_acceptance_pending",
+  "timestamp_verified": false,
+  "reasons": [
+    "stage371_first_receipt_not_generated"
+  ],
+  "checks": {
+    "stage371_result_present": true,
+    "stage371_previous_hash_bound": true,
+    "stage371_result_sha256_present": true,
+    "stage371_first_receipt_generated": false,
+    "stage371_not_block": true,
+    "stage371_not_rejected": true,
+    "stage360_result_present": true,
+    "stage360_target_hash_present": true,
+    "private_material_detected": false,
+    "raw_binary_marker_detected": false
+  },
+  "final_acceptance_manifest_sha256": "31272a949567c4f74d6c2afa88db12e945bc554489bedab958648827b0427d08",
+  "final_acceptance_manifest": {
+    "stage": 372,
+    "manifest_type": "timestamp_verification_final_acceptance_manifest",
+    "created_at": "2026-07-11T07:37:33.428897+00:00",
+    "source_stage": 371,
+    "previous_hash": "a938c34f6d29796faac735a349286e4812020b944adc716f3fa080be1cd96d3f",
+    "stage371_result_sha256": "581d2354f9aad758e551968634a79695cdd64aec2298f443e1376b646700c54f",
+    "stage371_decision": "first_receipt_pending",
+    "stage371_receipt_status": "not_generated",
+    "stage360_target_hash": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+    "timestamp_verified": false,
+    "decision": "final_acceptance_pending",
+    "reasons": [
+      "stage371_first_receipt_not_generated"
+    ],
+    "safety_boundary": {
+      "no_private_keys": true,
+      "no_raw_secrets": true,
+      "no_raw_qkd_key_material": true,
+      "no_raw_timestamp_binaries_in_public_docs": true,
+      "metadata_only_final_acceptance": true
+    },
+    "manifest_sha256": "31272a949567c4f74d6c2afa88db12e945bc554489bedab958648827b0427d08"
+  },
+  "guarantee": {
+    "what_stage372_guarantees": [
+      "Stage371 result is bound as previous_hash when present.",
+      "timestamp_verified can be true only after Stage371 first_receipt_generated.",
+      "If Stage371 is still pending, Stage372 remains final_acceptance_pending.",
+      "Final acceptance is recorded as an immutable public metadata manifest.",
+      "Raw timestamp binaries and secret leakage are blocked."
+    ],
+    "what_stage372_does_not_guarantee": [
+      "It does not run OpenTimestamps or RFC3161 commands.",
+      "It does not publish raw .ots, RFC3161 token, DER, TSA response, or secret material.",
+      "It does not verify Sigstore, Rekor, OCSP, or CRL."
+    ]
+  },
+  "result_sha256": "ef1847f09c7862d271d71e548f403f75c91b93b2ffc21dec6016f53e0db7c3aa"
+}

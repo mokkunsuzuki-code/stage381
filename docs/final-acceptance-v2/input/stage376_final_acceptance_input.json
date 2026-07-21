@@ -1,0 +1,94 @@
+{
+  "stage": 376,
+  "input_type": "production_dual_timestamp_superseding_final_acceptance_input",
+  "source_stage": 375,
+  "previous_hash": "fb0a43e582e5e581ddbf06d2ad2636bdafd8a944bc74d049bf4e072db50d918c",
+  "stage375_result_path": "docs/mldsa-production/stage375_dual_signature_verification_result.json",
+  "stage375_result_file_sha256": "d0ddbcb603e9a8a49a25dc81309a97087eef0c9c8f277f3cd4fb86566b571e2e",
+  "stage375_decision": "quantum_safe_dual_signature_verified",
+  "stage375_sigstore_signature_verified": true,
+  "stage375_rekor_inclusion_verified": true,
+  "stage375_mldsa_signature_verified": true,
+  "stage375_dual_signature_target_matches": true,
+  "stage375_pqc_downgrade_prevented": true,
+  "historic_stage372": {
+    "result_path": "docs/timestamp-final-acceptance/stage372_timestamp_verification_final_acceptance_result.json",
+    "result_file_sha256": "91be9d25ad89adc64da1cd14ddbb2e0a5c41cc10460a0437bbae790e6256625f",
+    "result_sha256": "ef1847f09c7862d271d71e548f403f75c91b93b2ffc21dec6016f53e0db7c3aa",
+    "decision": "final_acceptance_pending",
+    "timestamp_verified": false,
+    "record_modified": false
+  },
+  "timestamp_target": {
+    "source_stage": 360,
+    "stage360_result_path": "docs/timestamp-proof/stage360_external_timestamp_proof_result.json",
+    "stage360_result_file_sha256": "a99b52181342a3140425ff75496f752a6378e04ebc351f8a7c25cb5598a58acc",
+    "sha256": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+    "canonical_target_path": "docs/timestamp-evidence/stage376_stage360_timestamp_target.json",
+    "canonical_target_file_sha256": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
+    "canonicalization": {
+      "format": "JSON",
+      "encoding": "UTF-8",
+      "ensure_ascii": false,
+      "sort_keys": true,
+      "separators": [
+        ",",
+        ":"
+      ],
+      "trailing_newline": false
+    },
+    "reconstruction_source": {
+      "source_script": "stage360_external_timestamp_proof_binding.py",
+      "source_stage": 360,
+      "reconstruction_verified": true
+    }
+  },
+  "policy_path": "docs/timestamp-policy/stage376_dual_timestamp_policy.json",
+  "policy_file_sha256": "ac26d27e30b74cc2d75474f27330882fc12ac0170279cbbf6f7d87a71d4dd1a5",
+  "execution": {
+    "mode": "fixed_github_actions_workflows",
+    "execute_local_timestamp_commands": false,
+    "allow_free_form_commands": false
+  },
+  "rfc3161": {
+    "enabled": true,
+    "status": "not_executed",
+    "tsa_url": null,
+    "tsa_policy_oid": null,
+    "request_sha256": null,
+    "response_sha256": null,
+    "message_imprint_sha256": null,
+    "generation_time": null,
+    "verify_exit_code": null,
+    "verification_output_sha256": null,
+    "message_imprint_matches": false,
+    "tsa_signature_verified": false,
+    "certificate_chain_verified": false,
+    "nonce_matches": false,
+    "verified": false,
+    "receipt_path": "docs/timestamp-evidence/stage376_rfc3161_verification_receipt.json"
+  },
+  "opentimestamps": {
+    "enabled": true,
+    "status": "not_executed",
+    "proof_sha256": null,
+    "verified_target_sha256": null,
+    "confirmed_anchor_type": null,
+    "confirmed_anchor_reference": null,
+    "verified_time": null,
+    "verify_exit_code": null,
+    "verification_output_sha256": null,
+    "target_hash_matches": false,
+    "confirmed_public_anchor": false,
+    "verified": false,
+    "receipt_path": "docs/timestamp-evidence/stage376_opentimestamps_verification_receipt.json"
+  },
+  "requested_effective_state": {
+    "supersedes_stage372_pending": true,
+    "stage372_record_modified": false,
+    "effective_final_acceptance": false,
+    "timestamp_verified": false,
+    "maximum_timestamp_assurance": false
+  },
+  "note": "Safe initial input. Stage372 remains historically unchanged. Effective final acceptance can become true only after independently valid RFC3161 and OpenTimestamps verification receipts are imported."
+}

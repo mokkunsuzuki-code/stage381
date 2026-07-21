@@ -1,0 +1,23 @@
+{
+  "stage": 374,
+  "input_type": "production_sigstore_rekor_verification_input",
+  "source_stage": 373,
+  "execution_mode": "github_actions_oidc",
+  "execute_external_operations": false,
+  "target_path": "docs/final-acceptance-attestation/stage373_final_acceptance_attestation.json",
+  "expected_attestation_sha256": "d54b7524ced420f664da9d370985585d649ce80584b64bdf87342f89dbfde89f",
+  "expected_identity": "https://github.com/mokkunsuzuki-code/stage374/.github/workflows/stage374-production-sigstore.yml@refs/heads/main",
+  "expected_oidc_issuer": "https://token.actions.githubusercontent.com",
+  "minimum_cosign_version": "3.0.4",
+  "configured_cosign_version": "3.1.1",
+  "bundle_path": "docs/sigstore-production/stage373_attestation.sigstore.bundle.json",
+  "execution_receipt_path": "docs/sigstore-production/stage374_cosign_execution_receipt.json",
+  "rekor_receipt_path": "docs/sigstore-production/stage374_rekor_inclusion_receipt.json",
+  "note": "Local Python gate execution remains disabled. External Sigstore and Rekor operations were authorized and completed only in the fixed GitHub Actions OIDC workflow. No free-form command execution is accepted.",
+  "expected_attestation_blob_sha256": "6ecf58d0070d8db920744b7d32331e01e8e1aef2eded02dde428b80def79d5e6",
+  "execution_scope": "local_gate_only",
+  "local_external_execution_enabled": false,
+  "github_actions_external_execution_authorized": true,
+  "github_actions_external_execution_completed": true,
+  "verified_github_run_id": "29295518405"
+}
