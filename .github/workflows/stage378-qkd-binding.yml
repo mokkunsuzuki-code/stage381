@@ -2,6 +2,11 @@ name: Stage378 QKD Safety Metadata Binding Gate
 
 on:
   workflow_dispatch:
+    inputs:
+      stage377_run_id:
+        description: "Completed Stage377 dual-final-acceptance run ID"
+        required: false
+        type: string
   push:
     branches:
       - main
@@ -11,6 +16,7 @@ on:
       - ".github/workflows/stage378-qkd-binding.yml"
 
 permissions:
+  actions: read
   contents: read
 
 jobs:
@@ -20,6 +26,69 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Download completed Stage377 finalization package
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.stage377_run_id != '' }}
+        uses: actions/download-artifact@v4
+        with:
+          repository: mokkunsuzuki-code/stage377
+          run-id: ${{ inputs.stage377_run_id }}
+          name: stage377-dual-timestamp-finalization-package
+          github-token: ${{ secrets.STAGE377_ARTIFACT_TOKEN }}
+          path: imported/stage377
+
+      - name: Import and validate completed Stage377 result
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.stage377_run_id != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          SOURCE_RESULT="$(
+            find imported/stage377               -type f               -name 'stage377_dual_timestamp_finalization_result.json'               -print               -quit
+          )"
+
+          if [ -z "${SOURCE_RESULT}" ]; then
+            echo "ERROR: completed Stage377 result was not found."
+            exit 1
+          fi
+
+          mkdir -p docs/timestamp-finalization
+
+          cp             "${SOURCE_RESULT}"             docs/timestamp-finalization/stage377_dual_timestamp_finalization_result.json
+
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path(
+              "docs/timestamp-finalization/"
+              "stage377_dual_timestamp_finalization_result.json"
+          )
+
+          result = json.loads(path.read_text(encoding="utf-8"))
+
+          required = [
+              result.get("stage") == 377,
+              result.get("decision")
+                  == "dual_timestamp_final_acceptance_verified",
+              result.get("effective_final_acceptance") is True,
+              result.get("timestamp_verified") is True,
+              result.get("rfc3161_verified") is True,
+              result.get("opentimestamps_verified") is True,
+              result.get("verified_proof_count") == 2,
+          ]
+
+          if not all(required):
+              raise SystemExit(
+                  "ERROR: imported Stage377 result is not "
+                  "a completed dual-timestamp final acceptance."
+              )
+
+          print(
+              "Imported completed Stage377 result:",
+              result.get("result_sha256"),
+          )
+          PY
 
       - name: Set up Python
         uses: actions/setup-python@v5
