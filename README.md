@@ -1,362 +1,419 @@
-# Stage377: Production Dual-Timestamp Finalization and Superseding Final Acceptance Gate
+# Stage380: Independent Verification Package Contract & Deterministic Offline Core Verifier
 
-Stage377 extends Stage376 by connecting two independently verified production timestamp receipts to a new effective final-acceptance decision.
+Stage380 extends Stage379 by packaging the established verification scope into a deterministic offline verification contract.
 
-Stage377 does not rewrite the Stage372 or Stage376 historical records. It preserves both records and creates a new Stage377 result only after the required external evidence has been evaluated.
+Stage380 does not replace or rewrite Stage379. It preserves the Stage379 development snapshot and verifies the package from an independent, offline, fail-closed perspective.
 
 ## Purpose
 
-Stage376 established the fail-closed acceptance model for external timestamps.
+Stage380 adds two core capabilities:
 
-Stage377 adds the operational finalization layer:
+1. Independent Verification Package Contract
+2. Deterministic Offline Core Verifier
 
-1. Produce and verify an RFC3161 timestamp receipt.
-2. Produce and verify an OpenTimestamps receipt.
-3. Confirm that both proofs refer to the same established Stage360 target.
-4. Bind the new decision to the established Stage376 result hash.
-5. Issue a new effective final acceptance only when both independent proofs verify.
-6. Preserve the Stage372 and Stage376 historical records without modification.
+The purpose is to make the Stage379 verification package independently reproducible without network access and without changing the established verification scope.
 
-## Established Bindings
+## Current State
 
-Stage376 result SHA256:
+Stage380 is currently development-only.
 
-`32ff58a1f4d5837518226eee70b32833a8147617df3142ff2f641eca3f116138`
+The current decision is:
 
-Canonical Stage360 timestamp target SHA256:
+`development_package_verified_upstream_pending`
 
-`052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5`
+Current verified state:
 
-Historic Stage372 result SHA256:
+- package integrity verified: `true`
+- formal independent verification: `false`
+- formal acceptance: `false`
+- pipeline completed: `false`
+- public release allowed: `false`
+- critical failure count: `0`
 
-`ef1847f09c7862d271d71e548f403f75c91b93b2ffc21dec6016f53e0db7c3aa`
+Formal independent verification remains pending because the upstream formal acceptance conditions are not yet complete.
 
-## Initial State
+## Upstream Conditions
 
-Before both production timestamp receipts are verified:
+Stage380 depends on the established Stage377, Stage378, and Stage379 results.
 
-- `decision: timestamp_finalization_pending`
-- `rfc3161_verified: false`
-- `opentimestamps_verified: false`
-- `effective_final_acceptance: false`
-- `maximum_timestamp_assurance: false`
+Required formal conditions include:
 
-This is the expected fail-closed state.
+### Stage377
 
-An unexecuted or unconfirmed timestamp system must not be treated as verified.
+- `verified_proof_count == 2`
+- `effective_final_acceptance == true`
 
-## Successful State
+### Stage378
 
-Final acceptance is issued only when both independent timestamp rails verify:
+- `qkd_metadata_bound == true`
+- Stage377 result hash valid
+- Stage378 hash chain valid
+- QKD publication boundary valid
+- QKD evidence classification complete
 
-- `decision: dual_timestamp_final_acceptance_verified`
-- `rfc3161_verified: true`
-- `opentimestamps_verified: true`
-- `verified_proof_count: 2`
-- `timestamp_verified: true`
-- `effective_final_acceptance: true`
-- `maximum_timestamp_assurance: true`
+### Stage379
 
-## Decision Model
+- `formal_acceptance == true`
+- `pipeline_completed == true`
+- `critical_integrity_valid == true`
 
-Stage377 can return the following decisions:
+Until these conditions are satisfied, Stage380 must remain development-only and fail closed against any formal acceptance claim.
 
-### `timestamp_finalization_pending`
+## Independent Verification Package Contract
 
-Neither timestamp system has completed a verified production result.
+The Stage380 contract is:
 
-### `rfc3161_verified_opentimestamps_pending`
+`development/stage380/stage380_independent_verification_package_contract.json`
 
-The RFC3161 receipt is verified, but the OpenTimestamps proof is still unconfirmed or unverified.
+The contract defines:
 
-### `opentimestamps_verified_rfc3161_pending`
+- source stage
+- source snapshot manifest
+- required input files
+- deterministic offline execution
+- package locking
+- scope-reduction prohibition
+- fail-closed behavior
+- development-only state
+- formal acceptance prohibition
 
-The OpenTimestamps receipt is verified, but the RFC3161 receipt is still unverified.
+The contract is fixed by:
 
-### `dual_timestamp_final_acceptance_verified`
+`development/stage380/stage380_independent_verification_package_contract.sha256`
 
-Both independent timestamp systems verified the same Stage360 target and all final-acceptance conditions passed.
-
-### `block`
-
-A required binding, receipt, hash, verification result, or publication-boundary condition failed.
-
-## RFC3161 Verification Rail
-
-The RFC3161 workflow:
-
-- verifies the exact Stage360 target SHA256 before execution
-- generates an RFC3161 request using SHA256
-- sends the request to the configured timestamp authority
-- receives a timestamp response
-- extracts the signed timestamp token
-- verifies the target message imprint
-- verifies the timestamp authority signature
-- verifies the certificate chain using OpenSSL
-- generates a metadata-only public receipt
-- deletes raw RFC3161 material from the GitHub-hosted runner
-
-The public repository does not require publication of the raw timestamp request, raw timestamp response, timestamp token, or certificate bundle.
-
-## OpenTimestamps Verification Rail
-
-The OpenTimestamps workflow:
-
-- verifies the exact Stage360 target SHA256 before execution
-- copies the target into a private runner directory
-- creates an OpenTimestamps proof
-- runs OpenTimestamps verification
-- records whether a confirmed public blockchain anchor exists
-- records `pending_confirmation` when confirmation is not yet available
-- claims `verified` only when the public anchor and verified time are confirmed
-- generates a metadata-only public receipt
-- deletes the raw `.ots` proof from the GitHub-hosted runner
-
-A newly created OpenTimestamps proof commonly requires time before reaching a confirmed public blockchain anchor.
-
-Stage377 does not treat an unconfirmed proof as final verification.
-
-## GitHub Actions Workflows
-
-Stage377 adds:
-
-- `.github/workflows/stage377-production-rfc3161.yml`
-- `.github/workflows/stage377-production-opentimestamps.yml`
-- `.github/workflows/stage377-dual-final-acceptance.yml`
-
-### RFC3161 Workflow
-
-Produces the artifact:
-
-`stage377-rfc3161-metadata-receipt`
-
-### OpenTimestamps Workflow
-
-Produces the artifact:
-
-`stage377-opentimestamps-metadata-receipt`
-
-### Dual Final-Acceptance Workflow
-
-Accepts:
-
-- RFC3161 GitHub Actions run ID
-- OpenTimestamps GitHub Actions run ID
-
-It downloads the two metadata receipts, imports them into the checked-out repository, runs the Stage377 finalization engine, and generates a metadata-only finalization package.
-
-The finalization workflow does not automatically commit or push files to the repository.
-
-## Stage377 Engine
-
-The Stage377 finalization engine is:
-
-`scripts/stage377_dual_timestamp_finalization.py`
-
-It validates:
-
-- Stage376 result integrity
-- Stage372 result integrity
-- Stage360 target hash binding
-- RFC3161 receipt structure
-- RFC3161 verification status
-- OpenTimestamps receipt structure
-- OpenTimestamps verification status
-- common target binding
-- required proof count
-- metadata-only publication boundary
-- absence of forbidden timestamp binaries under `docs/`
-- absence of private key material under `docs/`
-
-## Public Evidence
-
-Stage377 publishes the following metadata and decision files:
-
-- `docs/timestamp-policy/stage377_dual_timestamp_finalization_policy.json`
-- `docs/timestamp-evidence/stage377_rfc3161_verification_receipt.json`
-- `docs/timestamp-evidence/stage377_opentimestamps_verification_receipt.json`
-- `docs/timestamp-finalization/stage377_dual_timestamp_finalization_result.json`
-- `docs/timestamp-finalization/stage377_superseding_final_acceptance_manifest.json`
-- `docs/timestamp-finalization/stage377_dual_timestamp_finalization_summary.txt`
-
-## Private and Excluded Material
-
-Stage377 does not publish:
-
-- private keys
-- secret seeds
-- OIDC tokens
-- GitHub tokens
-- raw QKD key material
-- RFC3161 `.tsq` files
-- RFC3161 `.tsr` files
-- RFC3161 timestamp tokens
-- RFC3161 certificate bundles
-- raw OpenTimestamps `.ots` proof files
-- free-form externally supplied shell commands
-
-Raw timestamp material is handled under Git-ignored private directories.
-
-## Historical Preservation
-
-Stage377 does not change the historic Stage372 or Stage376 result files.
-
-The Stage377 result records their established hashes and creates a new result representing a later verification state.
-
-Superseding does not mean deleting or rewriting previous history.
-
-It means that a newer, independently verified record establishes the latest effective final-acceptance state.
-
-## Fail-Closed Principle
-
-Stage377 does not grant final acceptance merely because:
-
-- one timestamp rail succeeded
-- a proof file exists
-- a workflow completed without a validated receipt
-- an OpenTimestamps proof was created but not confirmed
-- a timestamp response was received but not cryptographically verified
-- two receipts refer to different target hashes
-- a required historical hash does not match
-- raw timestamp material entered the public directory
-
-Any such state remains pending or becomes blocked.
-
-## Local Verification
-
-Run:
+Verification command:
 
 ```bash
+shasum -a 256 -c development/stage380/stage380_independent_verification_package_contract.sha256
+```
+
+## Deterministic Offline Core Verifier
+
+The Stage380 verifier is:
+
+development/stage380/verify_stage380_independent_package.py
+
+The verifier performs the following checks:
+
+Stage380 contract presence
+Stage380 contract SHA-256 verification
+SHA-256 record path verification
+contract policy validation
+required input presence checks
+required input SHA-256 calculation
+Stage379 snapshot manifest verification
+Stage379 snapshot artifact hash verification
+Stage379 snapshot artifact size verification
+duplicate artifact-path detection
+Stage377 state observation
+Stage378 state observation
+Stage379 state observation
+Stage379 critical-integrity validation
+Stage379 development certificate validation
+formal-acceptance readiness evaluation
+fail-closed decision generation
+deterministic result generation
+
+Run the verifier with:
+
+python3 development/stage380/verify_stage380_independent_package.py
+
+Expected current decision:
+
+decision=development_package_verified_upstream_pending
+package_integrity_verified=true
+formal_independent_verification=false
+critical_failure_count=0
+## Deterministic Output
+
+Stage380 is designed so that the same input produces the same output.
+
+The result intentionally excludes:
+
+runtime timestamps
+random values
+hostnames
+usernames
+absolute local paths
+network-derived values
+
+Deterministic verification can be checked with:
+
+FIRST_HASH=$(shasum -a 256 development/stage380/stage380_independent_verification_result.json | awk '{print $1}')
+python3 development/stage380/verify_stage380_independent_package.py >/dev/null
+SECOND_HASH=$(shasum -a 256 development/stage380/stage380_independent_verification_result.json | awk '{print $1}')
+printf "FIRST_HASH=%s\nSECOND_HASH=%s\n" "$FIRST_HASH" "$SECOND_HASH"
+[ "$FIRST_HASH" = "$SECOND_HASH" ] && echo "DETERMINISTIC_OUTPUT_VALID"
+## Fail-Closed Principle
+
+Stage380 must return fail_closed when a critical verification requirement fails.
+
+Examples include:
+
+missing Stage380 contract
+invalid contract JSON
+contract SHA-256 mismatch
+invalid SHA-256 record path
+missing required input
+missing Stage379 snapshot manifest
+Stage379 snapshot artifact missing
+Stage379 snapshot artifact hash mismatch
+Stage379 snapshot artifact size mismatch
+duplicate snapshot artifact path
+invalid Stage379 critical integrity
+invalid development certificate type
+contract policy mismatch
+scope reduction enabled
+offline mode disabled
+package lock disabled
+
+Stage380 does not convert missing, unknown, pending, or invalid evidence into verified evidence.
+
+## Verification Result
+
+The deterministic verification result is:
+
+development/stage380/stage380_independent_verification_result.json
+
+It contains:
+
+decision
+verification status
+package-integrity status
+formal-verification status
+upstream state
+contract SHA-256
+snapshot SHA-256
+required-input SHA-256 values
+verification checks
+critical failures
+deterministic result SHA-256
+
+The external result hash record is:
+
+development/stage380/stage380_independent_verification_result.sha256
+
+Verification command:
+
+shasum -a 256 -c development/stage380/stage380_independent_verification_result.sha256
+## Verification Manifest
+
+The Stage380 manifest is:
+
+development/stage380/stage380_independent_verification_manifest.json
+
+The manifest records:
+
+development policy
+verification contract
+deterministic verifier
+verification result
+verification certificate
+actual SHA-256 values
+actual file sizes
+artifact count
+
+The manifest is fixed by:
+
+development/stage380/stage380_independent_verification_manifest.sha256
+
+Verification command:
+
+shasum -a 256 -c development/stage380/stage380_independent_verification_manifest.sha256
+## Verification Certificate
+
+The Stage380 development certificate is:
+
+development/stage380/stage380_independent_verification_certificate.json
+
+Certificate type:
+
+development_independent_verification_certificate
+
+The certificate does not claim formal independent verification.
+
+It records that:
+
+deterministic offline package verification completed
+package integrity was verified
+formal independent verification remains pending
+upstream formal acceptance remains incomplete
+pipeline completion is not claimed
+
+The certificate is fixed by:
+
+development/stage380/stage380_independent_verification_certificate.sha256
+
+Verification command:
+
+shasum -a 256 -c development/stage380/stage380_independent_verification_certificate.sha256
+## Stage379 Preservation
+
+Stage380 preserves and consumes the Stage379 development package.
+
+Primary Stage379 inputs include:
+
+development/stage379/stage379_development_snapshot_manifest.json
+development/stage379/stage379_development_acceptance_certificate.json
+development/stage379/stage379_scoped_total_verification_result.json
+development/stage379/stage379_verification_scope_policy.json
+
+Stage380 does not modify these Stage379 records.
+
+The previous root README is preserved at:
+
+development/stage380/README.stage377-preserved.md
+
+## Public and Private Boundaries
+
+Stage380 preserves the existing Git exclusion rules.
+
+The following directories must remain private and must not be pushed to GitHub:
+
+core/
+private_core/
+private/
+secrets/
+keys/
+imported/
+
+Stage380 must not publish:
+
+private keys
+secret seeds
+access tokens
+OIDC tokens
+GitHub tokens
+raw QKD key material
+private runner output
+unrestricted external command input
+raw confidential evidence
+
+Only reviewed metadata and approved public evidence may be placed under docs/.
+
+## Offline Verification Boundary
+
+The Stage380 verifier requires no network access.
+
+It does not:
+
+contact timestamp authorities
+contact blockchain nodes
+contact Sigstore or Rekor
+download GitHub Actions artifacts
+fetch external evidence
+execute user-supplied shell commands
+generate or expose secret material
+
+Stage380 verifies the locally available package as provided.
+
+## Directory Structure
+development/stage380/
+├── README.stage377-preserved.md
+├── stage380_independent_verification_package_contract.json
+├── stage380_independent_verification_package_contract.sha256
+├── verify_stage380_independent_package.py
+├── stage380_independent_verification_result.json
+├── stage380_independent_verification_result.sha256
+├── stage380_independent_verification_manifest.json
+├── stage380_independent_verification_manifest.sha256
+├── stage380_independent_verification_certificate.json
+└── stage380_independent_verification_certificate.sha256
+
+Root development policy:
+
+.stage380-development-policy.json
+## Verification Sequence
+
+Recommended verification sequence:
+
+python3 -m json.tool .stage380-development-policy.json >/dev/null
+
+python3 -m json.tool \
+development/stage380/stage380_independent_verification_package_contract.json \
+>/dev/null
+
+shasum -a 256 -c \
+development/stage380/stage380_independent_verification_package_contract.sha256
+
 python3 -m py_compile \
-  scripts/stage377_dual_timestamp_finalization.py
+development/stage380/verify_stage380_independent_package.py
 
 python3 \
-  scripts/stage377_dual_timestamp_finalization.py
+development/stage380/verify_stage380_independent_package.py
 
-cat \
-  docs/timestamp-finalization/stage377_dual_timestamp_finalization_summary.txt
+shasum -a 256 -c \
+development/stage380/stage380_independent_verification_result.sha256
 
-Before production timestamp receipts exist, the expected output includes:
+python3 -m json.tool \
+development/stage380/stage380_independent_verification_manifest.json \
+>/dev/null
 
-Decision: timestamp_finalization_pending
-RFC3161 Verified: False
-OpenTimestamps Verified: False
-Effective Final Acceptance: False
-Maximum Timestamp Assurance: False
-GitHub Pages
+shasum -a 256 -c \
+development/stage380/stage380_independent_verification_manifest.sha256
 
-Stage377 preserves the existing GitHub Pages structure under:
+python3 -m json.tool \
+development/stage380/stage380_independent_verification_certificate.json \
+>/dev/null
 
-docs/
+shasum -a 256 -c \
+development/stage380/stage380_independent_verification_certificate.sha256
+## Decision Model
+development_package_verified_upstream_pending
 
-Public page:
+The Stage380 package is internally valid, but upstream formal acceptance conditions remain incomplete.
 
-https://mokkunsuzuki-code.github.io/stage377/
+independent_verification_package_ready
 
-Safety Statement
+The Stage380 package is internally valid and all required upstream formal acceptance conditions are satisfied.
 
-Stage377 is a verification and audit-evidence system.
+This decision must not be emitted unless the actual Stage377, Stage378, and Stage379 records satisfy the contract.
 
-It does not include:
+fail_closed
 
-malware
-exploit automation
-attack payloads
-credential theft
-private-key publication
-raw QKD key publication
-License
+One or more critical integrity, policy, hash, file, snapshot, or certificate checks failed.
 
-MIT License.
+## Security Properties
 
-<!-- STAGE378_README_START -->
+Stage380 provides the following development-stage properties:
 
-# Stage378: QKD Safety Metadata Binding & Evidence Classification Gate
+deterministic local verification
+offline operation
+package integrity validation
+artifact hash validation
+artifact size validation
+duplicate-path detection
+upstream-state observation
+fail-closed decisions
+scope-lock enforcement
+scope-reduction prohibition
+private-boundary preservation
+no formal claim while upstream is pending
 
-Stage378 extends Stage377 with a Fail-Closed QKD safety metadata binding and evidence classification layer.
+Stage380 does not prove that an external organization or independent third party has executed the verifier.
 
-Stage378 does not publish, reconstruct, transfer, or expose raw QKD key material.
+That requires an actual independent execution environment and independently retained evidence.
 
-## Stage377 to Stage378
+## Current Limitations
 
-Stage377 dual-timestamp finalization result -> Stage377 result SHA256 validation -> previous_hash binding -> QKD safety metadata validation -> QKD evidence classification -> raw-key non-publication verification -> QKD evidence-level assignment -> Stage378 decision.
+Current limitations include:
 
-## What Stage378 Adds
+Stage377 has not yet reached dual verified timestamp acceptance
+Stage378 QKD metadata binding remains pending
+Stage379 formal acceptance remains pending
+Stage380 remains development-only
+no third-party execution claim is made
+no production-readiness claim is made
+no pipeline-completion claim is made
 
-- Stage377 result SHA256 verification
-- Stage377 previous-hash binding
-- QKD safety metadata validation
-- QKD evidence-source classification
-- QKD evidence-level assignment
-- QBER declaration consistency checking
-- QKD raw-key publication prevention
-- private-material scanning inside docs
-- Fail-Closed handling when Stage377 is incomplete
-
-## Evidence Classifications
-
-- metadata_only: public safety metadata only
-- qkd_simulator: evidence generated by a QKD simulator
-- controlled_testbed: evidence generated in a controlled QKD test environment
-- physical_qkd_system: evidence generated by an identified physical QKD system
-
-Simulator evidence is not treated as physical-device evidence.
-
-## QKD Evidence Levels
-
-- QKD-E0: invalid, insufficient, inconsistent, or unsafe evidence
-- QKD-E1: safe metadata-only evidence
-- QKD-E2: QKD simulator evidence
-- QKD-E3: controlled QKD testbed evidence
-- QKD-E4: physical QKD-system evidence satisfying required metadata checks
-
-The evidence level identifies the type and completeness of submitted evidence. It does not independently prove universal QKD security.
-
-## QBER Handling
-
-Stage378 does not impose one universal QBER threshold.
-
-It validates observed_qber, declared_qber_limit, qber_within_declared_limit, and limit_source.
-
-The threshold source must be identified because the valid limit may depend on the protocol, implementation, security proof, operating conditions, or system policy.
-
-## Current Initial State
-
-Stage377 currently reports timestamp_finalization_pending and verified_proof_count 0.
-
-Therefore Stage378 correctly reports qkd_binding_pending_previous_stage, metadata_only, QKD-E1, and qkd_metadata_bound false.
-
-This is the expected Fail-Closed result.
-
-## Public Stage378 Files
-
-- docs/qkd/stage378_qkd_safety_metadata_input.json
-- docs/qkd/stage378_evidence_classification.json
-- docs/qkd/stage378_qkd_safety_metadata_binding_result.json
-- docs/qkd/stage378_qkd_safety_metadata_binding_summary.txt
-
-## Stage378 Engine
-
-- scripts/stage378_qkd_safety_metadata_binding_gate.py
-
-## Publication Boundary
-
-Stage378 prohibits publication of raw QKD keys, sifted keys, reconciled keys, final QKD secrets, derived secret material, private keys, device credentials, GitHub tokens, OIDC tokens, RFC3161 raw binaries, and OpenTimestamps raw binaries.
-
-Only public metadata, classifications, hashes, decisions, and summaries belong in docs.
-
-## Private Directories
-
-- core/
-- private_core/
-- private/
-- secrets/
-- keys/
-- runner-output/
-- imported/
+These limitations are intentionally represented rather than hidden.
 
 ## License
 
-MIT License. See LICENSE.
+This project is licensed under the MIT License.
 
-<!-- STAGE378_README_END -->
+See:
+
+LICENSE
+
+The MIT License applies to the published source code and documentation in this repository. It does not override restrictions, confidentiality requirements, third-party licenses, or security controls applicable to private material or external evidence.

@@ -251,3 +251,37 @@ qkd_final_key*
 # Stage378: publish only this workflow
 .github/workflows/*
 !.github/workflows/stage378-qkd-binding.yml
+
+# Stage379 development-only workspace
+.stage379-development-policy.json
+development/
+scripts/stage379_development_gate.py
+scripts/stage379_scoped_total_verification_gate.py
+
+# Stage380 public development verification package
+!.github/
+!.github/workflows/
+!.github/workflows/stage380-independent-verification.yml
+
+!development/
+development/*
+!development/stage379/
+development/stage379/*
+!development/stage379/stage379_development_snapshot_manifest.json
+!development/stage379/stage379_scoped_total_verification_result.json
+!development/stage379/stage379_development_acceptance_certificate.json
+
+!development/stage380/
+!development/stage380/README.stage377-preserved.md
+!development/stage380/stage380_independent_verification_package_contract.json
+!development/stage380/stage380_independent_verification_package_contract.sha256
+!development/stage380/verify_stage380_independent_package.py
+!development/stage380/stage380_independent_verification_result.json
+!development/stage380/stage380_independent_verification_result.sha256
+!development/stage380/stage380_independent_verification_manifest.json
+!development/stage380/stage380_independent_verification_manifest.sha256
+!development/stage380/stage380_independent_verification_certificate.json
+!development/stage380/stage380_independent_verification_certificate.sha256
+
+# Local Git metadata backup — never publish
+.git-stage380-empty-backup/

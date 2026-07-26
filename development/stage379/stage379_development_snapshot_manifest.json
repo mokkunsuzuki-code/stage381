@@ -1,0 +1,80 @@
+{
+  "artifact_count": 13,
+  "artifacts": [
+    {
+      "path": ".stage379-development-policy.json",
+      "sha256": "6ca50bf9e4f874c654c84b0ad17f3335293c0a1a69eba37b185b6c53d0f1b9c5",
+      "size_bytes": 1273
+    },
+    {
+      "path": "scripts/stage379_development_gate.py",
+      "sha256": "1b02f10d7f5a9805ea60c509c855934329c6078480a6d669efcb025791a5aea1",
+      "size_bytes": 15901
+    },
+    {
+      "path": "scripts/stage379_scoped_total_verification_gate.py",
+      "sha256": "ab3b19121287c817335e9b2bf44518058e4d2550878f5491ef603d3fce59a038",
+      "size_bytes": 20493
+    },
+    {
+      "path": "development/stage379/stage379_verification_scope_policy.json",
+      "sha256": "8730ee3aa3b633dd4033a11769bc536a1ea41cc41325d2e0eb1901cd4266da1c",
+      "size_bytes": 2308
+    },
+    {
+      "path": "development/stage379/stage379_verification_scope_policy.sha256",
+      "sha256": "2ae56800c627278ccf67f086aa86f481e6a6e9e9ce3ab40397032f1a9648e2c2",
+      "size_bytes": 127
+    },
+    {
+      "path": "development/stage379/test_stage379_fail_closed.py",
+      "sha256": "d20d2bc39341f539c8f8e7304876f9e4143f4bcc74cc9dd48c4f1d2f521e4ffc",
+      "size_bytes": 10352
+    },
+    {
+      "path": "development/stage379/verify_stage379_development_snapshot.py",
+      "sha256": "f18f88884ac66b716b3166cc8184f5e3a9555af3241730a46fa798dc37dd5342",
+      "size_bytes": 8379
+    },
+    {
+      "path": "development/stage379_development_gate_result.json",
+      "sha256": "5fe02a5575cc5a4c86da25cd31b4d72150e95d9682e52831565cb97affc0d4b1",
+      "size_bytes": 2566
+    },
+    {
+      "path": "development/stage379/stage379_scoped_total_verification_result.json",
+      "sha256": "b0c43c5969190b19a86fee800c17fa4b62ef5726d848003c8213c74311b1c15e",
+      "size_bytes": 2837
+    },
+    {
+      "path": "development/stage379/stage379_development_acceptance_certificate.json",
+      "sha256": "32dea959d2506fcba524f06954923ec02ffb43d9ed044881984994157e81567c",
+      "size_bytes": 1048
+    },
+    {
+      "path": "development/stage379/stage379_scoped_total_verification_summary.txt",
+      "sha256": "a8df0f2780e9f9478d01303ce3253896a29a80d62c3cec04ab72fcce6fd14914",
+      "size_bytes": 1059
+    },
+    {
+      "path": "docs/timestamp-finalization/stage377_dual_timestamp_finalization_result.json",
+      "sha256": "74288a3c2556de86699259c93f9a8de9b38c6f30ee0a7a0ba031bebbc55b7cdc",
+      "size_bytes": 3383
+    },
+    {
+      "path": "docs/qkd/stage378_qkd_safety_metadata_binding_result.json",
+      "sha256": "deb30c486d3569701ef87cdd0b08bb65bb136808b6ef88d5d3e61c181d03dfbc",
+      "size_bytes": 2888
+    }
+  ],
+  "created_at": "2026-07-26T09:17:56.036021+00:00",
+  "development_only": true,
+  "execution_mode": "development",
+  "formal_acceptance": false,
+  "manifest_sha256": "847625ff46628fc795da5bc30ea0b80d50cc8272a8d03317373dfeeaf67e92f7",
+  "manifest_type": "development_snapshot_manifest",
+  "pipeline_completed": false,
+  "public_release_allowed": false,
+  "stage": 379,
+  "statement": "This manifest fixes the exact local Stage379 development files and upstream inputs used for testing. It is not a formal Stage379 acceptance certificate and does not declare pipeline completion."
+}

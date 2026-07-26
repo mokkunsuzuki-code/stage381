@@ -1,0 +1,340 @@
+name: Stage380 Independent Verification Package
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".stage380-development-policy.json"
+      - "README.md"
+      - "development/stage379/**"
+      - "development/stage380/**"
+      - "docs/timestamp-finalization/stage377_dual_timestamp_finalization_result.json"
+      - "docs/qkd/stage378_qkd_safety_metadata_binding_result.json"
+      - ".github/workflows/stage380-independent-verification.yml"
+  pull_request:
+    paths:
+      - ".stage380-development-policy.json"
+      - "README.md"
+      - "development/stage379/**"
+      - "development/stage380/**"
+      - "docs/timestamp-finalization/stage377_dual_timestamp_finalization_result.json"
+      - "docs/qkd/stage378_qkd_safety_metadata_binding_result.json"
+      - ".github/workflows/stage380-independent-verification.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  stage380-independent-verification:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate Python syntax
+        run: |
+          set -euo pipefail
+
+          python3 -m py_compile \
+            development/stage380/verify_stage380_independent_package.py
+
+      - name: Validate Stage380 JSON inputs
+        run: |
+          set -euo pipefail
+
+          python3 -m json.tool \
+            .stage380-development-policy.json \
+            >/dev/null
+
+          python3 -m json.tool \
+            development/stage380/stage380_independent_verification_package_contract.json \
+            >/dev/null
+
+          python3 -m json.tool \
+            development/stage380/stage380_independent_verification_manifest.json \
+            >/dev/null
+
+          python3 -m json.tool \
+            development/stage380/stage380_independent_verification_certificate.json \
+            >/dev/null
+
+      - name: Verify retained SHA256 records
+        run: |
+          set -euo pipefail
+
+          shasum -a 256 -c \
+            development/stage380/stage380_independent_verification_package_contract.sha256
+
+          shasum -a 256 -c \
+            development/stage380/stage380_independent_verification_manifest.sha256
+
+          shasum -a 256 -c \
+            development/stage380/stage380_independent_verification_certificate.sha256
+
+      - name: Run deterministic offline verifier
+        run: |
+          set -euo pipefail
+
+          python3 \
+            development/stage380/verify_stage380_independent_package.py
+
+      - name: Validate deterministic verification result
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          path = Path(
+              "development/stage380/"
+              "stage380_independent_verification_result.json"
+          )
+
+          if not path.is_file():
+              raise SystemExit("Stage380 result file is missing.")
+
+          result = json.loads(path.read_text(encoding="utf-8"))
+
+          required_fields = [
+              "stage",
+              "verifier",
+              "execution_mode",
+              "verification_mode",
+              "network_access_required",
+              "fail_closed",
+              "package_integrity_verified",
+              "formal_independent_verification",
+              "formal_acceptance",
+              "pipeline_completed",
+              "public_release_allowed",
+              "verification_status",
+              "decision",
+              "critical_failure_count",
+              "critical_failures",
+              "checks",
+              "errors",
+              "result_sha256",
+          ]
+
+          missing = [
+              field for field in required_fields
+              if field not in result
+          ]
+
+          if missing:
+              raise SystemExit(
+                  f"Missing Stage380 result fields: {missing}"
+              )
+
+          if result["stage"] != 380:
+              raise SystemExit("Stage number is not 380.")
+
+          if result["verification_mode"] != "deterministic_offline":
+              raise SystemExit(
+                  "Stage380 verification mode is not deterministic_offline."
+              )
+
+          if result["network_access_required"] is not False:
+              raise SystemExit(
+                  "Stage380 result unexpectedly requires network access."
+              )
+
+          if result["fail_closed"] is not True:
+              raise SystemExit("Stage380 fail-closed policy is disabled.")
+
+          if result["package_integrity_verified"] is not True:
+              raise SystemExit(
+                  "Stage380 package integrity was not verified."
+              )
+
+          if result["public_release_allowed"] is not False:
+              raise SystemExit(
+                  "Stage380 public release must remain disabled."
+              )
+
+          allowed_decisions = {
+              "development_package_verified_upstream_pending",
+              "independent_verification_package_ready",
+          }
+
+          if result["decision"] not in allowed_decisions:
+              raise SystemExit(
+                  f"Unexpected Stage380 decision: {result['decision']}"
+              )
+
+          if result["critical_failure_count"] != 0:
+              raise SystemExit(
+                  "Stage380 result contains critical failures."
+              )
+
+          expected_hash = result["result_sha256"]
+
+          unsigned = dict(result)
+          unsigned.pop("result_sha256", None)
+
+          actual_hash = hashlib.sha256(
+              json.dumps(
+                  unsigned,
+                  ensure_ascii=False,
+                  sort_keys=True,
+                  separators=(",", ":"),
+              ).encode("utf-8")
+          ).hexdigest()
+
+          if actual_hash != expected_hash:
+              raise SystemExit(
+                  "Stage380 internal result SHA256 mismatch: "
+                  f"expected={expected_hash} actual={actual_hash}"
+              )
+
+          print(f"decision={result['decision']}")
+          print("package_integrity_verified=true")
+          print("critical_failure_count=0")
+          print("result_sha256_verified=true")
+          PY
+
+      - name: Verify deterministic output
+        run: |
+          set -euo pipefail
+
+          RESULT_PATH="development/stage380/stage380_independent_verification_result.json"
+
+          FIRST_HASH="$(
+            shasum -a 256 "${RESULT_PATH}" | awk '{print $1}'
+          )"
+
+          python3 \
+            development/stage380/verify_stage380_independent_package.py \
+            >/dev/null
+
+          SECOND_HASH="$(
+            shasum -a 256 "${RESULT_PATH}" | awk '{print $1}'
+          )"
+
+          echo "first_hash=${FIRST_HASH}"
+          echo "second_hash=${SECOND_HASH}"
+
+          test "${FIRST_HASH}" = "${SECOND_HASH}"
+
+          echo "deterministic_output_verified=true"
+
+      - name: Verify stored result SHA256 record
+        run: |
+          set -euo pipefail
+
+          shasum -a 256 -c \
+            development/stage380/stage380_independent_verification_result.sha256
+
+      - name: Validate README structure
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path("README.md")
+          text = path.read_text(encoding="utf-8")
+
+          required_headings = [
+              "# Stage380:",
+              "## Purpose",
+              "## Current State",
+              "## Upstream Conditions",
+              "## Independent Verification Package Contract",
+              "## Deterministic Offline Core Verifier",
+              "## Deterministic Output",
+              "## Fail-Closed Principle",
+              "## Verification Result",
+              "## Verification Manifest",
+              "## Verification Certificate",
+              "## Public and Private Boundaries",
+              "## Current Limitations",
+              "## License",
+          ]
+
+          missing = [
+              heading for heading in required_headings
+              if heading not in text
+          ]
+
+          if missing:
+              raise SystemExit(
+                  f"README headings are missing: {missing}"
+              )
+
+          fence_count = text.count("```")
+
+          if fence_count % 2 != 0:
+              raise SystemExit(
+                  f"README code-fence count is odd: {fence_count}"
+              )
+
+          print(f"README code fences: {fence_count}")
+          print("README structure verified=true")
+          PY
+
+      - name: Scan public tree for forbidden files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          count="$(
+            find docs -type f \
+              \( \
+                -iname "qkd_raw_key*" \
+                -o -iname "qkd_secret_key*" \
+                -o -iname "qkd_sifted_key*" \
+                -o -iname "qkd_reconciled_key*" \
+                -o -iname "qkd_final_key*" \
+                -o -name "*.qkdkey" \
+                -o -name "*.rawkey" \
+                -o -name "*.siftedkey" \
+                -o -name "*.reconciledkey" \
+                -o -name "*.finalkey" \
+                -o -name "*.key" \
+                -o -name "*.pem" \
+                -o -name "*.p12" \
+                -o -name "*.pfx" \
+                -o -name "*.seed" \
+                -o -name "*.pk8" \
+                -o -name "*.ots" \
+                -o -name "*.tsq" \
+                -o -name "*.tsr" \
+                -o -name "*.tst" \
+              \) \
+              -print |
+            wc -l |
+            tr -d " "
+          )"
+
+          echo "public_forbidden_file_count=${count}"
+
+          test "${count}" = "0"
+
+      - name: Upload Stage380 verification package
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage380-independent-verification-package
+          path: |
+            .stage380-development-policy.json
+            README.md
+            development/stage380/stage380_independent_verification_package_contract.json
+            development/stage380/stage380_independent_verification_package_contract.sha256
+            development/stage380/verify_stage380_independent_package.py
+            development/stage380/stage380_independent_verification_result.json
+            development/stage380/stage380_independent_verification_result.sha256
+            development/stage380/stage380_independent_verification_manifest.json
+            development/stage380/stage380_independent_verification_manifest.sha256
+            development/stage380/stage380_independent_verification_certificate.json
+            development/stage380/stage380_independent_verification_certificate.sha256
+          if-no-files-found: error

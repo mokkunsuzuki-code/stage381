@@ -1,0 +1,43 @@
+{
+  "stage": 380,
+  "policy_name": "Stage380 Independent Verification Package Contract & Deterministic Offline Core Verifier Development Policy",
+  "execution_mode": "development",
+  "development_only": true,
+  "production_eligible": false,
+  "formal_independent_verification": false,
+  "formal_acceptance": false,
+  "pipeline_completed": false,
+  "public_release_allowed": false,
+  "github_push_allowed": false,
+  "source_stage": 379,
+  "required_source_state": {
+    "stage": 379,
+    "snapshot_valid": true,
+    "development_only": true,
+    "formal_acceptance": false,
+    "pipeline_completed": false,
+    "public_release_allowed": false
+  },
+  "required_core_properties": {
+    "package_contract_locked": true,
+    "deterministic_output_required": true,
+    "offline_core_only": true,
+    "fail_closed": true,
+    "scope_reduction_allowed": false,
+    "missing_evidence_behavior": "block",
+    "invalid_hash_behavior": "block",
+    "contract_mismatch_behavior": "block"
+  },
+  "private_boundaries": {
+    "core_publication_prohibited": true,
+    "private_core_publication_prohibited": true,
+    "private_publication_prohibited": true,
+    "secrets_publication_prohibited": true,
+    "keys_publication_prohibited": true,
+    "imported_publication_prohibited": true,
+    "raw_qkd_key_publication_prohibited": true,
+    "private_key_publication_prohibited": true,
+    "timestamp_raw_binary_publication_prohibited": true
+  },
+  "statement": "Stage380 is development-only while Stage379 is not formally accepted. It may verify package integrity and deterministic contract compliance, but it must not claim formal independent verification, production eligibility, public release, or pipeline completion."
+}

@@ -1,0 +1,15 @@
+{
+  "stage": 380,
+  "certificate_type": "development_independent_verification_certificate",
+  "certificate_version": "1.0.0-development",
+  "development_only": true,
+  "formal_independent_verification": false,
+  "formal_acceptance": false,
+  "pipeline_completed": false,
+  "public_release_allowed": false,
+  "decision": "development_package_verified_upstream_pending",
+  "source_stage": 379,
+  "source_result": "development/stage380/stage380_independent_verification_result.json",
+  "source_manifest": "development/stage380/stage380_independent_verification_manifest.json",
+  "statement": "Stage380 has successfully completed deterministic offline package verification. Formal independent verification remains pending until upstream formal acceptance conditions are satisfied."
+}

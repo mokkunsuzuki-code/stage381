@@ -1,0 +1,32 @@
+{
+  "stage": 380,
+  "contract_name": "Independent Verification Package Contract",
+  "contract_version": "1.0.0-development",
+  "execution_mode": "development",
+  "development_only": true,
+  "formal_independent_verification": false,
+  "formal_acceptance": false,
+  "pipeline_completed": false,
+  "public_release_allowed": false,
+  "source_stage": 379,
+  "source_snapshot_manifest": "development/stage379/stage379_development_snapshot_manifest.json",
+  "source_policy": ".stage380-development-policy.json",
+  "verification_mode": "deterministic_offline",
+  "package_locked": true,
+  "scope_reduction_allowed": false,
+  "fail_closed": true,
+  "required_inputs": [
+    "development/stage379/stage379_development_snapshot_manifest.json",
+    "development/stage379/stage379_development_acceptance_certificate.json",
+    "development/stage379/stage379_scoped_total_verification_result.json",
+    "development/stage379/stage379_verification_scope_policy.json",
+    "docs/timestamp-finalization/stage377_dual_timestamp_finalization_result.json",
+    "docs/qkd/stage378_qkd_safety_metadata_binding_result.json"
+  ],
+  "deterministic_output": {
+    "same_input_same_output": true,
+    "same_hash_same_decision": true,
+    "offline_only": true
+  },
+  "statement": "Stage380 defines a deterministic offline verification package contract for independent verification. It does not declare formal independent verification while Stage379 remains in development."
+}
