@@ -7,14 +7,14 @@
     "physical_qkd_system": "QKD-E4",
     "qkd_simulator": "QKD-E2"
   },
-  "classification_sha256": "d5b6b45d81e737bc6dbdded5a3230728b7db664899123e860a3cbed18d751edf",
+  "classification_sha256": "06aa162b3eb96571c7eeaa50826f9187296b60b440ca5ca5f3764e15740901d1",
   "classification_type": "qkd_evidence_classification",
   "classification_valid": true,
-  "created_at": "2026-07-21T10:59:09.917724+00:00",
+  "created_at": "2026-07-26T04:39:22.242843+00:00",
   "key_safety_passed": true,
   "metadata_file_sha256": "e8d1ee7e15dda22b77fbac8faea1baffdc669e0d5dd7d04a4dd1ac4f8f536dd4",
   "missing_requirements": [],
-  "previous_hash": "52df4d3c78d693c621af73e788148f541f71b139002911bb39dd9661dc2976dd",
+  "previous_hash": "03135b9fe51b055c356179fdb927ad45317393f94b01b27250c1dd06312d098f",
   "public_boundary_passed": true,
   "qber_assessment": {
     "declared_qber_limit": null,

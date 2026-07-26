@@ -1,16 +1,16 @@
 Stage378 QKD Safety Metadata Binding
 ====================================
-created_at: 2026-07-21T10:59:09.917724+00:00
+created_at: 2026-07-26T04:39:22.242843+00:00
 decision: qkd_binding_pending_previous_stage
-previous_hash: 52df4d3c78d693c621af73e788148f541f71b139002911bb39dd9661dc2976dd
-stage377_decision: timestamp_finalization_pending
-stage377_verified_proof_count: 0
+previous_hash: 03135b9fe51b055c356179fdb927ad45317393f94b01b27250c1dd06312d098f
+stage377_decision: rfc3161_verified_opentimestamps_pending
+stage377_verified_proof_count: 1
 evidence_classification: metadata_only
 evidence_level: QKD-E1
 qkd_metadata_bound: False
 raw_qkd_key_publication_detected: False
 private_material_content_detected: False
-result_sha256: acb4d920bcee2c4629e4c94577d74a0ae40bf18fcd5606506c9ad375cf0a42f5
+result_sha256: 5c67a4160b06efb06e7608acfcf7e46d27895adeb3d69cd8a7fe216ba95ef86e
 
 Reasons:
 - stage377_dual_timestamp_final_acceptance_pending

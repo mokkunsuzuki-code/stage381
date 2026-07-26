@@ -1,26 +1,26 @@
 {
   "stage": 377,
   "engine": "Production Dual-Timestamp Finalization and Superseding Final Acceptance Gate",
-  "created_at": "2026-07-21T01:32:09.142641+00:00",
+  "created_at": "2026-07-26T04:11:52.413013+00:00",
   "source_stage": 376,
   "previous_hash": "32ff58a1f4d5837518226eee70b32833a8147617df3142ff2f641eca3f116138",
   "historic_stage372_result_sha256": "ef1847f09c7862d271d71e548f403f75c91b93b2ffc21dec6016f53e0db7c3aa",
   "stage372_record_modified": false,
   "stage376_record_modified": false,
   "timestamp_target_sha256": "052c8f0283110e405443d56f2396c52a8486e7a70a489f831af107dad73ab1b5",
-  "decision": "timestamp_finalization_pending",
+  "decision": "rfc3161_verified_opentimestamps_pending",
   "effective_final_acceptance": false,
   "timestamp_verified": false,
   "supersedes_stage372_pending": false,
   "supersedes_stage376_pending": false,
-  "rfc3161_verified": false,
+  "rfc3161_verified": true,
   "opentimestamps_verified": false,
   "maximum_timestamp_assurance": false,
-  "verified_proof_count": 0,
+  "verified_proof_count": 1,
   "required_verified_proof_count": 2,
-  "manifest_sha256": "ae5ac43f1da69c038f00a3d7b6912f48eb9a44c969388147648a8d6b682dc921",
+  "manifest_sha256": "40a50f61a5c44014ab005695bc63776537c69a88f3f57f072ba81e90a6f14747",
   "reasons": [
-    "production_dual_timestamp_receipts_not_verified"
+    "opentimestamps_public_anchor_not_final"
   ],
   "checks": {
     "stage376_result_present": true,
@@ -40,7 +40,7 @@
     "rfc3161_receipt_present": true,
     "opentimestamps_receipt_present": true,
     "both_receipts_same_target": true,
-    "rfc3161_verified": false,
+    "rfc3161_verified": true,
     "opentimestamps_verified": false,
     "verified_proof_count_satisfied": false,
     "private_material_detected": false,
@@ -74,5 +74,5 @@
       "It does not publish raw RFC3161 or OpenTimestamps proof binaries."
     ]
   },
-  "result_sha256": "52df4d3c78d693c621af73e788148f541f71b139002911bb39dd9661dc2976dd"
+  "result_sha256": "03135b9fe51b055c356179fdb927ad45317393f94b01b27250c1dd06312d098f"
 }
