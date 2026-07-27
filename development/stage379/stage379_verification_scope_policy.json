@@ -1,0 +1,64 @@
+{
+  "stage": 379,
+  "policy_name": "Stage379 Scoped Total Verification Acceptance Policy",
+  "execution_mode": "development",
+  "development_only": true,
+  "formal_certificate_issuance_allowed": false,
+  "pipeline_completion_declaration_allowed": false,
+  "scope_version": "1.0.0-development",
+  "scope_locked": true,
+  "scope_reduction_allowed": false,
+  "required_source_stages": [
+    377,
+    378
+  ],
+  "required_stage377_conditions": {
+    "stage": 377,
+    "result_hash_valid": true,
+    "decision": "dual_timestamp_final_acceptance_verified",
+    "rfc3161_verified": true,
+    "opentimestamps_verified": true,
+    "timestamp_verified": true,
+    "verified_proof_count": 2,
+    "effective_final_acceptance": true
+  },
+  "required_stage378_conditions": {
+    "stage": 378,
+    "result_hash_valid": true,
+    "stage377_hash_valid": true,
+    "stage377_final_acceptance_verified": true,
+    "previous_hash_matches_stage377_result_sha256": true,
+    "qkd_metadata_bound": true,
+    "public_forbidden_file_absent": true,
+    "public_private_content_absent": true,
+    "raw_qkd_key_publication_detected": false,
+    "private_material_content_detected": false,
+    "evidence_classification_valid": true,
+    "classification_requirements_satisfied": true
+  },
+  "accepted_qkd_evidence_levels": [
+    "QKD-E1",
+    "QKD-E2",
+    "QKD-E3"
+  ],
+  "required_safety_boundaries": {
+    "raw_qkd_key_publication_prohibited": true,
+    "derived_qkd_secret_publication_prohibited": true,
+    "private_key_publication_prohibited": true,
+    "timestamp_raw_binary_publication_prohibited": true,
+    "metadata_only_publication": true,
+    "universal_qber_threshold_hardcoded": false
+  },
+  "fail_closed": true,
+  "missing_evidence_behavior": "block_formal_acceptance",
+  "invalid_hash_behavior": "block_all_processing",
+  "scope_mismatch_behavior": "block_all_processing",
+  "development_behavior": {
+    "allow_engine_development": true,
+    "allow_local_test_results": true,
+    "allow_formal_acceptance_claim": false,
+    "allow_pipeline_completion_claim": false,
+    "allow_publication": false
+  },
+  "guarantee": "The verification scope is fixed before Stage379 evaluation. Missing, pending, invalid, or excluded evidence cannot be treated as verified and cannot produce formal acceptance or pipeline completion."
+}

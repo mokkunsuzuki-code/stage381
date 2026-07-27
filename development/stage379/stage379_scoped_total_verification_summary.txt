@@ -1,0 +1,20 @@
+Stage379 Scoped Total Verification Development Result
+====================================================
+created_at: 2026-07-26T05:12:05.984682+00:00
+decision: development_verification_pending_upstream
+development_only: true
+formal_acceptance: false
+certificate_issued: false
+pipeline_completed: false
+scope_policy_sha256: a05539d8e44d509c0238e13d38082123f5d4337b23ebd40e727e471fe1b9b97e
+stage377_result_sha256: 03135b9fe51b055c356179fdb927ad45317393f94b01b27250c1dd06312d098f
+stage378_result_sha256: 5c67a4160b06efb06e7608acfcf7e46d27895adeb3d69cd8a7fe216ba95ef86e
+stage377_requirements_satisfied: False
+stage378_requirements_satisfied: False
+critical_integrity_valid: True
+formal_acceptance_requirements_satisfied: False
+reasons: stage377_formal_acceptance_pending, stage378_qkd_binding_pending
+result_sha256: 1da749df88d09366f911dac82e2180ecd468a1f39a8feddd0e93088dc5809df9
+development_certificate_sha256: 713afcf0d707ba43a26ecc49fdefb39df5e1127269fb916c8fbac7aec621dde5
+
+No formal acceptance certificate was issued. No pipeline completion was declared.

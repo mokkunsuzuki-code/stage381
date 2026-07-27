@@ -1,0 +1,52 @@
+{
+  "checks": {
+    "development_execution_allowed": true,
+    "development_policy_present": true,
+    "development_policy_valid": true,
+    "formal_promotion_requirements_satisfied": false,
+    "git_metadata_absent": true,
+    "stage377_formal_requirements_satisfied": false,
+    "stage377_result_hash_valid": true,
+    "stage377_result_present": true,
+    "stage378_evidence_classification_completed": true,
+    "stage378_previous_hash_matches_stage377": true,
+    "stage378_qkd_public_boundary_valid": true,
+    "stage378_result_hash_valid": true,
+    "stage378_result_present": true,
+    "stage378_stage377_final_acceptance_verified": false,
+    "stage378_stage377_hash_valid": true
+  },
+  "created_at": "2026-07-26T04:58:45.218770+00:00",
+  "decision": "development_only_upstream_pending",
+  "development_only": true,
+  "engine": "Stage379 Development-Only Fail-Closed Gate",
+  "execution_mode": "development",
+  "formal_stage379_acceptance": false,
+  "guarantee": "This gate permits isolated development work only. It does not create, claim, or publish formal Stage379 acceptance and cannot convert pending upstream evidence into verified evidence.",
+  "policy_path": ".stage379-development-policy.json",
+  "previous_hash": "5c67a4160b06efb06e7608acfcf7e46d27895adeb3d69cd8a7fe216ba95ef86e",
+  "production_eligible": false,
+  "promotion_rule": "Formal Stage379 creation and publication remain prohibited until every upstream requirement is verified from real evidence.",
+  "public_release_allowed": false,
+  "reasons": [
+    "stage377_formal_acceptance_pending",
+    "stage378_stage377_final_acceptance_pending"
+  ],
+  "result_sha256": "b6d35ad9e754f78ca8486166bbd4619caade116473980936369392b1417848be",
+  "source_stage": 378,
+  "stage": 379,
+  "stage377_result_path": "docs/timestamp-finalization/stage377_dual_timestamp_finalization_result.json",
+  "stage377_result_sha256": "03135b9fe51b055c356179fdb927ad45317393f94b01b27250c1dd06312d098f",
+  "stage378_result_path": "docs/qkd/stage378_qkd_safety_metadata_binding_result.json",
+  "stage378_result_sha256": "5c67a4160b06efb06e7608acfcf7e46d27895adeb3d69cd8a7fe216ba95ef86e",
+  "upstream_state": {
+    "stage377_decision": "rfc3161_verified_opentimestamps_pending",
+    "stage377_effective_final_acceptance": false,
+    "stage377_verified_proof_count": 1,
+    "stage378_decision": "qkd_binding_pending_previous_stage",
+    "stage378_evidence_classification": "metadata_only",
+    "stage378_evidence_level": "QKD-E1",
+    "stage378_qkd_metadata_bound": false
+  },
+  "workspace_name": "stage379-development"
+}

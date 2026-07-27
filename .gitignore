@@ -285,3 +285,14 @@ development/stage379/*
 
 # Local Git metadata backup — never publish
 .git-stage380-empty-backup/
+
+# Stage380 required Stage379 verification inputs
+!.stage379-development-policy.json
+!scripts/stage379_development_gate.py
+!scripts/stage379_scoped_total_verification_gate.py
+!development/stage379_development_gate_result.json
+!development/stage379/stage379_verification_scope_policy.json
+!development/stage379/stage379_verification_scope_policy.sha256
+!development/stage379/test_stage379_fail_closed.py
+!development/stage379/verify_stage379_development_snapshot.py
+!development/stage379/stage379_scoped_total_verification_summary.txt
