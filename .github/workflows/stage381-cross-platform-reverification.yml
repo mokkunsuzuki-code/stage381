@@ -1,0 +1,355 @@
+name: Stage381 Cross-Platform Deterministic Reverification
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/stage381-cross-platform-reverification.yml"
+      - ".stage381-development-policy.json"
+      - "development/stage380/**"
+      - "development/stage381/**"
+      - "scripts/stage379_development_gate.py"
+      - "scripts/stage379_scoped_total_verification_gate.py"
+
+permissions:
+  contents: read
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONDONTWRITEBYTECODE: "1"
+
+jobs:
+  environment-reverification:
+    name: Reverify on ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: ubuntu
+            runner: ubuntu-latest
+          - platform: windows
+            runner: windows-latest
+          - platform: macos
+            runner: macos-latest
+
+    runs-on: ${{ matrix.runner }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Display environment
+        shell: bash
+        run: |
+          python --version
+          echo "platform=${{ matrix.platform }}"
+          echo "runner_os=${{ runner.os }}"
+
+      - name: Validate Python syntax
+        shell: bash
+        run: |
+          python -m py_compile \
+            development/stage380/verify_stage380_independent_package.py \
+            development/stage381/generate_stage381_environment_result.py \
+            development/stage381/compare_stage381_environment_results.py \
+            development/stage381/verify_stage381_cross_platform_package.py
+
+      - name: Validate Stage381 JSON inputs
+        shell: bash
+        run: |
+          python -m json.tool \
+            .stage381-development-policy.json \
+            > /dev/null
+
+          python -m json.tool \
+            development/stage381/stage381_canonicalization_profile.json \
+            > /dev/null
+
+      - name: Generate deterministic environment result
+        shell: bash
+        run: |
+          python \
+            development/stage381/generate_stage381_environment_result.py \
+            --platform "${{ matrix.platform }}"
+
+      - name: Validate generated environment result
+        shell: bash
+        run: |
+          python -m json.tool \
+            "development/stage381/environment-results/stage381_${{ matrix.platform }}_environment_result.json" \
+            > /dev/null
+
+      - name: Upload environment result
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage381-${{ matrix.platform }}-environment-result
+          path: development/stage381/environment-results/stage381_${{ matrix.platform }}_environment_result.json
+          if-no-files-found: error
+          retention-days: 30
+
+  cross-platform-comparison:
+    name: Compare all platform results
+    needs:
+      - environment-reverification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Remove repository-local environment results
+        shell: bash
+        run: |
+          rm -rf development/stage381/environment-results
+          mkdir -p development/stage381/environment-results
+
+      - name: Download Ubuntu result
+        uses: actions/download-artifact@v4
+        with:
+          name: stage381-ubuntu-environment-result
+          path: development/stage381/environment-results
+
+      - name: Download Windows result
+        uses: actions/download-artifact@v4
+        with:
+          name: stage381-windows-environment-result
+          path: development/stage381/environment-results
+
+      - name: Download macOS result
+        uses: actions/download-artifact@v4
+        with:
+          name: stage381-macos-environment-result
+          path: development/stage381/environment-results
+
+      - name: List downloaded results
+        shell: bash
+        run: |
+          find development/stage381/environment-results \
+            -maxdepth 1 \
+            -type f \
+            -print \
+            | LC_ALL=C sort
+
+      - name: Compare deterministic results
+        shell: bash
+        run: |
+          python \
+            development/stage381/compare_stage381_environment_results.py
+
+      - name: Validate comparison result
+        shell: bash
+        run: |
+          python -m json.tool \
+            development/stage381/stage381_cross_platform_verification_result.json \
+            > /dev/null
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path(
+              "development/stage381/"
+              "stage381_cross_platform_verification_result.json"
+          )
+
+          result = json.loads(path.read_text(encoding="utf-8"))
+
+          required = {
+              "decision": (
+                  "cross_platform_reverification_verified_"
+                  "upstream_pending"
+              ),
+              "cross_platform_reverification_verified": True,
+              "same_input_same_output_verified": True,
+              "same_decision_verified": True,
+              "same_exit_code_verified": True,
+              "same_stage380_result_sha256_verified": True,
+              "same_canonical_result_sha256_verified": True,
+              "all_required_platforms_present": True,
+              "critical_failure_count": 0,
+          }
+
+          failures = []
+
+          for field, expected in required.items():
+              actual = result.get(field)
+
+              if actual != expected:
+                  failures.append(
+                      f"{field}: expected={expected!r}, "
+                      f"actual={actual!r}"
+                  )
+
+          if failures:
+              raise SystemExit(
+                  "Stage381 comparison validation failed:\n"
+                  + "\n".join(failures)
+              )
+
+          print(
+              "OK: Ubuntu, Windows, and macOS produced "
+              "identical deterministic verification results"
+          )
+          print(
+              "common_canonical_result_sha256="
+              + str(
+                  result.get(
+                      "common_canonical_result_sha256"
+                  )
+              )
+          )
+          PY
+
+      - name: Validate Stage381 package contract
+        shell: bash
+        run: |
+          python -m json.tool             development/stage381/stage381_cross_platform_verification_package_contract.json             > /dev/null
+
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+
+          contract = Path(
+              "development/stage381/"
+              "stage381_cross_platform_verification_package_contract.json"
+          )
+
+          record = Path(
+              "development/stage381/"
+              "stage381_cross_platform_verification_package_contract.sha256"
+          )
+
+          line = record.read_text(
+              encoding="utf-8"
+          ).strip()
+
+          parts = line.split(maxsplit=1)
+
+          if len(parts) != 2:
+              raise SystemExit(
+                  "Invalid Stage381 contract SHA-256 record"
+              )
+
+          expected_hash = parts[0].lower()
+          recorded_path = parts[1].lstrip("*")
+
+          actual_hash = hashlib.sha256(
+              contract.read_bytes()
+          ).hexdigest()
+
+          if expected_hash != actual_hash:
+              raise SystemExit(
+                  "Stage381 contract SHA-256 mismatch"
+              )
+
+          if recorded_path != contract.as_posix():
+              raise SystemExit(
+                  "Stage381 contract SHA-256 path mismatch"
+              )
+
+          print(
+              "OK: Stage381 package contract SHA-256 verified"
+          )
+          PY
+
+      - name: Run Stage381 final package verifier
+        shell: bash
+        run: |
+          python             development/stage381/verify_stage381_cross_platform_package.py
+
+      - name: Validate Stage381 final package result
+        shell: bash
+        run: |
+          python -m json.tool             development/stage381/stage381_cross_platform_verification_package_result.json             > /dev/null
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path(
+              "development/stage381/"
+              "stage381_cross_platform_verification_package_result.json"
+          )
+
+          result = json.loads(
+              path.read_text(encoding="utf-8")
+          )
+
+          required = {
+              "package_integrity_verified": True,
+              "cross_platform_reverification_verified": True,
+              "same_input_same_output_verified": True,
+              "same_decision_verified": True,
+              "same_exit_code_verified": True,
+              "same_stage380_result_sha256_verified": True,
+              "same_canonical_result_sha256_verified": True,
+              "critical_failure_count": 0,
+          }
+
+          failures = []
+
+          for field, expected in required.items():
+              actual = result.get(field)
+
+              if actual != expected:
+                  failures.append(
+                      f"{field}: expected={expected!r}, "
+                      f"actual={actual!r}"
+                  )
+
+          allowed_decisions = {
+              "cross_platform_verification_package_ready",
+              "cross_platform_reverification_verified_upstream_pending",
+          }
+
+          if result.get("decision") not in allowed_decisions:
+              failures.append(
+                  "decision: unexpected value "
+                  f"{result.get('decision')!r}"
+              )
+
+          if failures:
+              raise SystemExit(
+                  "Stage381 final package validation failed:\n"
+                  + "\n".join(failures)
+              )
+
+          print(
+              "OK: Stage381 final cross-platform "
+              "verification package validated"
+          )
+          print(
+              "decision="
+              + str(result.get("decision"))
+          )
+          print(
+              "result_sha256="
+              + str(result.get("result_sha256"))
+          )
+          PY
+
+      - name: Upload Stage381 verification package
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage381-cross-platform-verification-package
+          path: |
+            development/stage381/environment-results/*.json
+            development/stage381/stage381_cross_platform_verification_result.json
+            development/stage381/stage381_cross_platform_verification_package_result.json
+            development/stage381/stage381_cross_platform_verification_package_contract.json
+            development/stage381/stage381_cross_platform_verification_package_contract.sha256
+            development/stage381/stage381_canonicalization_profile.json
+          if-no-files-found: error
+          retention-days: 30

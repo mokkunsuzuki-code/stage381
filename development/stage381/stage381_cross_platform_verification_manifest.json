@@ -1,0 +1,52 @@
+{
+  "artifact_count": 5,
+  "artifacts": [
+    {
+      "name": "Development Policy",
+      "path": ".stage380-development-policy.json",
+      "sha256": "35fa77fcc20364a84e7a9d0861a7257fa2f3cfc103d1d47125db99cee38f442d",
+      "size_bytes": 1706
+    },
+    {
+      "name": "Independent Verification Package Contract",
+      "path": "development/stage380/stage380_independent_verification_package_contract.json",
+      "sha256": "f9105dc206dfc77a6690ed3c83847c6c7012b41d199a8369953580adc4477af8",
+      "sha256_path": "development/stage380/stage380_independent_verification_package_contract.sha256",
+      "size_bytes": 1448
+    },
+    {
+      "name": "Deterministic Offline Core Verifier",
+      "path": "development/stage380/verify_stage380_independent_package.py",
+      "sha256": "21b4dcc51f128144c2d8dc76be40e3edbcb3130d8914136b98fa02a1ac418e40",
+      "size_bytes": 23282
+    },
+    {
+      "name": "Independent Verification Result",
+      "path": "development/stage380/stage380_independent_verification_result.json",
+      "sha256": "f0169f77e5b1093c0e49df20ec69b9f598ac7b94e0b63e52ed5dedd0006ba2e3",
+      "sha256_path": "development/stage380/stage380_independent_verification_result.sha256",
+      "size_bytes": 16483
+    },
+    {
+      "name": "Independent Verification Certificate",
+      "path": "development/stage380/stage380_independent_verification_certificate.json",
+      "sha256": "04d5f9506fbd49c39fdefe78c821c458d8c9a61ad2a01493e88b7c4b045a260c",
+      "sha256_path": "development/stage380/stage380_independent_verification_certificate.sha256",
+      "size_bytes": 780
+    }
+  ],
+  "development_only": true,
+  "fail_closed": true,
+  "formal_acceptance": false,
+  "formal_independent_verification": false,
+  "manifest_name": "Stage380 Independent Verification Manifest",
+  "manifest_version": "1.0.0-development",
+  "package_locked": true,
+  "pipeline_completed": false,
+  "public_release_allowed": false,
+  "scope_reduction_allowed": false,
+  "source_stage": 379,
+  "stage": 380,
+  "statement": "This manifest enumerates the complete Stage380 development verification package. Formal independent verification remains pending until upstream formal acceptance requirements are satisfied.",
+  "verification_mode": "deterministic_offline"
+}

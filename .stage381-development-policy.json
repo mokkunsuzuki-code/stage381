@@ -1,0 +1,46 @@
+{
+  "stage": 381,
+  "stage_name": "Cross-Platform Deterministic Reverification & Reproducibility Gate",
+  "source_stage": 380,
+  "development_only": true,
+  "formal_acceptance": false,
+  "pipeline_completed": false,
+  "public_release_allowed": false,
+  "verification_mode": "cross_platform_deterministic_offline",
+  "required_platforms": [
+    "ubuntu",
+    "windows",
+    "macos"
+  ],
+  "requirements": {
+    "offline_verification_required": true,
+    "same_input_required": true,
+    "same_decision_required": true,
+    "same_canonical_result_hash_required": true,
+    "same_exit_code_required": true,
+    "json_key_order_fixed": true,
+    "file_order_fixed": true,
+    "line_endings_fixed_to_lf": true,
+    "runtime_timestamp_excluded": true,
+    "temporary_path_excluded": true,
+    "hostname_excluded": true,
+    "username_excluded": true,
+    "network_derived_values_excluded": true
+  },
+  "security_boundary": {
+    "fail_closed": true,
+    "scope_reduction_allowed": false,
+    "private_core_publication_allowed": false,
+    "private_directory_publication_allowed": false,
+    "secret_publication_allowed": false,
+    "key_publication_allowed": false,
+    "raw_qkd_key_publication_allowed": false,
+    "raw_timestamp_binary_publication_allowed": false
+  },
+  "upstream_policy": {
+    "stage380_preserved": true,
+    "stage380_outputs_are_reference_inputs": true,
+    "stage381_does_not_upgrade_upstream_acceptance": true,
+    "development_only_until_upstream_completion": true
+  }
+}

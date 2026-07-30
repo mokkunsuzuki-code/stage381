@@ -1,5 +1,157 @@
-# Stage380: Independent Verification Package Contract & Deterministic Offline Core Verifier
+# Stage381: Deterministic Reverification & Reproducibility Gate
 
+Stage381 extends Stage380 with a cross-platform deterministic
+reverification and reproducibility gate.
+
+It verifies whether the same fixed verification input produces the same
+material result on:
+
+- Ubuntu
+- Windows
+- macOS
+
+Stage381 does not replace, rewrite, or upgrade the Stage380 verification
+scope. It preserves the Stage380 independent offline verification package
+and adds a fail-closed cross-platform comparison layer.
+
+## What Stage381 Adds
+
+Stage381 adds the following public verification components:
+
+1. A fixed canonicalization profile
+2. Deterministic environment-result generation
+3. Ubuntu, Windows, and macOS verification through GitHub Actions
+4. Cross-platform comparison of required result fields
+5. A Stage381 verification-package contract
+6. SHA-256 binding of the contract and verification records
+7. A final fail-closed package verifier
+8. Downloadable GitHub Actions verification artifacts
+
+## Verification Flow
+
+```text
+Stage380 independent offline verification package
+                    |
+                    v
+      Fixed Stage381 canonicalization rules
+                    |
+                    v
+       Ubuntu / Windows / macOS execution
+                    |
+                    v
+       Deterministic environment results
+                    |
+                    v
+        Cross-platform field comparison
+                    |
+                    v
+       Stage381 final package verification
+```
+
+## Required Cross-Platform Conditions
+
+Stage381 requires all three configured platforms to be present.
+
+The comparison must confirm:
+
+- the same fixed verification input was used
+- the same decision was produced
+- the same verification status was produced
+- the same package-integrity result was produced
+- the same critical-failure count was produced
+- the same process exit code was produced
+- the same Stage380 result SHA-256 was bound
+- the same canonical result SHA-256 was produced
+
+If a required platform result is missing, malformed, inconsistent, or not
+bound to the required Stage380 input, Stage381 remains fail-closed.
+
+## One-Command Local Verification
+
+A local machine can validate the Stage381 package structure with:
+
+```bash
+python3 development/stage381/verify_stage381_cross_platform_package.py
+```
+
+A single local machine verifies only the result available on that machine.
+
+Formal cross-platform verification requires Ubuntu, Windows, and macOS
+results. The included GitHub Actions workflow provides those environments
+without requiring the operator to own three separate computers.
+
+## GitHub Actions Verification
+
+The workflow is:
+
+```text
+.github/workflows/stage381-cross-platform-reverification.yml
+```
+
+It performs:
+
+1. Deterministic verification on Ubuntu
+2. Deterministic verification on Windows
+3. Deterministic verification on macOS
+4. Artifact collection
+5. Cross-platform comparison
+6. Stage381 contract validation
+7. Final package verification
+8. Verification-package artifact upload
+
+## License
+
+This project is released under the MIT License.
+
+See the `LICENSE` file included in this repository for the complete license
+text.
+
+## Security and Publication Boundary
+
+Stage381 publishes only the files required for deterministic verification
+and audit.
+
+The following material must remain outside the public repository:
+
+- `core/`
+- `private_core/`
+- `private/`
+- `secrets/`
+- `keys/`
+- `imported/`
+- private keys
+- credentials
+- unpublished raw evidence
+- confidential execution material
+
+Stage381 does not publish attack code, harmful payloads, secret keys, or
+private-core implementation material.
+
+## Fail-Closed Meaning
+
+A fail-closed result does not automatically mean that the verifier
+malfunctioned.
+
+Before all three operating-system results exist, Stage381 must report that
+cross-platform reverification is not verified.
+
+Stage381 may report successful cross-platform reproducibility only after all
+required platform records exist and all required comparison fields match.
+
+## Current Verification Status
+
+The Stage381 implementation and GitHub Actions workflow are present.
+
+Formal Stage381 cross-platform completion requires a successful GitHub
+Actions execution with matching Ubuntu, Windows, and macOS results.
+
+Until that execution succeeds, cross-platform reverification must remain
+unverified.
+
+## Inherited Stage380 Foundation
+
+The following Stage380 documentation is retained because Stage381 extends
+rather than replaces the Stage380 independent offline verification package.
 Stage380 extends Stage379 by packaging the established verification scope into a deterministic offline verification contract.
 
 Stage380 does not replace or rewrite Stage379. It preserves the Stage379 development snapshot and verifies the package from an independent, offline, fail-closed perspective.

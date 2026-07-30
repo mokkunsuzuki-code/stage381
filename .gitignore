@@ -296,3 +296,25 @@ development/stage379/*
 !development/stage379/test_stage379_fail_closed.py
 !development/stage379/verify_stage379_development_snapshot.py
 !development/stage379/stage379_scoped_total_verification_summary.txt
+
+# Stage381 public cross-platform deterministic verification package
+!.github/workflows/stage381-cross-platform-reverification.yml
+
+!development/stage381/
+development/stage381/*
+!development/stage381/stage381_canonicalization_profile.json
+!development/stage381/generate_stage381_environment_result.py
+!development/stage381/compare_stage381_environment_results.py
+!development/stage381/verify_stage381_cross_platform_package.py
+!development/stage381/stage381_cross_platform_verification_package_contract.json
+!development/stage381/stage381_cross_platform_verification_package_contract.sha256
+!development/stage381/stage381_cross_platform_verification_result.json
+!development/stage381/stage381_cross_platform_verification_result.sha256
+!development/stage381/stage381_cross_platform_verification_manifest.json
+!development/stage381/stage381_cross_platform_verification_manifest.sha256
+!development/stage381/stage381_cross_platform_verification_certificate.json
+!development/stage381/stage381_cross_platform_verification_certificate.sha256
+
+!development/stage381/environment-results/
+development/stage381/environment-results/*
+!development/stage381/environment-results/stage381_macos_environment_result.json
