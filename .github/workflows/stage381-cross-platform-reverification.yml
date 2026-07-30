@@ -73,6 +73,8 @@ jobs:
             > /dev/null
 
       - name: Generate deterministic environment result
+        id: generate_environment_result
+        continue-on-error: true
         shell: bash
         run: |
           python \
@@ -80,19 +82,59 @@ jobs:
             --platform "${{ matrix.platform }}"
 
       - name: Validate generated environment result
+        if: always()
         shell: bash
         run: |
-          python -m json.tool \
-            "development/stage381/environment-results/stage381_${{ matrix.platform }}_environment_result.json" \
-            > /dev/null
+          if [ -f "development/stage381/environment-results/stage381_${{ matrix.platform }}_environment_result.json" ]; then
+            python -m json.tool \
+              "development/stage381/environment-results/stage381_${{ matrix.platform }}_environment_result.json" \
+              > /dev/null
+          else
+            echo "WARNING: environment result was not generated"
+          fi
+
+      - name: Capture Stage380 diagnostic files
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p "development/stage381/diagnostics/${{ matrix.platform }}"
+
+          if [ -f development/stage380/stage380_independent_verification_result.json ]; then
+            cp \
+              development/stage380/stage380_independent_verification_result.json \
+              "development/stage381/diagnostics/${{ matrix.platform }}/"
+          fi
+
+          if [ -f "development/stage381/environment-results/stage381_${{ matrix.platform }}_environment_result.json" ]; then
+            cp \
+              "development/stage381/environment-results/stage381_${{ matrix.platform }}_environment_result.json" \
+              "development/stage381/diagnostics/${{ matrix.platform }}/"
+          fi
 
       - name: Upload environment result
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: stage381-${{ matrix.platform }}-environment-result
           path: development/stage381/environment-results/stage381_${{ matrix.platform }}_environment_result.json
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 30
+
+      - name: Upload Stage381 diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage381-${{ matrix.platform }}-diagnostics
+          path: development/stage381/diagnostics/${{ matrix.platform }}/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Enforce environment generation success
+        if: steps.generate_environment_result.outcome != 'success'
+        shell: bash
+        run: |
+          echo "ERROR: Stage381 environment generation failed for ${{ matrix.platform }}"
+          exit 1
 
   cross-platform-comparison:
     name: Compare all platform results
