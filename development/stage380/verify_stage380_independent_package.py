@@ -650,12 +650,12 @@ def main() -> int:
                 "formal_acceptance_ready": formal_acceptance_ready,
             },
             "contract": {
-                "path": str(CONTRACT_PATH),
+                "path": CONTRACT_PATH.as_posix(),
                 "sha256": actual_contract_hash,
-                "sha256_record_path": str(CONTRACT_SHA256_PATH),
+                "sha256_record_path": CONTRACT_SHA256_PATH.as_posix(),
             },
             "source_snapshot": {
-                "path": str(snapshot_manifest_path),
+                "path": snapshot_manifest_path.as_posix(),
                 "sha256": (
                     sha256_file(snapshot_manifest_path)
                     if snapshot_manifest_path.is_file()
