@@ -309,8 +309,8 @@ def main() -> int:
         add_check(
             checks,
             name="contract_sha256_record_path_valid",
-            passed=recorded_contract_path == str(CONTRACT_PATH),
-            expected=str(CONTRACT_PATH),
+            passed=recorded_contract_path == CONTRACT_PATH.as_posix(),
+            expected=CONTRACT_PATH.as_posix(),
             actual=recorded_contract_path,
         )
 
