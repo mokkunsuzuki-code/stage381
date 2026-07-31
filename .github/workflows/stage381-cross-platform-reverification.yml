@@ -159,19 +159,19 @@ jobs:
           mkdir -p development/stage381/environment-results
 
       - name: Download Ubuntu result
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           name: stage381-ubuntu-environment-result
           path: development/stage381/environment-results
 
       - name: Download Windows result
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           name: stage381-windows-environment-result
           path: development/stage381/environment-results
 
       - name: Download macOS result
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           name: stage381-macos-environment-result
           path: development/stage381/environment-results
