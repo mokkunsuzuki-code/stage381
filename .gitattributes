@@ -1,0 +1,34 @@
+# Stage381 cross-platform deterministic byte normalization
+
+# Default text files must use LF in the working tree on every OS.
+* text=auto eol=lf
+
+# Explicit verification and source file rules.
+*.py text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.sha256 text eol=lf
+*.toml text eol=lf
+*.ini text eol=lf
+*.cfg text eol=lf
+*.sh text eol=lf
+
+# Binary files must never be modified by Git line-ending conversion.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.tar binary
+*.ots binary
+*.der binary
+*.crt binary
+*.cer binary
+*.p12 binary
+*.pfx binary
