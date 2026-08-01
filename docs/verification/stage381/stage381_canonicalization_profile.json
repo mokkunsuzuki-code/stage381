@@ -1,0 +1,63 @@
+{
+  "canonical_json": {
+    "array_order": "preserved_unless_explicitly_sorted",
+    "byte_order_mark_allowed": false,
+    "canonical_output_final_newline": false,
+    "encoding": "UTF-8",
+    "ensure_ascii": false,
+    "object_keys": "lexicographically_sorted",
+    "separators": {
+      "item_separator": ",",
+      "key_separator": ":"
+    },
+    "trailing_whitespace_allowed": false
+  },
+  "development_only": true,
+  "excluded_runtime_values": [
+    "runtime_timestamp",
+    "hostname",
+    "username",
+    "process_id",
+    "temporary_directory",
+    "absolute_repository_path",
+    "random_value",
+    "network_derived_value"
+  ],
+  "fail_closed": true,
+  "file_processing": {
+    "binary_files": "hashed_as_raw_bytes",
+    "file_order": "lexicographically_sorted_relative_paths",
+    "hash_algorithm": "sha256",
+    "symbolic_links_allowed": false
+  },
+  "path_normalization": {
+    "absolute_paths_allowed": false,
+    "current_working_directory_allowed": false,
+    "home_directory_allowed": false,
+    "separator": "/",
+    "temporary_paths_allowed": false
+  },
+  "profile_name": "Stage381 Cross-Platform Canonicalization Profile",
+  "profile_version": "1.0.0",
+  "required_comparison_fields": [
+    "decision",
+    "verification_status",
+    "package_integrity_verified",
+    "critical_failure_count",
+    "result_sha256",
+    "process_exit_code",
+    "canonical_result_sha256"
+  ],
+  "required_platforms": [
+    "ubuntu",
+    "windows",
+    "macos"
+  ],
+  "source_stage": 380,
+  "stage": 381,
+  "text_normalization": {
+    "line_endings": "LF",
+    "runtime_locale_dependency_allowed": false,
+    "unicode_normalization": "NFC"
+  }
+}

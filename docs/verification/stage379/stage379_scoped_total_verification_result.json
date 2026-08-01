@@ -1,0 +1,57 @@
+{
+  "certificate_issued": false,
+  "checks": {
+    "critical_integrity_valid": true,
+    "development_gate_allows_execution": true,
+    "formal_acceptance_requirements_satisfied": false,
+    "qkd_evidence_level_accepted": true,
+    "safety_boundaries_satisfied": true,
+    "stage377_requirements_satisfied": false,
+    "stage377_result_hash_valid": true,
+    "stage377_result_present": true,
+    "stage378_hash_chain_valid": true,
+    "stage378_requirements_satisfied": false,
+    "stage378_result_hash_valid": true,
+    "stage378_result_present": true,
+    "verification_scope_policy_hash_valid": true,
+    "verification_scope_policy_present": true,
+    "verification_scope_policy_structure_valid": true
+  },
+  "created_at": "2026-07-26T05:12:05.984682+00:00",
+  "decision": "development_verification_pending_upstream",
+  "development_gate_result_path": "development/stage379_development_gate_result.json",
+  "development_gate_result_sha256": "b6d35ad9e754f78ca8486166bbd4619caade116473980936369392b1417848be",
+  "development_only": true,
+  "engine": "Scoped Total Verification Acceptance Certificate & Pipeline Completion Gate",
+  "execution_mode": "development",
+  "formal_acceptance": false,
+  "guarantee": "Stage379 development evaluation verifies the locked scope, upstream self-hashes, hash chain, QKD public-safety boundary, and development gate. It never issues a formal certificate or declares pipeline completion while upstream evidence is pending.",
+  "pipeline_completed": false,
+  "previous_hash": "5c67a4160b06efb06e7608acfcf7e46d27895adeb3d69cd8a7fe216ba95ef86e",
+  "public_release_allowed": false,
+  "reasons": [
+    "stage377_formal_acceptance_pending",
+    "stage378_qkd_binding_pending"
+  ],
+  "result_sha256": "1da749df88d09366f911dac82e2180ecd468a1f39a8feddd0e93088dc5809df9",
+  "source_stages": [
+    377,
+    378
+  ],
+  "stage": 379,
+  "stage377_result_path": "docs/timestamp-finalization/stage377_dual_timestamp_finalization_result.json",
+  "stage377_result_sha256": "03135b9fe51b055c356179fdb927ad45317393f94b01b27250c1dd06312d098f",
+  "stage378_result_path": "docs/qkd/stage378_qkd_safety_metadata_binding_result.json",
+  "stage378_result_sha256": "5c67a4160b06efb06e7608acfcf7e46d27895adeb3d69cd8a7fe216ba95ef86e",
+  "upstream_state": {
+    "stage377_decision": "rfc3161_verified_opentimestamps_pending",
+    "stage377_effective_final_acceptance": false,
+    "stage377_verified_proof_count": 1,
+    "stage378_decision": "qkd_binding_pending_previous_stage",
+    "stage378_evidence_classification": "metadata_only",
+    "stage378_evidence_level": "QKD-E1",
+    "stage378_qkd_metadata_bound": false
+  },
+  "verification_scope_policy_path": "development/stage379/stage379_verification_scope_policy.json",
+  "verification_scope_policy_sha256": "a05539d8e44d509c0238e13d38082123f5d4337b23ebd40e727e471fe1b9b97e"
+}

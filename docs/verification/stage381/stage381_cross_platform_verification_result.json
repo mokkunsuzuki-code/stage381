@@ -1,0 +1,555 @@
+{
+  "all_required_platforms_present": true,
+  "check_count": 62,
+  "checks": [
+    {
+      "actual": [
+        "macos",
+        "ubuntu",
+        "windows"
+      ],
+      "critical": true,
+      "expected": [
+        "ubuntu",
+        "windows",
+        "macos"
+      ],
+      "name": "all_required_platform_results_available",
+      "passed": true
+    },
+    {
+      "actual": {
+        "macos": "d248ee64a524cea14ecb1a7e75a977bc53a6a44ed98ff48ef1ca159932eed1d9",
+        "ubuntu": "d248ee64a524cea14ecb1a7e75a977bc53a6a44ed98ff48ef1ca159932eed1d9",
+        "windows": "d248ee64a524cea14ecb1a7e75a977bc53a6a44ed98ff48ef1ca159932eed1d9"
+      },
+      "critical": true,
+      "expected": "identical SHA-256 on all required platforms",
+      "name": "cross_platform_canonical_result_sha256_match",
+      "passed": true
+    },
+    {
+      "actual": {
+        "macos": 0,
+        "ubuntu": 0,
+        "windows": 0
+      },
+      "critical": true,
+      "expected": 0,
+      "name": "cross_platform_match:critical_failure_count",
+      "passed": true
+    },
+    {
+      "actual": {
+        "macos": "development_package_verified_upstream_pending",
+        "ubuntu": "development_package_verified_upstream_pending",
+        "windows": "development_package_verified_upstream_pending"
+      },
+      "critical": true,
+      "expected": "development_package_verified_upstream_pending",
+      "name": "cross_platform_match:decision",
+      "passed": true
+    },
+    {
+      "actual": {
+        "macos": true,
+        "ubuntu": true,
+        "windows": true
+      },
+      "critical": true,
+      "expected": true,
+      "name": "cross_platform_match:package_integrity_verified",
+      "passed": true
+    },
+    {
+      "actual": {
+        "macos": 0,
+        "ubuntu": 0,
+        "windows": 0
+      },
+      "critical": true,
+      "expected": 0,
+      "name": "cross_platform_match:process_exit_code",
+      "passed": true
+    },
+    {
+      "actual": {
+        "macos": "f9ee8d519c9f922960743c7f77ec801d90144b43a8e0b562e99379252920580a",
+        "ubuntu": "f9ee8d519c9f922960743c7f77ec801d90144b43a8e0b562e99379252920580a",
+        "windows": "f9ee8d519c9f922960743c7f77ec801d90144b43a8e0b562e99379252920580a"
+      },
+      "critical": true,
+      "expected": "f9ee8d519c9f922960743c7f77ec801d90144b43a8e0b562e99379252920580a",
+      "name": "cross_platform_match:result_sha256",
+      "passed": true
+    },
+    {
+      "actual": {
+        "macos": "verified_development_only",
+        "ubuntu": "verified_development_only",
+        "windows": "verified_development_only"
+      },
+      "critical": true,
+      "expected": "verified_development_only",
+      "name": "cross_platform_match:verification_status",
+      "passed": true
+    },
+    {
+      "actual": "d248ee64a524cea14ecb1a7e75a977bc53a6a44ed98ff48ef1ca159932eed1d9",
+      "critical": true,
+      "expected": "d248ee64a524cea14ecb1a7e75a977bc53a6a44ed98ff48ef1ca159932eed1d9",
+      "name": "macos_canonical_result_sha256_valid",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "macos_comparison_field_present:critical_failure_count",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "macos_comparison_field_present:decision",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "macos_comparison_field_present:package_integrity_verified",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "macos_comparison_field_present:process_exit_code",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "macos_comparison_field_present:result_sha256",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "macos_comparison_field_present:verification_status",
+      "passed": true
+    },
+    {
+      "actual": "dict",
+      "critical": true,
+      "expected": "object",
+      "name": "macos_comparison_payload_is_object",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "macos_development_only",
+      "passed": true
+    },
+    {
+      "actual": "e556e7de1b754fdc757e0bda35d948ff3f62257c62fef296fecea4790afd248d",
+      "critical": true,
+      "expected": "e556e7de1b754fdc757e0bda35d948ff3f62257c62fef296fecea4790afd248d",
+      "name": "macos_environment_result_sha256_valid",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "macos_fail_closed",
+      "passed": true
+    },
+    {
+      "actual": false,
+      "critical": true,
+      "expected": false,
+      "name": "macos_network_access_required",
+      "passed": true
+    },
+    {
+      "actual": "macos",
+      "critical": true,
+      "expected": "macos",
+      "name": "macos_platform",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "macos_result_file_present",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "macos_source_file_sha256_available",
+      "passed": true
+    },
+    {
+      "actual": 380,
+      "critical": true,
+      "expected": 380,
+      "name": "macos_source_stage",
+      "passed": true
+    },
+    {
+      "actual": 381,
+      "critical": true,
+      "expected": 381,
+      "name": "macos_stage",
+      "passed": true
+    },
+    {
+      "actual": "cross_platform_deterministic_offline",
+      "critical": true,
+      "expected": "cross_platform_deterministic_offline",
+      "name": "macos_verification_mode",
+      "passed": true
+    },
+    {
+      "actual": "d248ee64a524cea14ecb1a7e75a977bc53a6a44ed98ff48ef1ca159932eed1d9",
+      "critical": true,
+      "expected": "d248ee64a524cea14ecb1a7e75a977bc53a6a44ed98ff48ef1ca159932eed1d9",
+      "name": "ubuntu_canonical_result_sha256_valid",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "ubuntu_comparison_field_present:critical_failure_count",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "ubuntu_comparison_field_present:decision",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "ubuntu_comparison_field_present:package_integrity_verified",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "ubuntu_comparison_field_present:process_exit_code",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "ubuntu_comparison_field_present:result_sha256",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "ubuntu_comparison_field_present:verification_status",
+      "passed": true
+    },
+    {
+      "actual": "dict",
+      "critical": true,
+      "expected": "object",
+      "name": "ubuntu_comparison_payload_is_object",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "ubuntu_development_only",
+      "passed": true
+    },
+    {
+      "actual": "8475511385d3292883bfff189f6c1d4cf20a31c247c2d2905c2177a8cc0986be",
+      "critical": true,
+      "expected": "8475511385d3292883bfff189f6c1d4cf20a31c247c2d2905c2177a8cc0986be",
+      "name": "ubuntu_environment_result_sha256_valid",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "ubuntu_fail_closed",
+      "passed": true
+    },
+    {
+      "actual": false,
+      "critical": true,
+      "expected": false,
+      "name": "ubuntu_network_access_required",
+      "passed": true
+    },
+    {
+      "actual": "ubuntu",
+      "critical": true,
+      "expected": "ubuntu",
+      "name": "ubuntu_platform",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "ubuntu_result_file_present",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "ubuntu_source_file_sha256_available",
+      "passed": true
+    },
+    {
+      "actual": 380,
+      "critical": true,
+      "expected": 380,
+      "name": "ubuntu_source_stage",
+      "passed": true
+    },
+    {
+      "actual": 381,
+      "critical": true,
+      "expected": 381,
+      "name": "ubuntu_stage",
+      "passed": true
+    },
+    {
+      "actual": "cross_platform_deterministic_offline",
+      "critical": true,
+      "expected": "cross_platform_deterministic_offline",
+      "name": "ubuntu_verification_mode",
+      "passed": true
+    },
+    {
+      "actual": "d248ee64a524cea14ecb1a7e75a977bc53a6a44ed98ff48ef1ca159932eed1d9",
+      "critical": true,
+      "expected": "d248ee64a524cea14ecb1a7e75a977bc53a6a44ed98ff48ef1ca159932eed1d9",
+      "name": "windows_canonical_result_sha256_valid",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "windows_comparison_field_present:critical_failure_count",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "windows_comparison_field_present:decision",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "windows_comparison_field_present:package_integrity_verified",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "windows_comparison_field_present:process_exit_code",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "windows_comparison_field_present:result_sha256",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "windows_comparison_field_present:verification_status",
+      "passed": true
+    },
+    {
+      "actual": "dict",
+      "critical": true,
+      "expected": "object",
+      "name": "windows_comparison_payload_is_object",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "windows_development_only",
+      "passed": true
+    },
+    {
+      "actual": "96f4f54492852bcb2f57904cdfb91eae3ed8df19eb4c9cf9ffff49c84110119b",
+      "critical": true,
+      "expected": "96f4f54492852bcb2f57904cdfb91eae3ed8df19eb4c9cf9ffff49c84110119b",
+      "name": "windows_environment_result_sha256_valid",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "windows_fail_closed",
+      "passed": true
+    },
+    {
+      "actual": false,
+      "critical": true,
+      "expected": false,
+      "name": "windows_network_access_required",
+      "passed": true
+    },
+    {
+      "actual": "windows",
+      "critical": true,
+      "expected": "windows",
+      "name": "windows_platform",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "windows_result_file_present",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "windows_source_file_sha256_available",
+      "passed": true
+    },
+    {
+      "actual": 380,
+      "critical": true,
+      "expected": 380,
+      "name": "windows_source_stage",
+      "passed": true
+    },
+    {
+      "actual": 381,
+      "critical": true,
+      "expected": 381,
+      "name": "windows_stage",
+      "passed": true
+    },
+    {
+      "actual": "cross_platform_deterministic_offline",
+      "critical": true,
+      "expected": "cross_platform_deterministic_offline",
+      "name": "windows_verification_mode",
+      "passed": true
+    }
+  ],
+  "common_canonical_result_sha256": "d248ee64a524cea14ecb1a7e75a977bc53a6a44ed98ff48ef1ca159932eed1d9",
+  "critical_failure_count": 0,
+  "critical_failures": [],
+  "cross_platform_reverification_verified": true,
+  "decision": "cross_platform_reverification_verified_upstream_pending",
+  "deterministic_statement": "No runtime timestamp, hostname, username, absolute path, temporary path, random value, or network-derived value is included.",
+  "development_only": true,
+  "errors": [],
+  "execution_mode": "development",
+  "fail_closed": true,
+  "formal_acceptance": false,
+  "network_access_required": false,
+  "pipeline_completed": false,
+  "platform_result_count": 3,
+  "platform_results": {
+    "macos": {
+      "canonical_result_sha256": "d248ee64a524cea14ecb1a7e75a977bc53a6a44ed98ff48ef1ca159932eed1d9",
+      "comparison_payload": {
+        "critical_failure_count": 0,
+        "decision": "development_package_verified_upstream_pending",
+        "package_integrity_verified": true,
+        "process_exit_code": 0,
+        "result_sha256": "f9ee8d519c9f922960743c7f77ec801d90144b43a8e0b562e99379252920580a",
+        "verification_status": "verified_development_only"
+      },
+      "environment_result_sha256": "e556e7de1b754fdc757e0bda35d948ff3f62257c62fef296fecea4790afd248d",
+      "file_sha256": "b5439bc825422d0fbbafd058e6bb3298fa63e6db0b16b599e48640da4b27b9a5",
+      "path": "development/stage381/environment-results/stage381_macos_environment_result.json",
+      "platform": "macos"
+    },
+    "ubuntu": {
+      "canonical_result_sha256": "d248ee64a524cea14ecb1a7e75a977bc53a6a44ed98ff48ef1ca159932eed1d9",
+      "comparison_payload": {
+        "critical_failure_count": 0,
+        "decision": "development_package_verified_upstream_pending",
+        "package_integrity_verified": true,
+        "process_exit_code": 0,
+        "result_sha256": "f9ee8d519c9f922960743c7f77ec801d90144b43a8e0b562e99379252920580a",
+        "verification_status": "verified_development_only"
+      },
+      "environment_result_sha256": "8475511385d3292883bfff189f6c1d4cf20a31c247c2d2905c2177a8cc0986be",
+      "file_sha256": "6b98813f11e32992e20a6a86c17d83872a5dcb377a221ed21552f6511dcdb36b",
+      "path": "development/stage381/environment-results/stage381_ubuntu_environment_result.json",
+      "platform": "ubuntu"
+    },
+    "windows": {
+      "canonical_result_sha256": "d248ee64a524cea14ecb1a7e75a977bc53a6a44ed98ff48ef1ca159932eed1d9",
+      "comparison_payload": {
+        "critical_failure_count": 0,
+        "decision": "development_package_verified_upstream_pending",
+        "package_integrity_verified": true,
+        "process_exit_code": 0,
+        "result_sha256": "f9ee8d519c9f922960743c7f77ec801d90144b43a8e0b562e99379252920580a",
+        "verification_status": "verified_development_only"
+      },
+      "environment_result_sha256": "96f4f54492852bcb2f57904cdfb91eae3ed8df19eb4c9cf9ffff49c84110119b",
+      "file_sha256": "14286eebfb5df66a1763fc0aa0d5d1d01dce4a31fac3e5c4a834283802569cd2",
+      "path": "development/stage381/environment-results/stage381_windows_environment_result.json",
+      "platform": "windows"
+    }
+  },
+  "public_release_allowed": false,
+  "required_platforms": [
+    "ubuntu",
+    "windows",
+    "macos"
+  ],
+  "result_sha256": "e84a62595669e0bd4bbd2d19f149c153636158f83a821a0f3cb67c8b09bd0245",
+  "same_canonical_result_sha256_verified": true,
+  "same_decision_verified": true,
+  "same_exit_code_verified": true,
+  "same_input_same_output_verified": true,
+  "same_stage380_result_sha256_verified": true,
+  "source_stage": 380,
+  "stage": 381,
+  "upstream_statement": "Stage381 verifies cross-platform reproducibility only and does not upgrade Stage377, Stage378, Stage379, or Stage380 formal acceptance.",
+  "verification_mode": "cross_platform_deterministic_offline",
+  "verification_status": "verified_development_only",
+  "verifier": "Stage381 Cross-Platform Deterministic Reverification Comparator"
+}

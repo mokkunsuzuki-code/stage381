@@ -1,0 +1,73 @@
+{
+  "canonicalization_profile": "development/stage381/stage381_canonicalization_profile.json",
+  "canonicalization_requirements": {
+    "absolute_path_excluded": true,
+    "encoding": "UTF-8",
+    "file_order": "lexicographically_sorted_relative_paths",
+    "hostname_excluded": true,
+    "json_object_keys": "lexicographically_sorted",
+    "line_endings": "LF",
+    "network_derived_value_excluded": true,
+    "path_separator": "/",
+    "random_value_excluded": true,
+    "runtime_timestamp_excluded": true,
+    "temporary_path_excluded": true,
+    "unicode_normalization": "NFC",
+    "username_excluded": true
+  },
+  "contract_name": "Stage381 Cross-Platform Deterministic Reverification Package Contract",
+  "contract_version": "1.0.0-development",
+  "cross_platform_comparison_result": "development/stage381/stage381_cross_platform_verification_result.json",
+  "development_only": true,
+  "execution_mode": "development",
+  "fail_closed": true,
+  "formal_acceptance": false,
+  "formal_independent_verification": false,
+  "network_access_required": false,
+  "package_locked": true,
+  "pipeline_completed": false,
+  "public_release_allowed": false,
+  "reproducibility_requirements": {
+    "offline_only": true,
+    "same_canonical_result_sha256": true,
+    "same_decision": true,
+    "same_input_same_output": true,
+    "same_process_exit_code": true,
+    "same_source_result_sha256": true
+  },
+  "required_inputs": [
+    ".stage381-development-policy.json",
+    "development/stage380/stage380_independent_verification_result.json",
+    "development/stage381/stage381_canonicalization_profile.json",
+    "development/stage381/environment-results/stage381_ubuntu_environment_result.json",
+    "development/stage381/environment-results/stage381_windows_environment_result.json",
+    "development/stage381/environment-results/stage381_macos_environment_result.json",
+    "development/stage381/stage381_cross_platform_verification_result.json"
+  ],
+  "required_platforms": [
+    "ubuntu",
+    "windows",
+    "macos"
+  ],
+  "scope_reduction_allowed": false,
+  "security_boundary": {
+    "key_publication_allowed": false,
+    "private_core_publication_allowed": false,
+    "private_directory_publication_allowed": false,
+    "raw_qkd_key_publication_allowed": false,
+    "raw_timestamp_binary_publication_allowed": false,
+    "secret_publication_allowed": false
+  },
+  "source_policy": ".stage381-development-policy.json",
+  "source_stage": 380,
+  "source_stage380_result": "development/stage380/stage380_independent_verification_result.json",
+  "stage": 381,
+  "statement": "Stage381 verifies that the same Stage380 verification input produces the same decision, process exit code, source result SHA-256, and canonical result SHA-256 on Ubuntu, Windows, and macOS using deterministic offline verification. Stage381 does not independently upgrade unresolved upstream formal acceptance.",
+  "upstream_boundary": {
+    "development_only_until_upstream_completion": true,
+    "stage380_acceptance_state_preserved": true,
+    "stage380_result_preserved": true,
+    "stage381_does_not_upgrade_upstream_acceptance": true
+  },
+  "verification_mode": "cross_platform_deterministic_offline"
+}

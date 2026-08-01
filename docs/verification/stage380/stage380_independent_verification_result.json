@@ -1,0 +1,531 @@
+{
+  "check_count": 47,
+  "checks": [
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "contract_development_only",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "contract_fail_closed",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "contract_file_present",
+      "passed": true
+    },
+    {
+      "actual": false,
+      "critical": true,
+      "expected": false,
+      "name": "contract_formal_acceptance",
+      "passed": true
+    },
+    {
+      "actual": false,
+      "critical": true,
+      "expected": false,
+      "name": "contract_formal_independent_verification",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "contract_package_locked",
+      "passed": true
+    },
+    {
+      "actual": false,
+      "critical": true,
+      "expected": false,
+      "name": "contract_pipeline_completed",
+      "passed": true
+    },
+    {
+      "actual": false,
+      "critical": true,
+      "expected": false,
+      "name": "contract_public_release_allowed",
+      "passed": true
+    },
+    {
+      "actual": false,
+      "critical": true,
+      "expected": false,
+      "name": "contract_scope_reduction_allowed",
+      "passed": true
+    },
+    {
+      "actual": "development/stage380/stage380_independent_verification_package_contract.json",
+      "critical": true,
+      "expected": "development/stage380/stage380_independent_verification_package_contract.json",
+      "name": "contract_sha256_record_path_valid",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "contract_sha256_record_present",
+      "passed": true
+    },
+    {
+      "actual": "f9105dc206dfc77a6690ed3c83847c6c7012b41d199a8369953580adc4477af8",
+      "critical": true,
+      "expected": "f9105dc206dfc77a6690ed3c83847c6c7012b41d199a8369953580adc4477af8",
+      "name": "contract_sha256_valid",
+      "passed": true
+    },
+    {
+      "actual": 379,
+      "critical": true,
+      "expected": 379,
+      "name": "contract_source_stage",
+      "passed": true
+    },
+    {
+      "actual": 380,
+      "critical": true,
+      "expected": 380,
+      "name": "contract_stage",
+      "passed": true
+    },
+    {
+      "actual": "deterministic_offline",
+      "critical": true,
+      "expected": "deterministic_offline",
+      "name": "contract_verification_mode",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "deterministic_output_offline_only",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "deterministic_output_same_hash_same_decision",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "deterministic_output_same_input_same_output",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "required_input_present:development/stage379/stage379_development_acceptance_certificate.json",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "required_input_present:development/stage379/stage379_development_snapshot_manifest.json",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "required_input_present:development/stage379/stage379_scoped_total_verification_result.json",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "required_input_present:development/stage379/stage379_verification_scope_policy.json",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "required_input_present:docs/qkd/stage378_qkd_safety_metadata_binding_result.json",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "required_input_present:docs/timestamp-finalization/stage377_dual_timestamp_finalization_result.json",
+      "passed": true
+    },
+    {
+      "actual": [
+        "development/stage379/stage379_development_snapshot_manifest.json",
+        "development/stage379/stage379_development_acceptance_certificate.json",
+        "development/stage379/stage379_scoped_total_verification_result.json",
+        "development/stage379/stage379_verification_scope_policy.json",
+        "docs/timestamp-finalization/stage377_dual_timestamp_finalization_result.json",
+        "docs/qkd/stage378_qkd_safety_metadata_binding_result.json"
+      ],
+      "critical": true,
+      "expected": "non-empty list of paths",
+      "name": "required_inputs_is_nonempty_list",
+      "passed": true
+    },
+    {
+      "actual": {
+        "duplicate": false,
+        "exists": true,
+        "path": ".stage379-development-policy.json",
+        "sha256": "6ca50bf9e4f874c654c84b0ad17f3335293c0a1a69eba37b185b6c53d0f1b9c5",
+        "size_bytes": 1273
+      },
+      "critical": true,
+      "expected": {
+        "duplicate": false,
+        "exists": true,
+        "sha256": "6ca50bf9e4f874c654c84b0ad17f3335293c0a1a69eba37b185b6c53d0f1b9c5",
+        "size_bytes": 1273
+      },
+      "name": "snapshot_artifact_0_valid",
+      "passed": true
+    },
+    {
+      "actual": {
+        "duplicate": false,
+        "exists": true,
+        "path": "development/stage379/stage379_scoped_total_verification_summary.txt",
+        "sha256": "a8df0f2780e9f9478d01303ce3253896a29a80d62c3cec04ab72fcce6fd14914",
+        "size_bytes": 1059
+      },
+      "critical": true,
+      "expected": {
+        "duplicate": false,
+        "exists": true,
+        "sha256": "a8df0f2780e9f9478d01303ce3253896a29a80d62c3cec04ab72fcce6fd14914",
+        "size_bytes": 1059
+      },
+      "name": "snapshot_artifact_10_valid",
+      "passed": true
+    },
+    {
+      "actual": {
+        "duplicate": false,
+        "exists": true,
+        "path": "docs/timestamp-finalization/stage377_dual_timestamp_finalization_result.json",
+        "sha256": "74288a3c2556de86699259c93f9a8de9b38c6f30ee0a7a0ba031bebbc55b7cdc",
+        "size_bytes": 3383
+      },
+      "critical": true,
+      "expected": {
+        "duplicate": false,
+        "exists": true,
+        "sha256": "74288a3c2556de86699259c93f9a8de9b38c6f30ee0a7a0ba031bebbc55b7cdc",
+        "size_bytes": 3383
+      },
+      "name": "snapshot_artifact_11_valid",
+      "passed": true
+    },
+    {
+      "actual": {
+        "duplicate": false,
+        "exists": true,
+        "path": "docs/qkd/stage378_qkd_safety_metadata_binding_result.json",
+        "sha256": "deb30c486d3569701ef87cdd0b08bb65bb136808b6ef88d5d3e61c181d03dfbc",
+        "size_bytes": 2888
+      },
+      "critical": true,
+      "expected": {
+        "duplicate": false,
+        "exists": true,
+        "sha256": "deb30c486d3569701ef87cdd0b08bb65bb136808b6ef88d5d3e61c181d03dfbc",
+        "size_bytes": 2888
+      },
+      "name": "snapshot_artifact_12_valid",
+      "passed": true
+    },
+    {
+      "actual": {
+        "duplicate": false,
+        "exists": true,
+        "path": "scripts/stage379_development_gate.py",
+        "sha256": "1b02f10d7f5a9805ea60c509c855934329c6078480a6d669efcb025791a5aea1",
+        "size_bytes": 15901
+      },
+      "critical": true,
+      "expected": {
+        "duplicate": false,
+        "exists": true,
+        "sha256": "1b02f10d7f5a9805ea60c509c855934329c6078480a6d669efcb025791a5aea1",
+        "size_bytes": 15901
+      },
+      "name": "snapshot_artifact_1_valid",
+      "passed": true
+    },
+    {
+      "actual": {
+        "duplicate": false,
+        "exists": true,
+        "path": "scripts/stage379_scoped_total_verification_gate.py",
+        "sha256": "ab3b19121287c817335e9b2bf44518058e4d2550878f5491ef603d3fce59a038",
+        "size_bytes": 20493
+      },
+      "critical": true,
+      "expected": {
+        "duplicate": false,
+        "exists": true,
+        "sha256": "ab3b19121287c817335e9b2bf44518058e4d2550878f5491ef603d3fce59a038",
+        "size_bytes": 20493
+      },
+      "name": "snapshot_artifact_2_valid",
+      "passed": true
+    },
+    {
+      "actual": {
+        "duplicate": false,
+        "exists": true,
+        "path": "development/stage379/stage379_verification_scope_policy.json",
+        "sha256": "8730ee3aa3b633dd4033a11769bc536a1ea41cc41325d2e0eb1901cd4266da1c",
+        "size_bytes": 2308
+      },
+      "critical": true,
+      "expected": {
+        "duplicate": false,
+        "exists": true,
+        "sha256": "8730ee3aa3b633dd4033a11769bc536a1ea41cc41325d2e0eb1901cd4266da1c",
+        "size_bytes": 2308
+      },
+      "name": "snapshot_artifact_3_valid",
+      "passed": true
+    },
+    {
+      "actual": {
+        "duplicate": false,
+        "exists": true,
+        "path": "development/stage379/stage379_verification_scope_policy.sha256",
+        "sha256": "2ae56800c627278ccf67f086aa86f481e6a6e9e9ce3ab40397032f1a9648e2c2",
+        "size_bytes": 127
+      },
+      "critical": true,
+      "expected": {
+        "duplicate": false,
+        "exists": true,
+        "sha256": "2ae56800c627278ccf67f086aa86f481e6a6e9e9ce3ab40397032f1a9648e2c2",
+        "size_bytes": 127
+      },
+      "name": "snapshot_artifact_4_valid",
+      "passed": true
+    },
+    {
+      "actual": {
+        "duplicate": false,
+        "exists": true,
+        "path": "development/stage379/test_stage379_fail_closed.py",
+        "sha256": "d20d2bc39341f539c8f8e7304876f9e4143f4bcc74cc9dd48c4f1d2f521e4ffc",
+        "size_bytes": 10352
+      },
+      "critical": true,
+      "expected": {
+        "duplicate": false,
+        "exists": true,
+        "sha256": "d20d2bc39341f539c8f8e7304876f9e4143f4bcc74cc9dd48c4f1d2f521e4ffc",
+        "size_bytes": 10352
+      },
+      "name": "snapshot_artifact_5_valid",
+      "passed": true
+    },
+    {
+      "actual": {
+        "duplicate": false,
+        "exists": true,
+        "path": "development/stage379/verify_stage379_development_snapshot.py",
+        "sha256": "f18f88884ac66b716b3166cc8184f5e3a9555af3241730a46fa798dc37dd5342",
+        "size_bytes": 8379
+      },
+      "critical": true,
+      "expected": {
+        "duplicate": false,
+        "exists": true,
+        "sha256": "f18f88884ac66b716b3166cc8184f5e3a9555af3241730a46fa798dc37dd5342",
+        "size_bytes": 8379
+      },
+      "name": "snapshot_artifact_6_valid",
+      "passed": true
+    },
+    {
+      "actual": {
+        "duplicate": false,
+        "exists": true,
+        "path": "development/stage379_development_gate_result.json",
+        "sha256": "5fe02a5575cc5a4c86da25cd31b4d72150e95d9682e52831565cb97affc0d4b1",
+        "size_bytes": 2566
+      },
+      "critical": true,
+      "expected": {
+        "duplicate": false,
+        "exists": true,
+        "sha256": "5fe02a5575cc5a4c86da25cd31b4d72150e95d9682e52831565cb97affc0d4b1",
+        "size_bytes": 2566
+      },
+      "name": "snapshot_artifact_7_valid",
+      "passed": true
+    },
+    {
+      "actual": {
+        "duplicate": false,
+        "exists": true,
+        "path": "development/stage379/stage379_scoped_total_verification_result.json",
+        "sha256": "b0c43c5969190b19a86fee800c17fa4b62ef5726d848003c8213c74311b1c15e",
+        "size_bytes": 2837
+      },
+      "critical": true,
+      "expected": {
+        "duplicate": false,
+        "exists": true,
+        "sha256": "b0c43c5969190b19a86fee800c17fa4b62ef5726d848003c8213c74311b1c15e",
+        "size_bytes": 2837
+      },
+      "name": "snapshot_artifact_8_valid",
+      "passed": true
+    },
+    {
+      "actual": {
+        "duplicate": false,
+        "exists": true,
+        "path": "development/stage379/stage379_development_acceptance_certificate.json",
+        "sha256": "32dea959d2506fcba524f06954923ec02ffb43d9ed044881984994157e81567c",
+        "size_bytes": 1048
+      },
+      "critical": true,
+      "expected": {
+        "duplicate": false,
+        "exists": true,
+        "sha256": "32dea959d2506fcba524f06954923ec02ffb43d9ed044881984994157e81567c",
+        "size_bytes": 1048
+      },
+      "name": "snapshot_artifact_9_valid",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "source_snapshot_manifest_present",
+      "passed": true
+    },
+    {
+      "actual": false,
+      "critical": false,
+      "expected": "boolean",
+      "name": "stage377_effective_final_acceptance_observed",
+      "passed": true
+    },
+    {
+      "actual": 1,
+      "critical": false,
+      "expected": "integer",
+      "name": "stage377_verified_proof_count_observed",
+      "passed": true
+    },
+    {
+      "actual": false,
+      "critical": false,
+      "expected": "boolean",
+      "name": "stage378_qkd_metadata_bound_observed",
+      "passed": true
+    },
+    {
+      "actual": "development_non_acceptance_certificate",
+      "critical": true,
+      "expected": "development_non_acceptance_certificate",
+      "name": "stage379_certificate_is_development_non_acceptance",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "stage379_critical_integrity_valid",
+      "passed": true
+    },
+    {
+      "actual": false,
+      "critical": false,
+      "expected": "boolean",
+      "name": "stage379_formal_acceptance_observed",
+      "passed": true
+    },
+    {
+      "actual": false,
+      "critical": false,
+      "expected": "boolean",
+      "name": "stage379_pipeline_completed_observed",
+      "passed": true
+    },
+    {
+      "actual": true,
+      "critical": true,
+      "expected": true,
+      "name": "stage379_snapshot_development_only",
+      "passed": true
+    }
+  ],
+  "contract": {
+    "path": "development/stage380/stage380_independent_verification_package_contract.json",
+    "sha256": "f9105dc206dfc77a6690ed3c83847c6c7012b41d199a8369953580adc4477af8",
+    "sha256_record_path": "development/stage380/stage380_independent_verification_package_contract.sha256"
+  },
+  "contract_name": "Independent Verification Package Contract",
+  "contract_version": "1.0.0-development",
+  "critical_failure_count": 0,
+  "critical_failures": [],
+  "decision": "development_package_verified_upstream_pending",
+  "deterministic_statement": "The result contains no runtime timestamp, random value, hostname, username, absolute path, or network-derived value.",
+  "errors": [],
+  "execution_mode": "development",
+  "fail_closed": true,
+  "formal_acceptance": false,
+  "formal_independent_verification": false,
+  "network_access_required": false,
+  "package_integrity_verified": true,
+  "pipeline_completed": false,
+  "public_release_allowed": false,
+  "required_input_sha256": {
+    "development/stage379/stage379_development_acceptance_certificate.json": "32dea959d2506fcba524f06954923ec02ffb43d9ed044881984994157e81567c",
+    "development/stage379/stage379_development_snapshot_manifest.json": "28e4ba9000461cae4bc50831f03e7ede1f5e78a5291651d806744f6ceb377a3d",
+    "development/stage379/stage379_scoped_total_verification_result.json": "b0c43c5969190b19a86fee800c17fa4b62ef5726d848003c8213c74311b1c15e",
+    "development/stage379/stage379_verification_scope_policy.json": "8730ee3aa3b633dd4033a11769bc536a1ea41cc41325d2e0eb1901cd4266da1c",
+    "docs/qkd/stage378_qkd_safety_metadata_binding_result.json": "deb30c486d3569701ef87cdd0b08bb65bb136808b6ef88d5d3e61c181d03dfbc",
+    "docs/timestamp-finalization/stage377_dual_timestamp_finalization_result.json": "74288a3c2556de86699259c93f9a8de9b38c6f30ee0a7a0ba031bebbc55b7cdc"
+  },
+  "result_sha256": "f9ee8d519c9f922960743c7f77ec801d90144b43a8e0b562e99379252920580a",
+  "source_snapshot": {
+    "invalid_artifact_count": 0,
+    "path": "development/stage379/stage379_development_snapshot_manifest.json",
+    "sha256": "28e4ba9000461cae4bc50831f03e7ede1f5e78a5291651d806744f6ceb377a3d",
+    "valid_artifact_count": 13
+  },
+  "stage": 380,
+  "upstream_state": {
+    "formal_acceptance_ready": false,
+    "stage377_effective_final_acceptance": false,
+    "stage377_verified_proof_count": 1,
+    "stage378_qkd_metadata_bound": false,
+    "stage379_formal_acceptance": false,
+    "stage379_pipeline_completed": false
+  },
+  "verification_mode": "deterministic_offline",
+  "verification_status": "verified_development_only",
+  "verifier": "Deterministic Offline Core Verifier"
+}

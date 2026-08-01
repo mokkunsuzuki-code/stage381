@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="google" content="notranslate">
-  <title>Stage378: QKD Safety Metadata Binding &amp; Evidence Classification Gate</title>
+  <title>Stage381: Cross-Platform Deterministic Reverification &amp; Reproducibility Gate</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; background: #f6f8fa; color: #24292f; }
     header { background: #0d1117; color: white; padding: 44px 32px; }
@@ -28,41 +28,50 @@
 
 
 
-<!-- STAGE378_CURRENT_PAGE_HEADER_START -->
+<!-- STAGE381_CURRENT_PAGE_HEADER_START -->
 <script>
   document.title =
-    "Stage378: QKD Safety Metadata Binding & Evidence Classification Gate";
+    "Stage381: Cross-Platform Deterministic Reverification & Reproducibility Gate";
 </script>
 
 <section
-  id="stage378-current-page-header"
-  aria-label="Stage378 current stage"
+  id="stage381-current-page-header"
+  aria-label="Stage381 current stage"
 >
-  <h1>Stage378</h1>
+  <h1>Stage381</h1>
 
   <h2>
-    QKD Safety Metadata Binding &amp;
-    Evidence Classification Gate
+    Cross-Platform Deterministic Reverification
+    &amp; Reproducibility Gate
   </h2>
 
   <p>
-    Stage377までの検証履歴を保持し、その末尾に、
-    Stage377の検証結果ハッシュと公開可能なQKD安全メタデータを結合する
-    Stage378の証拠区分ゲートを積み上げています。
+    Stage380の決定論的オフライン独立検証を保持したまま、
+    Ubuntu、Windows、macOSの異なる環境で同一入力を再検証し、
+    同一判定、同一終了コード、同一Stage380結果ハッシュ、
+    同一正規化結果ハッシュになることを検証します。
   </p>
 
   <p>
-    QKD生鍵、ふるい分け鍵、誤り訂正後の鍵、最終秘密鍵、
-    秘密鍵、認証情報およびトークンは公開しません。
-    公開対象は安全なメタデータと検証結果だけです。
+    2026年のGitHub Actions実行において、
+    Ubuntu、Windows、macOS、および最終比較ジョブの
+    すべてが成功しました。
   </p>
 
   <p>
     <strong>Current decision:</strong>
-    <code>qkd_binding_pending_previous_stage</code>
+    <code>cross_platform_reverification_verified_upstream_pending</code>
+  </p>
+
+  <p>
+    <strong>Cross-platform reverification:</strong>
+    <code>true</code>
+    /
+    <strong>Critical failures:</strong>
+    <code>0</code>
   </p>
 </section>
-<!-- STAGE378_CURRENT_PAGE_HEADER_END -->
+<!-- STAGE381_CURRENT_PAGE_HEADER_END -->
 
 
 
@@ -2779,5 +2788,351 @@ Verified / Pending / Block</pre>
 </section>
 <!-- STAGE378_APPEND_ONLY_END -->
 
+<!-- STAGE379_APPEND_ONLY_START -->
+<section class="card" id="stage379">
+  <h2>
+    Stage379: Scoped Total Verification Acceptance Certificate
+    &amp; Pipeline Completion Gate
+  </h2>
+
+  <p>
+    Stage379は、Stage377およびStage378までに積み上げた
+    タイムスタンプ、QKD安全メタデータ、証拠区分、
+    ハッシュ連鎖、公開境界を、範囲を固定した一つの
+    総合検証結果へ統合します。
+  </p>
+
+  <h3>Current State</h3>
+
+  <ul>
+    <li>
+      Decision:
+      <code>development_verification_pending_upstream</code>
+    </li>
+    <li>
+      Development only:
+      <code>true</code>
+    </li>
+    <li>
+      Formal acceptance:
+      <code>false</code>
+    </li>
+    <li>
+      Pipeline completed:
+      <code>false</code>
+    </li>
+    <li>
+      Public release allowed:
+      <code>false</code>
+    </li>
+    <li>
+      Certificate type:
+      <code>development_non_acceptance_certificate</code>
+    </li>
+  </ul>
+
+  <p>
+    Stage379は、上流条件が未完了である間、
+    正式承認やパイプライン完了を主張しません。
+    これは意図されたFail-Closed状態です。
+  </p>
+
+  <h3>Public Stage379 Evidence</h3>
+
+  <ul>
+    <li>
+      <a href="./verification/stage379/stage379_scoped_total_verification_result.json">
+        Stage379 Scoped Total Verification Result
+      </a>
+    </li>
+    <li>
+      <a href="./verification/stage379/stage379_scoped_total_verification_result.json.sha256">
+        Stage379 Result SHA-256 Record
+      </a>
+    </li>
+    <li>
+      <a href="./verification/stage379/stage379_development_acceptance_certificate.json">
+        Stage379 Development Non-Acceptance Certificate
+      </a>
+    </li>
+    <li>
+      <a href="./verification/stage379/stage379_development_acceptance_certificate.json.sha256">
+        Stage379 Certificate SHA-256 Record
+      </a>
+    </li>
+  </ul>
+
+  <p>
+    Stage379 does not overwrite Stage378.
+  </p>
+
+  <p>
+    <strong>License:</strong> MIT License
+  </p>
+</section>
+<!-- STAGE379_APPEND_ONLY_END -->
+
+<!-- STAGE380_APPEND_ONLY_START -->
+<section class="card" id="stage380">
+  <h2>
+    Stage380: Independent Verification Package Contract
+    &amp; Deterministic Offline Core Verifier
+  </h2>
+
+  <p>
+    Stage380は、Stage379の固定された検証範囲を、
+    ネットワークを必要としない決定論的な独立検証パッケージとして
+    再検証します。
+  </p>
+
+  <h3>Current State</h3>
+
+  <ul>
+    <li>
+      Decision:
+      <code>development_package_verified_upstream_pending</code>
+    </li>
+    <li>
+      Verification status:
+      <code>verified_development_only</code>
+    </li>
+    <li>
+      Package integrity verified:
+      <code>true</code>
+    </li>
+    <li>
+      Critical failure count:
+      <code>0</code>
+    </li>
+    <li>
+      Formal independent verification:
+      <code>false</code>
+    </li>
+    <li>
+      Formal acceptance:
+      <code>false</code>
+    </li>
+    <li>
+      Pipeline completed:
+      <code>false</code>
+    </li>
+  </ul>
+
+  <p>
+    Stage380の内部パッケージ整合性は検証済みです。
+    ただしStage377、Stage378、Stage379の正式な上流条件が
+    未完了であるため、正式承認は主張しません。
+  </p>
+
+  <h3>Deterministic Offline Properties</h3>
+
+  <ul>
+    <li>Network access is not required.</li>
+    <li>Runtime timestamps are excluded from the decision.</li>
+    <li>Random values are excluded from the decision.</li>
+    <li>Hostnames and usernames are excluded.</li>
+    <li>Absolute local paths are excluded.</li>
+    <li>Required artifacts are verified by SHA-256 and size.</li>
+    <li>Integrity failures produce a Fail-Closed decision.</li>
+  </ul>
+
+  <h3>Public Stage380 Evidence</h3>
+
+  <ul>
+    <li>
+      <a href="./verification/stage380/stage380_independent_verification_result.json">
+        Stage380 Independent Verification Result
+      </a>
+    </li>
+    <li>
+      <a href="./verification/stage380/stage380_independent_verification_result.json.sha256">
+        Stage380 Result SHA-256 Record
+      </a>
+    </li>
+  </ul>
+
+  <p>
+    Stage380 does not overwrite Stage379.
+  </p>
+
+  <p>
+    <strong>License:</strong> MIT License
+  </p>
+</section>
+<!-- STAGE380_APPEND_ONLY_END -->
+
+<!-- STAGE381_APPEND_ONLY_START -->
+<section class="card" id="stage381">
+  <h2>
+    Stage381: Cross-Platform Deterministic Reverification
+    &amp; Reproducibility Gate
+  </h2>
+
+  <p>
+    Stage381は、同一のStage380検証入力を
+    Ubuntu、Windows、macOSで実行し、
+    OSの違いによって検証判定が変化しないことを確認します。
+  </p>
+
+  <h3>Verified Cross-Platform Flow</h3>
+
+  <p>
+    Stage380 deterministic offline result<br>
+    ↓<br>
+    fixed canonicalization profile<br>
+    ↓<br>
+    Ubuntu reverification<br>
+    ↓<br>
+    Windows reverification<br>
+    ↓<br>
+    macOS reverification<br>
+    ↓<br>
+    comparison of required fields and hashes<br>
+    ↓<br>
+    Stage381 cross-platform decision
+  </p>
+
+  <h3>Successful Verification State</h3>
+
+  <ul>
+    <li>
+      Decision:
+      <code>cross_platform_reverification_verified_upstream_pending</code>
+    </li>
+    <li>
+      Verification status:
+      <code>verified_development_only</code>
+    </li>
+    <li>
+      All required platforms present:
+      <code>true</code>
+    </li>
+    <li>
+      Cross-platform reverification verified:
+      <code>true</code>
+    </li>
+    <li>
+      Same input and same output verified:
+      <code>true</code>
+    </li>
+    <li>
+      Same decision verified:
+      <code>true</code>
+    </li>
+    <li>
+      Same process exit code verified:
+      <code>true</code>
+    </li>
+    <li>
+      Same Stage380 result SHA-256 verified:
+      <code>true</code>
+    </li>
+    <li>
+      Same canonical result SHA-256 verified:
+      <code>true</code>
+    </li>
+    <li>
+      Critical failure count:
+      <code>0</code>
+    </li>
+  </ul>
+
+  <h3>Common Canonical Result SHA-256</h3>
+
+  <pre>d248ee64a524cea14ecb1a7e75a977bc53a6a44ed98ff48ef1ca159932eed1d9</pre>
+
+  <h3>GitHub Actions Verification</h3>
+
+  <ul>
+    <li>Ubuntu job: successful</li>
+    <li>Windows job: successful</li>
+    <li>macOS job: successful</li>
+    <li>Cross-platform comparison job: successful</li>
+    <li>
+      Verified workflow run:
+      <a href="https://github.com/mokkunsuzuki-code/stage381/actions/runs/30636505090">
+        Run 30636505090
+      </a>
+    </li>
+  </ul>
+
+  <h3>Meaning of the Current Decision</h3>
+
+  <p>
+    Stage381のクロスプラットフォーム再現性は検証済みです。
+    ただし、Stage377からStage380までの上流正式承認条件が
+    未完了であるため、QSP全体の正式承認やパイプライン完了を
+    意味するものではありません。
+  </p>
+
+  <ul>
+    <li>
+      Formal acceptance:
+      <code>false</code>
+    </li>
+    <li>
+      Pipeline completed:
+      <code>false</code>
+    </li>
+    <li>
+      Public release allowed:
+      <code>false</code>
+    </li>
+  </ul>
+
+  <h3>Public Stage381 Evidence</h3>
+
+  <ul>
+    <li>
+      <a href="./verification/stage381/stage381_cross_platform_verification_result.json">
+        Stage381 Cross-Platform Verification Result
+      </a>
+    </li>
+    <li>
+      <a href="./verification/stage381/stage381_cross_platform_verification_result.json.sha256">
+        Stage381 Comparison Result SHA-256 Record
+      </a>
+    </li>
+    <li>
+      <a href="./verification/stage381/stage381_cross_platform_verification_package_result.json">
+        Stage381 Final Verification Package Result
+      </a>
+    </li>
+    <li>
+      <a href="./verification/stage381/stage381_cross_platform_verification_package_result.json.sha256">
+        Stage381 Package Result SHA-256 Record
+      </a>
+    </li>
+    <li>
+      <a href="./verification/stage381/stage381_canonicalization_profile.json">
+        Stage381 Canonicalization Profile
+      </a>
+    </li>
+    <li>
+      <a href="./verification/stage381/stage381_cross_platform_verification_package_contract.json">
+        Stage381 Verification Package Contract
+      </a>
+    </li>
+  </ul>
+
+  <h3>Publication Boundary</h3>
+
+  <ul>
+    <li>No private core is published.</li>
+    <li>No secret, credential, token, or private key is published.</li>
+    <li>No raw QKD secret material is published.</li>
+    <li>No raw timestamp proof binary is published.</li>
+    <li>Only reviewed public metadata and verification results are published.</li>
+  </ul>
+
+  <p>
+    Stage381 does not modify or overwrite Stage380.
+  </p>
+
+  <p>
+    <strong>License:</strong> MIT License
+  </p>
+</section>
+<!-- STAGE381_APPEND_ONLY_END -->
 </body>
 </html>
